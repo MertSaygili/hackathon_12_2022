@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/constants/app/icons.dart';
@@ -8,6 +10,7 @@ import 'package:hackathon_app/view/preview/signup.dart';
 
 import '../../core/components/textfield/custom_textfield.dart';
 import '../../core/constants/app/colors.dart';
+import '../../core/constants/app/regex.dart';
 import '../../core/constants/custom_divider.dart';
 
 class LoginPreview extends StatefulWidget {
@@ -20,12 +23,14 @@ class LoginPreview extends StatefulWidget {
 class _LoginPreviewState extends State<LoginPreview> {
   final int _flex = 1;
   final String _login = 'Log in';
-  final String _usernameHint = 'Username';
+  final String _emailHint = 'Email';
   final String _passwordHint = 'Password';
   bool _isPasswordObscure = true;
 
   String _email = '';
   String _password = '';
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -97,46 +102,69 @@ class _LoginPreviewState extends State<LoginPreview> {
     return Column(
       children: [
         CustomElevatedButton(
-          fun: () {}, // butona tiklandiginda calisacak fonksiyon
+          fun: () {
+            AppController controller = Get.find<AppController>();
+            if (formKey.currentState!.validate() &&
+                !controller.isLoginPressed) {
+              // controller.loginUser(_email, _password);
+            }
+          }, // butona tiklandiginda calisacak fonksiyon
           text: _login,
         ),
       ],
     );
   }
 
-  Column _inputfieldColumn() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          child: CustomTextField(
-            borderColor: colorTransparent,
-            fun: _setUsername, //s
-            inputType: TextInputType.emailAddress,
-            inputAction: TextInputAction.next,
-            hintText: _usernameHint,
-            prefixIcon: const Icon(Icons.person),
-            isRoundedBorder: true,
-            obscureText: false,
+  Form _inputfieldColumn() {
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: CustomTextField(
+              borderColor: colorTransparent,
+              fun: _setEmail, //s
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return "Please enter your email adress!";
+                } else if (!emailRegex.hasMatch(value)) {
+                  return "Please enter a valid email address";
+                }
+                return null;
+              },
+              inputType: TextInputType.emailAddress,
+              inputAction: TextInputAction.next,
+              hintText: _emailHint,
+              prefixIcon: iconEmail,
+              isRoundedBorder: true,
+              obscureText: false,
+            ),
           ),
-        ),
-        CustomTextField(
-          fun: _setPassword, // s
-          borderColor: colorTransparent,
-          inputType: TextInputType.visiblePassword,
-          inputAction: TextInputAction.done,
-          prefixIcon: const Icon(Icons.key),
-          obscureText: _isPasswordObscure,
-          suffix: _obscureButton(),
-          hintText: _passwordHint,
-          maxLines: 1,
-          isRoundedBorder: true,
-        ),
-      ],
+          CustomTextField(
+            fun: _setPassword, // s
+            validator: (String value) {
+              if (value.isEmpty) {
+                return "Please enter your password!";
+              }
+              return null;
+            },
+            borderColor: colorTransparent,
+            inputType: TextInputType.visiblePassword,
+            inputAction: TextInputAction.done,
+            prefixIcon: iconKey,
+            obscureText: _isPasswordObscure,
+            suffix: _obscureButton(),
+            hintText: _passwordHint,
+            maxLines: 1,
+            isRoundedBorder: true,
+          ),
+        ],
+      ),
     );
   }
 
-  void _setUsername(String email) => setState(() => _email = email);
+  void _setEmail(String email) => setState(() => _email = email);
   void _setPassword(String password) => setState(() => _password = password);
 
   IconButton _obscureButton() {

@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hackathon_app/core/constants/enums/gender.dart';
 
 import 'package:hive/hive.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -216,6 +217,7 @@ class AppController extends GetxController {
               : "";
           UserModel user = UserModel(
             username: username,
+            gender: GenderType.unknown,
             profilePhoto: downloadUrl,
             email: email,
             uid: firebaseAuth.currentUser!.uid,
@@ -274,6 +276,7 @@ class AppController extends GetxController {
         if (!value) {
           UserModel user = UserModel(
             username: gUser.displayName!,
+            gender: GenderType.unknown,
             profilePhoto: gUser.photoUrl!,
             email: gUser.email,
             uid: firebaseAuth.currentUser!.uid,

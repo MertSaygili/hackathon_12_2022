@@ -3,6 +3,7 @@ import 'dart:convert';
 class CommentModel {
   String listingUID;
   String userUID;
+  int score;
   String content;
 
   // Firebase Releated
@@ -13,6 +14,7 @@ class CommentModel {
   CommentModel({
     required this.listingUID,
     required this.userUID,
+    required this.score,
     required this.content,
     required this.uid,
     required this.createdAt,
@@ -23,6 +25,7 @@ class CommentModel {
     return <String, dynamic>{
       'listingUID': listingUID,
       'userUID': userUID,
+      'score': score,
       'content': content,
       'uid': uid,
       'createdAt': createdAt,
@@ -34,6 +37,7 @@ class CommentModel {
     return CommentModel(
       listingUID: map['listingUID'] as String,
       userUID: map['userUID'] as String,
+      score: map['score'] as int,
       content: map['content'] as String,
       uid: map['uid'] as String,
       createdAt: map['createdAt'] as int,
