@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
-import 'package:hackathon_app/core/constants/app/colors.dart';
+
+import '../../core/components/appbar/custom_appbar.dart';
+import '../../core/components/bottom_navigation_bar/bottom_navigation_bar.dart';
+import '../../core/components/bottom_navigation_bar/page_view.dart';
+import '../../core/constants/app/colors.dart';
+import '../../core/constants/app/strings.dart';
+import 'add_product_pages/favourites.dart';
+import 'add_product_pages/mylistings.dart';
 
 class ListingsPage extends StatefulWidget {
   const ListingsPage({super.key});
@@ -10,149 +16,66 @@ class ListingsPage extends StatefulWidget {
 }
 
 class _ListingsPageState extends State<ListingsPage> {
-  final RoundedRectangleBorder _borderRadius = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(15),
-  );
+  late final PageController _controller = PageController();
+  final List<Widget> _items = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: 4,
-        itemBuilder: ((context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 12, right: 12),
-            child: SizedBox(
-              height: 170,
-              child: Card(
-                shape: _borderRadius,
-                elevation: 15,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    backgroundColor: colorPrimary,
-                    shape: _borderRadius,
-                  ),
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _imgAlign(index, context),
-                      _cardTexts(index, context),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        }),
-      ),
-    );
-  }
-
-  Align _imgAlign(int index, BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(25),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: SizedBox(
-            child: Image.asset(
-              'assets/images/jpg/listing-foto-${index + 1}.jpg',
-              width: 150,
-              height: 200,
-              fit: BoxFit.cover,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: Image.asset(logoUrlSmall),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Flexible _cardTexts(int index, BuildContext context) {
-    return Flexible(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _cardItemsPadding(_listingTitle(index, context), 16),
-          _cardItemsPadding(_listingDescText(index, context), 4),
-          _cardItemsPadding(
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _richText(
-                  context,
-                  const Icon(Icons.remove_red_eye, color: colorWhite),
-                  " 1251",
-                ),
-                _richText(
-                  context,
-                  const Icon(Icons.favorite, color: colorWhite),
-                  " 21",
-                ),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.zero,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width - 30,
+                height: 30,
+                child: _navigationBar(),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 10,
+            child: CustomPageView(
+              controller: _controller,
+              items: const [
+                Mylistings(),
+                Favourites(),
               ],
             ),
-            4,
-          )
+          ),
         ],
       ),
     );
   }
 
-  Padding _richText(BuildContext context, Widget icon, String text) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: RichText(
-        text: TextSpan(
-          style: DefaultTextStyle.of(context).style.copyWith(
-                color: colorWhite,
-              ),
-          children: [
-            WidgetSpan(
-              alignment: PlaceholderAlignment.middle,
-              child: icon,
-            ),
-            TextSpan(text: text)
-          ],
-        ),
+  CustomBottomNavigationBar _navigationBar() {
+    List<BottomNavigationBarItem> items = const [
+      BottomNavigationBarItem(
+        icon: Icon(Icons.hourglass_empty),
+        label: 'My listings',
       ),
-    );
-  }
-
-  Padding _cardItemsPadding(Widget child, double vertical) {
-    return Padding(
-      padding: EdgeInsets.only(left: 8, top: vertical, right: 8, bottom: 8),
-      child: child,
-    );
-  }
-
-  Text _listingDescText(int index, BuildContext context) {
-    return Text(
-      "Lorem Ipsum is simply dummy text of the printing and typesetting",
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: colorWhite,
-          ),
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.start,
-      maxLines: 4,
-    );
-  }
-
-  Align _listingTitle(int index, BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        "Listing item - 1",
-        style: Theme.of(context).textTheme.headline5?.copyWith(
-              color: colorWhite,
-            ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.hourglass_empty),
+        label: 'Favourites',
       ),
+    ];
+
+    return CustomBottomNavigationBar(
+      controller: _controller,
+      items: items,
+      isText: true,
+      elevation: 0,
+      backgroundColor: colorTransparent,
     );
   }
-
-  void _floatingActionFun() {}
 }

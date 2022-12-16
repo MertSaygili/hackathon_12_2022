@@ -23,7 +23,6 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        backgroundColor: colorGrey,
         preferedSize: 75,
         backButton: false,
         title: Padding(
