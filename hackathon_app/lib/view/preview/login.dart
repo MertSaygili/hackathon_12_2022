@@ -31,6 +31,7 @@ class _LoginPreviewState extends State<LoginPreview> {
   String _password = '';
 
   final formKey = GlobalKey<FormState>();
+  AppController controller = Get.find<AppController>();
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +104,6 @@ class _LoginPreviewState extends State<LoginPreview> {
       children: [
         CustomElevatedButton(
           fun: () {
-            AppController controller = Get.find<AppController>();
             if (formKey.currentState!.validate() &&
                 !controller.isLoginPressed) {
               // controller.loginUser(_email, _password);
