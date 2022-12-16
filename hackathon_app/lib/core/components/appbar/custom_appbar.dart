@@ -11,8 +11,10 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
     this.backgroundColor,
     this.leading,
     this.actions,
+    this.title,
   });
 
+  final Widget? title;
   final Widget? leading;
   final Widget? actions;
   final double preferedSize;
@@ -32,6 +34,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      title: widget.title,
+      centerTitle: true,
       backgroundColor: widget.backgroundColor ?? colorTransparent,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       elevation: _elevation,
