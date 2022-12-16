@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hackathon_app/core/constants/app/colors.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   const CustomAppBar({super.key, required this.preferedSize});
@@ -18,6 +20,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: colorTransparent,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
       elevation: _elevation,
     );
   }

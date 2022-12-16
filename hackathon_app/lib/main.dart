@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Barter Buddy',
       theme: ThemeData(primaryColor: colorScaffold),
       home: const OnboardPreview(),
     );
