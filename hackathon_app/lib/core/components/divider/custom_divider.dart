@@ -5,7 +5,7 @@ class CustomTextDivider extends StatelessWidget {
   final Color? textColor;
   final Color? lineColor;
   final double _dividerThickness = 2;
-  final String _or = 'veya';
+  final String _or = 'or';
 
   const CustomTextDivider({super.key, this.textColor, this.lineColor});
 

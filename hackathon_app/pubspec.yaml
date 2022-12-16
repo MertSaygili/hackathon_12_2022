@@ -61,6 +61,9 @@ dependencies:
   image_cropper: ^3.0.0
   image_picker: ^0.8.5+3
 
+  # cached network image
+  cached_network_image: ^3.2.2
+
 
 
   

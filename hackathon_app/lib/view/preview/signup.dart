@@ -8,6 +8,7 @@ import 'package:hackathon_app/view/preview/signup_2.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/base/controllers/app_controller.dart';
+import '../../core/components/gridview/custom_gridview.dart';
 import '../../core/components/textfield/custom_textfield.dart';
 
 class SignupPreview extends StatefulWidget {
@@ -22,7 +23,10 @@ class _SignupPreviewState extends State<SignupPreview> {
   final String _infoText = 'With barter buddy\nenjoy your old stuffs';
   final Radius _radiusSheet = const Radius.circular(30);
   final String _usernameHint = 'Username';
+  final String _pathAvatar = 'assets/images/avatar/avatar_';
+
   String _username = '';
+  String _currentImageId = '';
   bool _hasAvatarChoosen = false;
 
   final formKey = GlobalKey<FormState>();
@@ -192,6 +196,24 @@ class _SignupPreviewState extends State<SignupPreview> {
             fontWeight: FontWeight.w600,
           ),
     );
+  }
+
+  void _bottomSheetGridModal() async {
+    final response = await showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return CustomGridView().gridView(41, _pathAvatar);
+        });
+    _setImage(response);
+  }
+
+  void _setImage(String? path) {
+    if (path != null) {
+      setState(() {
+        _currentImageId = path;
+        _hasAvatarChoosen = true;
+      });
+    }
   }
 
   void _navigateNextPage() {
