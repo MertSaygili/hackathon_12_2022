@@ -140,12 +140,6 @@ class _Body extends StatelessWidget {
                         leading: iconGallery,
                         title: const Text("Select photo from gallery"),
                       ),
-                      // TODO: Avator bottom sheet
-                      ListTile(
-                        onTap: () => _bottomSheetGridModal(context),
-                        leading: iconPerson,
-                        title: const Text("Select from our custom avatars"),
-                      )
                     ],
                   ),
                 ),
@@ -212,27 +206,6 @@ class _Body extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
     );
-  }
-
-  void _bottomSheetGridModal(BuildContext context) async {
-    for (int i = 1; i <= 8; i++) {
-      avatars.add(await StorageService.getImageFromStorage(
-          "avatar_$i.png", StorageService.avatarPhotoRef));
-    }
-    final response = await showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return CustomGridView().gridView(8, avatars);
-        });
-    _setImage(response);
-  }
-
-  void _setImage(int? path) async {
-    if (path != null) {
-      _imageURL = avatars[path];
-      controller.profilePhoto = null;
-      controller.update([AppController.authId]);
-    }
   }
 
   void _navigateNextPage() {
