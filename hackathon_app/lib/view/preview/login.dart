@@ -4,13 +4,11 @@ import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
-import 'package:hackathon_app/core/constants/app/icons.dart';
+import 'package:hackathon_app/core/components/form/auth_form.dart';
 import 'package:hackathon_app/core/constants/app/strings.dart';
 import 'package:hackathon_app/view/preview/signup.dart';
 
-import '../../core/components/textfield/custom_textfield.dart';
 import '../../core/constants/app/colors.dart';
-import '../../core/constants/app/regex.dart';
 import '../../core/components/divider/custom_divider.dart';
 
 class LoginPreview extends StatefulWidget {
@@ -23,12 +21,6 @@ class LoginPreview extends StatefulWidget {
 class _LoginPreviewState extends State<LoginPreview> {
   final int _flex = 1;
   final String _login = 'Log in';
-  final String _emailHint = 'Email';
-  final String _passwordHint = 'Password';
-  bool _isPasswordObscure = true;
-
-  String _email = '';
-  String _password = '';
 
   final formKey = GlobalKey<FormState>();
   AppController controller = Get.find<AppController>();
@@ -47,7 +39,11 @@ class _LoginPreviewState extends State<LoginPreview> {
               _flex * 3,
               Image.asset(logoUrl),
             ),
-            _expanded(_flex * 3, _inputfieldColumn()),
+            _expanded(
+                _flex * 3,
+                AuthForm(
+                  formKey: formKey,
+                )),
             _expanded(_flex * 2, _loginButton()),
             const CustomTextDivider(
               textColor: colorGrey,
@@ -112,67 +108,6 @@ class _LoginPreviewState extends State<LoginPreview> {
           text: _login,
         ),
       ],
-    );
-  }
-
-  Form _inputfieldColumn() {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: CustomTextField(
-              borderColor: colorTransparent,
-              fun: _setEmail, //s
-              validator: (String value) {
-                if (value.isEmpty) {
-                  return "Please enter your email adress!";
-                } else if (!emailRegex.hasMatch(value)) {
-                  return "Please enter a valid email address";
-                }
-                return null;
-              },
-              inputType: TextInputType.emailAddress,
-              inputAction: TextInputAction.next,
-              hintText: _emailHint,
-              prefixIcon: iconEmail,
-              isRoundedBorder: true,
-              obscureText: false,
-            ),
-          ),
-          CustomTextField(
-            fun: _setPassword, // s
-            validator: (String value) {
-              if (value.isEmpty) {
-                return "Please enter your password!";
-              }
-              return null;
-            },
-            borderColor: colorTransparent,
-            inputType: TextInputType.visiblePassword,
-            inputAction: TextInputAction.done,
-            prefixIcon: iconKey,
-            obscureText: _isPasswordObscure,
-            suffix: _obscureButton(),
-            hintText: _passwordHint,
-            maxLines: 1,
-            isRoundedBorder: true,
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _setEmail(String email) => setState(() => _email = email);
-  void _setPassword(String password) => setState(() => _password = password);
-
-  IconButton _obscureButton() {
-    return IconButton(
-      onPressed: () => setState(
-        () => _isPasswordObscure = !_isPasswordObscure,
-      ),
-      icon: _isPasswordObscure ? iconVisibltyOn : iconVisibilityOff,
     );
   }
 }

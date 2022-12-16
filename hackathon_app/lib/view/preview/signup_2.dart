@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
+import 'package:hackathon_app/core/components/form/auth_form.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/core/constants/app/strings.dart';
 
@@ -23,6 +24,8 @@ class _SignupTwoPreviewState extends State<SignupTwoPreview> {
   bool _isPasswordObscure = true;
   String _email = '';
   String _password = '';
+  final formKey = GlobalKey<FormState>();
+  final int _flex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +50,9 @@ class _SignupTwoPreviewState extends State<SignupTwoPreview> {
                   children: [
                     CustomIconButtons().backButton(context),
                     _titleText(context, _infoText),
-                    _emailTextField(context),
-                    _passwordTextField(context),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.25,
+                        child: AuthForm(formKey: formKey)),
                     _registerButton(context),
                     const CustomTextDivider(),
                     _signUpText(),
@@ -66,44 +70,13 @@ class _SignupTwoPreviewState extends State<SignupTwoPreview> {
   Padding _registerButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: CustomElevatedButton(fun: () {}, text: _register),
-    );
-  }
-
-  Padding _passwordTextField(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width / 1.25,
-        child: CustomTextField(
-          fun: _setPassword,
-          inputType: TextInputType.visiblePassword,
-          inputAction: TextInputAction.done,
-          isRoundedBorder: true,
-          obscureText: _isPasswordObscure,
-          suffix: _visibilityIconButton(),
-          hintText: passwordHint,
-          maxLines: 1,
-        ),
-      ),
-    );
-  }
-
-  Padding _emailTextField(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width / 1.25,
-        child: CustomTextField(
-          fun: _setEmail,
-          inputType: TextInputType.text,
-          inputAction: TextInputAction.next,
-          isRoundedBorder: true,
-          obscureText: false,
-          hintText: emailHint,
-          isFilled: true,
-        ),
-      ),
+      child: CustomElevatedButton(
+          fun: () {
+            if (formKey.currentState!.validate()) {
+              // controller.loginUser(_email, _password);
+            }
+          },
+          text: _register),
     );
   }
 
@@ -114,17 +87,6 @@ class _SignupTwoPreviewState extends State<SignupTwoPreview> {
       style: Theme.of(context).textTheme.headline5?.copyWith(
             fontWeight: FontWeight.w600,
           ),
-    );
-  }
-
-  IconButton _visibilityIconButton() {
-    return IconButton(
-      onPressed: () => setState(
-        () => _isPasswordObscure = !_isPasswordObscure,
-      ),
-      icon: _isPasswordObscure
-          ? const Icon(Icons.visibility)
-          : const Icon(Icons.visibility_off),
     );
   }
 
@@ -159,7 +121,4 @@ class _SignupTwoPreviewState extends State<SignupTwoPreview> {
       ],
     );
   }
-
-  void _setPassword(String password) => setState(() => _password = password);
-  void _setEmail(String email) => setState(() => _email = email);
 }
