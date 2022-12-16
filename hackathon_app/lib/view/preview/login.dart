@@ -31,7 +31,7 @@ class _LoginPreviewState extends State<LoginPreview> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const CustomAppBar(preferedSize: 0),
+      appBar: const CustomAppBar(preferedSize: 0, backButton: false),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
         child: Column(

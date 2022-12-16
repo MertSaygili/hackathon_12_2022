@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
+import 'package:hackathon_app/core/constants/app/icons.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
-  const CustomAppBar({super.key, required this.preferedSize});
+  const CustomAppBar({
+    super.key,
+    required this.preferedSize,
+    required this.backButton,
+  });
 
   final double preferedSize;
+  final bool backButton;
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -23,6 +29,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
       backgroundColor: colorTransparent,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       elevation: _elevation,
+      leading: widget.backButton ? _backButton() : null,
     );
   }
+
+  IconButton _backButton() => IconButton(
+        padding: EdgeInsets.zero,
+        icon: iconBackButton,
+        onPressed: () => Navigator.of(context).pop(),
+      );
 }
