@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:hackathon_app/core/components/icon_buttons/back_button.dart';
 import 'package:hackathon_app/core/components/stack_image/stack_image.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
-import 'package:hackathon_app/view/preview/signup-2.dart';
+import 'package:hackathon_app/view/preview/signup_2.dart';
 
 import '../../core/components/textfield/custom_textfield.dart';
 
