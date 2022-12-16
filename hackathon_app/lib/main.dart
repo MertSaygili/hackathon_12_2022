@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/view/preview/onboard.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primaryColor: colorScaffold),
       home: const OnboardPreview(),
     );
   }

@@ -14,6 +14,7 @@ class OnboardPreview extends StatefulWidget {
 
 class _OnboardPreviewState extends State<OnboardPreview> {
   final String _login = 'Login';
+  final String _skip = 'Skip';
   final String _next = 'Next';
   final int _dotCount = 3;
   final Color _onBoardGradientColor = const Color.fromARGB(60, 78, 115, 223);
@@ -27,7 +28,7 @@ class _OnboardPreviewState extends State<OnboardPreview> {
           IntroductionScreen(
             done: Text(_login),
             next: Text(_next),
-            skip: Text(_login),
+            skip: Text(_skip),
             onDone: _openLoginScreen,
             onSkip: _openLoginScreen,
             pages: _introductionPages(),
@@ -88,15 +89,15 @@ class _OnboardPreviewState extends State<OnboardPreview> {
       'assets/images/svg/intro-3.svg',
     ];
     final List<String> introTitles = [
-      'Yüzlerce Farklı Topluluk.',
-      'Kendi topluluğunu oluştur.',
-      'Favori film listeni oluştur.',
+      "Isn't it time to sell products you no longer use?",
+      'Swap for another product or sell directly!',
+      'Instead of keeping dust on the shelves, the products keep money in your pocket',
     ];
 
     final List<String> introText = [
-      'Sosyalleşip sinema hakkında konuşup sohbet edebilecegin yüzlerce topluluga katıl!',
-      'Sinema severleri bir araya topla ve onlarla istedigin her konu hakkında konuş.',
-      'Profilinde herkese açık ya da özel şekilde listeler oluştur ve paylaş.',
+      'With BarterBuddy, you can turn your unused products into something for your benefit ',
+      "Sell or trade any product at any price with just a few simple clicks! It's so easy with BarterBuddy",
+      "You can bid on other people's ads and evalueate the products that hold dust in your hand",
     ];
 
     return [
