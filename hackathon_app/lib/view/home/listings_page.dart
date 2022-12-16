@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 
 class ListingsPage extends StatefulWidget {
@@ -9,141 +10,149 @@ class ListingsPage extends StatefulWidget {
 }
 
 class _ListingsPageState extends State<ListingsPage> {
-  final String _dummyImage = 'assets/images/jpg/listing-foto-1.jpg';
-
+  final RoundedRectangleBorder _borderRadius = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(15),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _listings(context),
+      body: ListView.builder(
+        itemCount: 4,
+        itemBuilder: ((context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 12, right: 12),
+            child: SizedBox(
+              height: 170,
+              child: Card(
+                shape: _borderRadius,
+                elevation: 15,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    backgroundColor: colorPrimary,
+                    shape: _borderRadius,
+                  ),
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _imgAlign(index, context),
+                      _cardTexts(index, context),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }),
       ),
     );
   }
 
-  SizedBox _listings(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 1.75,
-      height: 250,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+  Align _imgAlign(int index, BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(25),
         ),
-        color: colorPrimary,
         child: Padding(
           padding: const EdgeInsets.all(4.0),
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  _alignImage(),
-                  _alignFavButton(),
-                ],
-              ),
-              ListTile(
-                contentPadding: const EdgeInsets.only(top: 4, left: 4),
-                title: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _alignTitle(context, ''),
-                    _alignSubtitle(context, ''),
-                    _alignRow(context, ''),
-                  ],
-                ),
-              )
-            ],
+          child: SizedBox(
+            child: Image.asset(
+              'assets/images/jpg/listing-foto-${index + 1}.jpg',
+              width: 150,
+              height: 200,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ),
     );
   }
 
-  Padding _alignRow(BuildContext context, String text) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 12.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+  Flexible _cardTexts(int index, BuildContext context) {
+    return Flexible(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Icon(Icons.location_on, color: colorWhite),
-          Text(
-            'Peru, Brazil',
-            style: Theme.of(context)
-                .textTheme
-                .subtitle2
-                ?.copyWith(color: colorWhite),
+          _cardItemsPadding(_listingTitle(index, context), 16),
+          _cardItemsPadding(_listingDescText(index, context), 4),
+          _cardItemsPadding(
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _richText(
+                  context,
+                  const Icon(Icons.remove_red_eye, color: colorWhite),
+                  " 1251",
+                ),
+                _richText(
+                  context,
+                  const Icon(Icons.favorite, color: colorWhite),
+                  " 21",
+                ),
+              ],
+            ),
+            4,
           )
         ],
       ),
     );
   }
 
-  Padding _alignSubtitle(BuildContext context, String text) {
+  Padding _richText(BuildContext context, Widget icon, String text) {
     return Padding(
-      padding: const EdgeInsets.only(top: 4),
-      child: Text(
-        'Lorem ipsum is simpy sumyy text of printing and typesetting',
-        maxLines: 2,
-        style: Theme.of(context).textTheme.subtitle2?.copyWith(
-              fontSize: 12,
-              color: colorWhite,
-              fontWeight: FontWeight.w400,
+      padding: const EdgeInsets.only(right: 10),
+      child: RichText(
+        text: TextSpan(
+          style: DefaultTextStyle.of(context).style.copyWith(
+                color: colorWhite,
+              ),
+          children: [
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: icon,
             ),
+            TextSpan(text: text)
+          ],
+        ),
       ),
     );
   }
 
-  Align _alignTitle(BuildContext context, String text) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Text(
-        'Listing title - 1',
-        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-              fontSize: 18,
-              color: colorWhite,
-            ),
-      ),
+  Padding _cardItemsPadding(Widget child, double vertical) {
+    return Padding(
+      padding: EdgeInsets.only(left: 8, top: vertical, right: 8, bottom: 8),
+      child: child,
     );
   }
 
-  Padding _alignFavButton() {
-    return Padding(
-      padding: const EdgeInsets.all(4),
-      child: Align(
-        alignment: Alignment.topRight,
-        child: Container(
-          height: 32,
-          width: 32,
-          decoration: const BoxDecoration(
-            color: colorPrimary,
-            shape: BoxShape.circle,
-          ),
-          child: IconButton(
-            iconSize: 24,
-            padding: EdgeInsets.zero,
+  Text _listingDescText(int index, BuildContext context) {
+    return Text(
+      "Lorem Ipsum is simply dummy text of the printing and typesetting",
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: colorWhite,
-            onPressed: () {},
-            icon: const Icon(
-              Icons.heart_broken,
-            ),
           ),
-        ),
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.start,
+      maxLines: 4,
+    );
+  }
+
+  Align _listingTitle(int index, BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "Listing item - 1",
+        style: Theme.of(context).textTheme.headline5?.copyWith(
+              color: colorWhite,
+            ),
       ),
     );
   }
 
-  Align _alignImage() {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
-        child: Image.asset(
-          _dummyImage,
-          fit: BoxFit.cover,
-          height: 125,
-        ),
-      ),
-    );
-  }
+  void _floatingActionFun() {}
 }
