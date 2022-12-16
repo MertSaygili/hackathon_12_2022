@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import '../indicator/loading_indicator.dart';
 
 class CustomGridView {
   Padding gridView(int itemCount, String pathJpg) {

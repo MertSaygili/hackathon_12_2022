@@ -15,38 +15,42 @@ class _ListingsPageState extends State<ListingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width / 1.75,
-          height: 250,
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            color: colorPrimary,
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Column(
+        child: _listings(context),
+      ),
+    );
+  }
+
+  SizedBox _listings(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 1.75,
+      height: 250,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        color: colorPrimary,
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Stack(
-                    children: [
-                      _alignImage(),
-                      _alignFavButton(),
-                    ],
-                  ),
-                  ListTile(
-                    contentPadding: const EdgeInsets.only(top: 4, left: 4),
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _alignTitle(context, ''),
-                        _alignSubtitle(context, ''),
-                        _alignRow(context, ''),
-                      ],
-                    ),
-                  )
+                  _alignImage(),
+                  _alignFavButton(),
                 ],
               ),
-            ),
+              ListTile(
+                contentPadding: const EdgeInsets.only(top: 4, left: 4),
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _alignTitle(context, ''),
+                    _alignSubtitle(context, ''),
+                    _alignRow(context, ''),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
