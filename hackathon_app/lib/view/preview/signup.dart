@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hackathon_app/core/base/services/storage/storage_service.dart';
 import 'package:hackathon_app/core/components/icon_buttons/back_button.dart';
 import 'package:hackathon_app/core/components/stack_image/stack_image.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
@@ -9,7 +8,6 @@ import 'package:hackathon_app/view/preview/signup_2.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/base/controllers/app_controller.dart';
-import '../../core/components/gridview/custom_gridview.dart';
 import '../../core/components/textfield/custom_textfield.dart';
 
 class SignupPreview extends StatelessWidget {
@@ -27,14 +25,12 @@ class SignupPreview extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  _Body({super.key, required this.controller});
+  _Body({required this.controller});
 
   final String _bottomImagePath = 'assets/images/svg/reg-1.svg';
   final String _infoText = 'With barter buddy\nenjoy your old stuffs';
   final Radius _radiusSheet = const Radius.circular(30);
   final String _usernameHint = 'Username';
-
-  String _imageURL = '';
 
   final formKey = GlobalKey<FormState>();
   final AppController controller;
@@ -161,18 +157,11 @@ class _Body extends StatelessWidget {
                     fit: BoxFit.contain,
                   ).image,
                 )
-              : _imageURL != ''
-                  ? CircleAvatar(
-                      backgroundImage: Image.network(
-                        _imageURL,
-                        fit: BoxFit.contain,
-                      ).image,
-                    )
-                  : Icon(
-                      Icons.add,
-                      color: colorWhite,
-                      size: MediaQuery.of(context).size.height / 7,
-                    ),
+              : Icon(
+                  Icons.add,
+                  color: colorWhite,
+                  size: MediaQuery.of(context).size.height / 7,
+                ),
         ),
       ),
     );
