@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/constants/app/icons.dart';
 import 'package:hackathon_app/core/constants/app/strings.dart';
+import 'package:hackathon_app/view/preview/signup.dart';
 
 import '../../core/components/textfield/custom_textfield.dart';
 import '../../core/constants/app/colors.dart';
@@ -70,7 +72,7 @@ class _LoginPreviewState extends State<LoginPreview> {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () => Get.to(() => const SignupPreview()),
           child: Text(
             signUpText,
             style: const TextStyle(
@@ -93,7 +95,12 @@ class _LoginPreviewState extends State<LoginPreview> {
 
   Column _loginButton() {
     return Column(
-      children: [CustomElevatedButton(fun: () {}, text: _login)],
+      children: [
+        CustomElevatedButton(
+          fun: () {}, // butona tiklandiginda calisacak fonksiyon
+          text: _login,
+        ),
+      ],
     );
   }
 
@@ -104,7 +111,7 @@ class _LoginPreviewState extends State<LoginPreview> {
           padding: const EdgeInsets.symmetric(vertical: 15),
           child: CustomTextField(
             borderColor: colorTransparent,
-            fun: () {}, //s
+            fun: _setUsername, //s
             inputType: TextInputType.emailAddress,
             inputAction: TextInputAction.next,
             hintText: _usernameHint,
@@ -114,7 +121,7 @@ class _LoginPreviewState extends State<LoginPreview> {
           ),
         ),
         CustomTextField(
-          fun: () {}, // s
+          fun: _setPassword, // s
           borderColor: colorTransparent,
           inputType: TextInputType.visiblePassword,
           inputAction: TextInputAction.done,
@@ -128,6 +135,9 @@ class _LoginPreviewState extends State<LoginPreview> {
       ],
     );
   }
+
+  void _setUsername(String email) => setState(() => _email = email);
+  void _setPassword(String password) => setState(() => _password = password);
 
   IconButton _obscureButton() {
     return IconButton(
