@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       defaultTransition: Transition.cupertino,
-      title: 'Flutter Demo',
+      title: 'Barter Buddy',
       theme: ThemeData(primaryColor: colorScaffold),
       home: const OnboardPreview(),
       initialBinding: InitialBindings(),
