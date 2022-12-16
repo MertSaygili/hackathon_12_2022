@@ -66,7 +66,7 @@ class _OnboardPreviewState extends State<OnboardPreview> {
 
   Size _setDotSize(double size) => Size.fromRadius(size);
 
-  void _openLoginScreen() => Get.offAll(() => const LoginPreview());
+  void _openLoginScreen() => Get.to(() => const LoginPreview());
 
   Container _backgroundContainer() {
     return Container(
