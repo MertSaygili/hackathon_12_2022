@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>434117415029-m0s1s4h02st824c703hacpihur1jsmb6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.434117415029-m0s1s4h02st824c703hacpihur1jsmb6</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>434117415029-rve46784jumj5og7ga0p54ie3pqgbndp.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBUe91mj_WWdxHe72-qNhG-1XFT4uDE2LI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>434117415029</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.hackathonApp</string>
+	<key>PROJECT_ID</key>
+	<string>barter-buddy</string>
+	<key>STORAGE_BUCKET</key>
+	<string>barter-buddy.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:434117415029:ios:34d4c48f0ad2a17c9b683c</string>
+</dict>
+</plist>
