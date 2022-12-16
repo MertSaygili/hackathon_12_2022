@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
+import 'package:hackathon_app/core/components/stack_image/stack_image.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 
 class SignupPreview extends StatefulWidget {
@@ -10,11 +11,15 @@ class SignupPreview extends StatefulWidget {
 }
 
 class _SignupPreviewState extends State<SignupPreview> {
+  final String _bottomImagePath = 'assets/images/png/reg-1.svg';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colorPrimary,
       resizeToAvoidBottomInset: false,
       appBar: const CustomAppBar(
+        backgroundColor: colorScaffold,
         preferedSize: 50,
         backButton: true,
       ),
@@ -30,6 +35,7 @@ class _SignupPreviewState extends State<SignupPreview> {
               ),
             ),
           ),
+          StackImage().bottomImage(context, _bottomImagePath),
         ],
       ),
     );
