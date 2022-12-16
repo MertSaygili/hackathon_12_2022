@@ -11,7 +11,7 @@ import 'package:hackathon_app/view/preview/signup.dart';
 import '../../core/components/textfield/custom_textfield.dart';
 import '../../core/constants/app/colors.dart';
 import '../../core/constants/app/regex.dart';
-import '../../core/constants/custom_divider.dart';
+import '../../core/components/divider/custom_divider.dart';
 
 class LoginPreview extends StatefulWidget {
   const LoginPreview({super.key});
@@ -60,8 +60,8 @@ class _LoginPreviewState extends State<LoginPreview> {
   }
 
   Column _signUpText() {
-    String anotherAccountText = 'Henüz bir hesabın yok mu?';
-    String signUpText = 'Hemen kayıt ol';
+    String anotherAccountText = "You haven't got account yet?";
+    String signUpText = 'Register now!';
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

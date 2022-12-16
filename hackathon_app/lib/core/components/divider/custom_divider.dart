@@ -35,7 +35,7 @@ class CustomTextDivider extends StatelessWidget {
           : const EdgeInsets.only(left: 20, top: 30, bottom: 30),
       color: lineColor ?? colorGrey,
       height: _dividerThickness,
-      width: MediaQuery.of(context).size.width / 3.1,
+      width: MediaQuery.of(context).size.width / 3.35,
     );
   }
 }

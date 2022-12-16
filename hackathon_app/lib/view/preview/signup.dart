@@ -17,7 +17,7 @@ class SignupPreview extends StatefulWidget {
 class _SignupPreviewState extends State<SignupPreview> {
   final String _bottomImagePath = 'assets/images/svg/reg-1.svg';
   final String _infoText = 'With barter buddy\nenjoy your old stuffs';
-  final Radius _radiusSheet = const Radius.circular(15);
+  final Radius _radiusSheet = const Radius.circular(30);
   final String _usernameHint = 'Username';
   String _username = '';
   bool _hasAvatarChoosen = false;

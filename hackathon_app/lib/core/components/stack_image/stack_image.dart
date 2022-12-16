@@ -7,7 +7,7 @@ class StackImage {
       alignment: Alignment.bottomCenter,
       child: SvgPicture.asset(
         imagePath,
-        height: MediaQuery.of(context).size.height / 2.25,
+        height: MediaQuery.of(context).size.height / 2.5,
         // width: MediaQuery.of(context).size.width * 1.5,
         fit: BoxFit.cover,
       ),

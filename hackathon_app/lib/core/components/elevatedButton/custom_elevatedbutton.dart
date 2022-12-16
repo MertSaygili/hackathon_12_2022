@@ -16,13 +16,13 @@ class CustomElevatedButton extends StatefulWidget {
 }
 
 class _CustomElevatedButtonState extends State<CustomElevatedButton> {
-  final double _height = 55;
+  final double _height = 45;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: _height,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width / 1.25,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
