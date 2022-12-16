@@ -133,7 +133,9 @@ class _SignupPreviewState extends State<SignupPreview> {
                       ),
                       // TODO: Avator bottom sheet
                       ListTile(
-                        onTap: () {},
+                        onTap: () {
+                          _bottomSheetGridModal();
+                        },
                         leading: iconPerson,
                         title: const Text("Select from our custom avatars"),
                       )
