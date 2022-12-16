@@ -61,6 +61,9 @@ dependencies:
   image_cropper: ^3.0.0
   image_picker: ^0.8.5+3
 
+  # cached network image
+  cached_network_image: ^3.2.2
+
 
 
   
@@ -89,6 +92,7 @@ flutter:
   assets:
     - assets/images/svg/
     - assets/images/png/
+    - assets/images/avatar/
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
