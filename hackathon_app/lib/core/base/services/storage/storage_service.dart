@@ -7,6 +7,7 @@ class StorageService {
 
   static Reference get listingPhotosRef => _storage.ref('/listingPhotos');
   static Reference get profilePhotoRef => _storage.ref('/profilePhotos');
+  static Reference get avatarPhotoRef => _storage.ref('/avatars');
 
   static Future<String> uploadImageToStorage(
       String id, File? image, Reference ref) async {
@@ -16,7 +17,9 @@ class StorageService {
     return downloadUrl;
   }
 
-  static Future<void> deleteFileFromStorage(String uid, Reference ref) async {
-    ref.child(uid).delete();
-  }
+  static Future<void> deleteFileFromStorage(String uid, Reference ref) async =>
+      await ref.child(uid).delete();
+
+  static Future<String> getImageFromStorage(String id, Reference ref) async =>
+      await ref.child(id).getDownloadURL();
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
@@ -94,12 +93,12 @@ class _HomePageViewState extends State<HomePageView> {
                   )
                 ]),
           ),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 100,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 6,
+                itemCount: _categoriesText.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(4.0),

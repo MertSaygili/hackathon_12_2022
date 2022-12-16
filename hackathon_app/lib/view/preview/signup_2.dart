@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/components/form/auth_form.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
-import 'package:hackathon_app/core/constants/app/strings.dart';
 
 import '../../core/components/divider/custom_divider.dart';
 import '../../core/components/icon_buttons/back_button.dart';
 import '../../core/components/stack_image/stack_image.dart';
-import '../../core/components/textfield/custom_textfield.dart';
 
 class SignupTwoPreview extends StatefulWidget {
   const SignupTwoPreview({super.key});
@@ -21,11 +21,8 @@ class _SignupTwoPreviewState extends State<SignupTwoPreview> {
   final String _infoText = 'Last steps for a amazing world\nof BarterBuddy';
   final String _register = 'Register';
   final String _bottomImagePath = 'assets/images/svg/reg-2.svg';
-  bool _isPasswordObscure = true;
-  String _email = '';
-  String _password = '';
   final formKey = GlobalKey<FormState>();
-  final int _flex = 1;
+  final AppController controller = Get.find<AppController>();
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +70,7 @@ class _SignupTwoPreviewState extends State<SignupTwoPreview> {
       child: CustomElevatedButton(
           fun: () {
             if (formKey.currentState!.validate()) {
-              // controller.loginUser(_email, _password);
+              controller.registerUser();
             }
           },
           text: _register),
