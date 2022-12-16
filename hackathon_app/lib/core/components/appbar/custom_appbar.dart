@@ -8,9 +8,11 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
     super.key,
     required this.preferedSize,
     required this.backButton,
+    this.backgroundColor,
   });
 
   final double preferedSize;
+  final Color? backgroundColor;
   final bool backButton;
 
   @override
@@ -26,7 +28,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: colorTransparent,
+      backgroundColor: widget.backgroundColor ?? colorTransparent,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       elevation: _elevation,
       leading: widget.backButton ? _backButton() : null,

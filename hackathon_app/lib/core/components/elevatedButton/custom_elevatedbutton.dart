@@ -16,7 +16,7 @@ class CustomElevatedButton extends StatefulWidget {
 }
 
 class _CustomElevatedButtonState extends State<CustomElevatedButton> {
-  final double _height = 25;
+  final double _height = 55;
 
   @override
   Widget build(BuildContext context) {
