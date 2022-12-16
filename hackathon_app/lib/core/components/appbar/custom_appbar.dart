@@ -9,8 +9,12 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
     required this.preferedSize,
     required this.backButton,
     this.backgroundColor,
+    this.leading,
+    this.actions,
   });
 
+  final Widget? leading;
+  final Widget? actions;
   final double preferedSize;
   final Color? backgroundColor;
   final bool backButton;
@@ -31,7 +35,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
       backgroundColor: widget.backgroundColor ?? colorTransparent,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       elevation: _elevation,
-      leading: widget.backButton ? _backButton() : null,
+      leading: widget.leading ?? (widget.backButton ? _backButton() : null),
+      actions: [widget.actions ?? const SizedBox()],
       bottomOpacity: 0,
     );
   }
