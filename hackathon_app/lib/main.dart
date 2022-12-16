@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/firebase_options.dart';
-import 'package:hackathon_app/view/preview/onboard.dart';
+import 'package:hackathon_app/view/home/home_page_controller.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'core/base/controllers/app_controller.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.cupertino,
       title: 'Barter Buddy',
       theme: ThemeData(primaryColor: colorScaffold),
-      home: const OnboardPreview(),
+      home: const HomePageControllerView(),
       initialBinding: InitialBindings(),
     );
   }
