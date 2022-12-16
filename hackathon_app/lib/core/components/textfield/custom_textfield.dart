@@ -7,6 +7,7 @@ class CustomTextField extends StatefulWidget {
   const CustomTextField({
     super.key,
     required this.fun,
+    this.validator,
     required this.inputType,
     required this.inputAction,
     required this.isRoundedBorder,
@@ -25,6 +26,7 @@ class CustomTextField extends StatefulWidget {
   });
 
   final Function fun;
+  final Function? validator;
   final TextInputType inputType;
   final TextInputAction inputAction;
   final Widget? label;
@@ -74,6 +76,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       maxLength: widget.maxLength,
       maxLines: widget.maxLines,
       cursorColor: colorPrimary,
+      validator:
+          widget.validator == null ? null : (value) => widget.validator!(value),
       decoration: InputDecoration(
         filled: widget.isFilled ?? true,
         contentPadding: widget.contentPadding,
