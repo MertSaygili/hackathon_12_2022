@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:hackathon_app/view/preview/login.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -65,10 +66,7 @@ class _OnboardPreviewState extends State<OnboardPreview> {
 
   Size _setDotSize(double size) => Size.fromRadius(size);
 
-  void _openLoginScreen() =>
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return const LoginPreview();
-      }));
+  void _openLoginScreen() => Get.offAll(() => const LoginPreview());
 
   Container _backgroundContainer() {
     return Container(
