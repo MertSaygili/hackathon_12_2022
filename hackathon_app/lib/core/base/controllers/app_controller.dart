@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hackathon_app/core/constants/enums/gender.dart';
-
 import 'package:hive/hive.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../view/home/home_page_controller.dart';
 import '../../../view/preview/onboard.dart';
 import '../../init/utils/prefs_helper.dart';
 import '../models/comment.dart';
@@ -88,7 +88,7 @@ class AppController extends GetxController {
 
   _setInitialScreen(User? user) async {
     if (user == null) {
-      Get.offAll(() => const OnboardPreview());
+      Get.offAll(() => const HomePageControllerView());
     } else {
       if (userList.isNotEmpty) {
         for (var element in userList) {
