@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 
 import '../../constants/app/colors.dart';
 import '../../constants/app/icons.dart';
@@ -15,8 +17,8 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   bool isPasswordObscure = true;
-  String email = '';
-  String password = '';
+  AppController controller = Get.find<AppController>();
+
   @override
   Widget build(BuildContext context) {
     const String emailHint = 'Email';
@@ -70,9 +72,9 @@ class _AuthFormState extends State<AuthForm> {
     );
   }
 
-  void _setEmail(String email) => email = email;
+  void _setEmail(String email) => controller.email = email;
 
-  void _setPassword(String password) => password = password;
+  void _setPassword(String password) => controller.password = password;
 
   IconButton _obscureButton() {
     return IconButton(

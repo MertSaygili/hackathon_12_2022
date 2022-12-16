@@ -12,26 +12,32 @@ import '../../core/base/controllers/app_controller.dart';
 import '../../core/components/gridview/custom_gridview.dart';
 import '../../core/components/textfield/custom_textfield.dart';
 
-class SignupPreview extends StatefulWidget {
+class SignupPreview extends StatelessWidget {
   const SignupPreview({super.key});
 
   @override
-  State<SignupPreview> createState() => _SignupPreviewState();
+  Widget build(BuildContext context) {
+    return GetBuilder(
+      id: AppController.authId,
+      builder: (AppController controller) => _Body(
+        controller: controller,
+      ),
+    );
+  }
 }
 
-class _SignupPreviewState extends State<SignupPreview> {
+class _Body extends StatelessWidget {
+  _Body({super.key, required this.controller});
+
   final String _bottomImagePath = 'assets/images/svg/reg-1.svg';
   final String _infoText = 'With barter buddy\nenjoy your old stuffs';
   final Radius _radiusSheet = const Radius.circular(30);
   final String _usernameHint = 'Username';
 
-  String _username = '';
-  int? _currentImageId;
   String _imageURL = '';
-  bool _hasAvatarChoosen = false;
 
   final formKey = GlobalKey<FormState>();
-  AppController controller = Get.find<AppController>();
+  final AppController controller;
 
   List<String> avatars = [];
 
@@ -87,7 +93,7 @@ class _SignupPreviewState extends State<SignupPreview> {
               if (value!.isEmpty) {
                 return "Please enter your username!";
               } else if (controller.userList
-                  .any((element) => element.username == _username)) {
+                  .any((element) => element.username == value)) {
                 return "This username is in use.";
               }
               return null;
@@ -136,7 +142,7 @@ class _SignupPreviewState extends State<SignupPreview> {
                       ),
                       // TODO: Avator bottom sheet
                       ListTile(
-                        onTap: () => _bottomSheetGridModal(),
+                        onTap: () => _bottomSheetGridModal(context),
                         leading: iconPerson,
                         title: const Text("Select from our custom avatars"),
                       )
@@ -161,7 +167,7 @@ class _SignupPreviewState extends State<SignupPreview> {
                     fit: BoxFit.contain,
                   ).image,
                 )
-              : _hasAvatarChoosen
+              : _imageURL != ''
                   ? CircleAvatar(
                       backgroundImage: Image.network(
                         _imageURL,
@@ -208,7 +214,7 @@ class _SignupPreviewState extends State<SignupPreview> {
     );
   }
 
-  void _bottomSheetGridModal() async {
+  void _bottomSheetGridModal(BuildContext context) async {
     for (int i = 1; i <= 8; i++) {
       avatars.add(await StorageService.getImageFromStorage(
           "avatar_$i.png", StorageService.avatarPhotoRef));
@@ -223,10 +229,9 @@ class _SignupPreviewState extends State<SignupPreview> {
 
   void _setImage(int? path) async {
     if (path != null) {
-      _currentImageId = path;
-      _hasAvatarChoosen = true;
-      _imageURL = avatars[_currentImageId!];
-      setState(() {});
+      _imageURL = avatars[path];
+      controller.profilePhoto = null;
+      controller.update([AppController.authId]);
     }
   }
 
@@ -236,5 +241,5 @@ class _SignupPreviewState extends State<SignupPreview> {
     }
   }
 
-  void _setUsername(String username) => () => _username = username;
+  void _setUsername(String username) => () => controller.username = username;
 }

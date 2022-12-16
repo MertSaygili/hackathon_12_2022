@@ -39,11 +39,15 @@ class AppController extends GetxController {
   late Box _listingsBox;
   late Box _commentsBox;
 
+  String email = '';
+  String password = '';
+  String username = '';
+
   File? profilePhoto;
 
   var firebaseAuth = FirebaseAuth.instance;
 
-  /* static const String userId = "userId";
+  static const String userId = "userId";
   static const String videoId = "videoId";
   static const String searchId = "searchId";
   static const String authId = "authId";
@@ -51,7 +55,7 @@ class AppController extends GetxController {
   static const String settingsId = "settingsId";
   static const String navigationId = "navigationId";
   static const String reportId = "reportId";
-  static String profileMoreId = "profileMoreId"; */
+  static String profileMoreId = "profileMoreId";
 
   StreamSubscription<QuerySnapshot<Object?>>? listingsListener;
   StreamSubscription<QuerySnapshot<Object?>>? usersListener;
@@ -201,18 +205,17 @@ class AppController extends GetxController {
         .toList();
   }
 
-  void registerUser(
-      String username, String email, String password, File? image) async {
+  void registerUser() async {
     String downloadUrl;
     try {
       await checkIfUserExists(email).then((value) async {
         if (!value) {
           await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: password);
-          downloadUrl = image != null
+          downloadUrl = profilePhoto != null
               ? await StorageService.uploadImageToStorage(
                   firebaseAuth.currentUser!.uid,
-                  image,
+                  profilePhoto,
                   StorageService.profilePhotoRef)
               : "";
           UserModel user = UserModel(
@@ -327,7 +330,7 @@ class AppController extends GetxController {
     return await firebaseAuth.fetchSignInMethodsForEmail(email);
   }
 
-  void pickImage(ImageSource imageSource) async {
+  Future<void> pickImage(ImageSource imageSource) async {
     final pickedImage = await ImagePicker().pickImage(
         source: imageSource, preferredCameraDevice: CameraDevice.front);
     if (pickedImage != null) {
@@ -345,6 +348,7 @@ class AppController extends GetxController {
                   Theme.of(Get.context!).colorScheme.primary),
         ],
       );
+      Get.back();
       if (file != null) {
         Get.snackbar(
             "Profile Picture", "Profile picture successfully selected!");
@@ -356,7 +360,7 @@ class AppController extends GetxController {
     } else {
       Get.snackbar("Profile Picture", "You selected nothing!");
     }
-    Get.back();
+    update([authId]);
   }
 
   void blockUser(String uid) async {
