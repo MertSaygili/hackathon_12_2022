@@ -58,11 +58,13 @@ class _HomePageViewState extends State<HomePageView> {
           backButton: false,
           preferedSize: 75,
         ),
-        body: Column(
-          children: [
-            _categories(),
-            _listings(context),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _categories(),
+              _listings(context),
+            ],
+          ),
         ),
       ),
     );
@@ -133,12 +135,16 @@ class _HomePageViewState extends State<HomePageView> {
 
     return GridView.builder(
       shrinkWrap: true,
-      itemCount: 2,
+      itemCount: 6,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: axisCount,
+        childAspectRatio: 0.8,
       ),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: ((context, index) {
-        return Expanded(
+        return SizedBox(
+          width: MediaQuery.of(context).size.width / 1.75,
+          height: 250,
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
