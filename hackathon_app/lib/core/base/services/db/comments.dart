@@ -3,7 +3,7 @@ import 'package:hackathon_app/core/base/services/db/ref.dart';
 
 import '../../models/comment.dart';
 
-class ListingsService {
+class CommentsService {
   static final CollectionReference _ref = RefService.comments;
 
   static Future<void> createOne(CommentModel item) async {

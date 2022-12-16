@@ -1,13 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
-import 'comment.dart';
 
 class ListingModel {
   List<String> photos;
   double price;
   String description;
-  List<CommentModel> comments;
+  List<String> comments;
 
   // Firebase Releated
   String uid;
@@ -29,7 +26,7 @@ class ListingModel {
       'photos': photos,
       'price': price,
       'description': description,
-      'comments': comments.map((x) => x.toMap()).toList(),
+      'comments': comments,
       'uid': uid,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
@@ -41,11 +38,7 @@ class ListingModel {
       photos: List<String>.from(map['photos'] as List<String>),
       price: map['price'] as double,
       description: map['description'] as String,
-      comments: List<CommentModel>.from(
-        (map['comments'] as List<int>).map<CommentModel>(
-          (x) => CommentModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      comments: List<String>.from(map['comments'] as List<String>),
       uid: map['uid'] as String,
       createdAt: map['createdAt'] as int,
       updatedAt: map['updatedAt'] as int,

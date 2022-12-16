@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
   String username;
   String birthDate;
@@ -8,6 +7,7 @@ class UserModel {
   String email;
   String phone;
   List<String> listings;
+  List<String> blocked;
 
   // Firebase Releated
   String uid;
@@ -24,6 +24,7 @@ class UserModel {
     required this.uid,
     required this.createdAt,
     required this.updatedAt,
+    required this.blocked,
   });
 
   Map<String, dynamic> toMap() {
@@ -42,16 +43,16 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      username: map['username'] as String,
-      birthDate: map['birthDate'] as String,
-      profilePhoto: map['profilePhoto'] as String,
-      email: map['email'] as String,
-      phone: map['phone'] as String,
-      listings: List<String>.from(map['listings'] as List<String>),
-      uid: map['uid'] as String,
-      createdAt: map['createdAt'] as int,
-      updatedAt: map['updatedAt'] as int,
-    );
+        username: map['username'] as String,
+        birthDate: map['birthDate'] as String,
+        profilePhoto: map['profilePhoto'] as String,
+        email: map['email'] as String,
+        phone: map['phone'] as String,
+        listings: List<String>.from(map['listings'] as List<String>),
+        uid: map['uid'] as String,
+        createdAt: map['createdAt'] as int,
+        updatedAt: map['updatedAt'] as int,
+        blocked: List<String>.from(map['blocked'] as List<String>));
   }
 
   String toJson() => json.encode(toMap());
