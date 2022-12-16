@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:hackathon_app/core/constants/enums/gender.dart';
+
 class UserModel {
   String username;
+  GenderType gender;
   String birthDate;
   String profilePhoto;
   String email;
@@ -16,6 +19,7 @@ class UserModel {
 
   UserModel({
     required this.username,
+    required this.gender,
     required this.birthDate,
     required this.profilePhoto,
     required this.email,
@@ -30,6 +34,7 @@ class UserModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'username': username,
+      'gender': gender.index,
       'birthDate': birthDate,
       'profilePhoto': profilePhoto,
       'email': email,
@@ -44,6 +49,7 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
         username: map['username'] as String,
+        gender: GenderType.values[map['gender'] as int],
         birthDate: map['birthDate'] as String,
         profilePhoto: map['profilePhoto'] as String,
         email: map['email'] as String,
