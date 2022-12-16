@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "434117415029",
+    "project_id": "barter-buddy",
+    "storage_bucket": "barter-buddy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434117415029:android:c7256d7e00a4c1b59b683c",
+        "android_client_info": {
+          "package_name": "com.example.hackathon_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "434117415029-rve46784jumj5og7ga0p54ie3pqgbndp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hackathon_app",
+            "certificate_hash": "7eea339771ab1a8ac2224df665e9c7d6c193852a"
+          }
+        },
+        {
+          "client_id": "434117415029-fkeppf5fv92scsb75k8qpb8al9ta27fv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLfvKgVglJQ-bVanbEaYW5OFyZ6qJ9kwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "434117415029-fkeppf5fv92scsb75k8qpb8al9ta27fv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

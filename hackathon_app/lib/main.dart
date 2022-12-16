@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
+import 'package:hackathon_app/firebase_options.dart';
 import 'package:hackathon_app/view/preview/onboard.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -16,7 +17,9 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MyApp());
 }
