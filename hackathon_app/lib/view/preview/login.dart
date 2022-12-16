@@ -22,6 +22,7 @@ class _LoginPreviewState extends State<LoginPreview> {
   final String _login = 'Log in';
 
   final formKey = GlobalKey<FormState>();
+  final emailFieldKey = GlobalKey<FormFieldState<String>>();
   AppController controller = Get.find<AppController>();
 
   @override
@@ -40,8 +41,29 @@ class _LoginPreviewState extends State<LoginPreview> {
             ),
             _expanded(
                 _flex * 3,
-                AuthForm(
-                  formKey: formKey,
+                Column(
+                  children: [
+                    AuthForm(
+                      formKey: formKey,
+                      emailFieldKey: emailFieldKey,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                          onPressed: () {
+                            if (emailFieldKey.currentState!.validate()) {
+                              controller.forgotPass();
+                            }
+                          },
+                          child: const Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.grey,
+                                fontSize: 11.0),
+                          )),
+                    ),
+                  ],
                 )),
             _expanded(_flex * 2, _loginButton()),
             const CustomTextDivider(

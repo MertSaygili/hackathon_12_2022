@@ -9,7 +9,8 @@ import '../textfield/custom_textfield.dart';
 
 class AuthForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
-  const AuthForm({super.key, required this.formKey});
+  final GlobalKey<FormFieldState<String>>? emailFieldKey;
+  const AuthForm({super.key, required this.formKey, this.emailFieldKey});
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -31,6 +32,7 @@ class _AuthFormState extends State<AuthForm> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: CustomTextField(
+              emailFieldKey: widget.emailFieldKey,
               borderColor: colorTransparent,
               fun: _setEmail, //s
               validator: (String value) {
