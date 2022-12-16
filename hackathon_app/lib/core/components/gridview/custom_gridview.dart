@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import '../indicator/loading_indicator.dart';
 
 class CustomGridView {
-  Padding gridView(int itemCount, String pathJpg) {
+  Padding gridView(int itemCount, List<String> avatars) {
     double itemSpacing = 30;
     int axisCount = 2;
 
@@ -17,14 +15,13 @@ class CustomGridView {
           crossAxisCount: axisCount,
         ),
         itemBuilder: (context, index) {
-          String tempImage = '$pathJpg${index + 1}.png';
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).pop<String>(index.toString());
+              Navigator.of(context).pop<int>(index);
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: Image.asset(tempImage, fit: BoxFit.cover),
+              child: Image.network(avatars[index], fit: BoxFit.cover),
             ),
           );
         },

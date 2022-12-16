@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/services/storage/storage_service.dart';
 import 'package:hackathon_app/core/components/icon_buttons/back_button.dart';
 import 'package:hackathon_app/core/components/stack_image/stack_image.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
@@ -23,14 +24,16 @@ class _SignupPreviewState extends State<SignupPreview> {
   final String _infoText = 'With barter buddy\nenjoy your old stuffs';
   final Radius _radiusSheet = const Radius.circular(30);
   final String _usernameHint = 'Username';
-  final String _pathAvatar = 'assets/images/avatar/avatar_';
 
   String _username = '';
-  String _currentImageId = '';
+  int? _currentImageId;
+  String _imageURL = '';
   bool _hasAvatarChoosen = false;
 
   final formKey = GlobalKey<FormState>();
   AppController controller = Get.find<AppController>();
+
+  List<String> avatars = [];
 
   @override
   Widget build(BuildContext context) {
@@ -151,18 +154,25 @@ class _SignupPreviewState extends State<SignupPreview> {
             shape: BoxShape.circle,
             color: colorPrimary,
           ),
-          child: _hasAvatarChoosen
+          child: controller.profilePhoto != null
               ? CircleAvatar(
-                  backgroundImage: Image.asset(
-                    '$_pathAvatar$_currentImageId.png',
+                  backgroundImage: Image.file(
+                    controller.profilePhoto!,
                     fit: BoxFit.contain,
                   ).image,
                 )
-              : Icon(
-                  Icons.add,
-                  color: colorWhite,
-                  size: MediaQuery.of(context).size.height / 7,
-                ),
+              : _hasAvatarChoosen
+                  ? CircleAvatar(
+                      backgroundImage: Image.network(
+                        _imageURL,
+                        fit: BoxFit.contain,
+                      ).image,
+                    )
+                  : Icon(
+                      Icons.add,
+                      color: colorWhite,
+                      size: MediaQuery.of(context).size.height / 7,
+                    ),
         ),
       ),
     );
@@ -199,20 +209,24 @@ class _SignupPreviewState extends State<SignupPreview> {
   }
 
   void _bottomSheetGridModal() async {
+    for (int i = 1; i <= 8; i++) {
+      avatars.add(await StorageService.getImageFromStorage(
+          "avatar_$i.png", StorageService.avatarPhotoRef));
+    }
     final response = await showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return CustomGridView().gridView(8, _pathAvatar);
+          return CustomGridView().gridView(8, avatars);
         });
     _setImage(response);
   }
 
-  void _setImage(String? path) {
+  void _setImage(int? path) async {
     if (path != null) {
-      setState(() {
-        _currentImageId = path;
-        _hasAvatarChoosen = true;
-      });
+      _currentImageId = path;
+      _hasAvatarChoosen = true;
+      _imageURL = avatars[_currentImageId!];
+      setState(() {});
     }
   }
 
