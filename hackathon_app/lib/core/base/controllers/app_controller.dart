@@ -89,7 +89,7 @@ class AppController extends GetxController {
 
   _setInitialScreen(User? user) async {
     if (user == null) {
-      Get.offAll(() => const OnboardPreview());
+      Get.offAll(() => const HomePageControllerView());
     } else {
       if (userList.isNotEmpty) {
         for (var element in userList) {
