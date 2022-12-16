@@ -133,9 +133,7 @@ class _SignupPreviewState extends State<SignupPreview> {
                       ),
                       // TODO: Avator bottom sheet
                       ListTile(
-                        onTap: () {
-                          _bottomSheetGridModal();
-                        },
+                        onTap: () => _bottomSheetGridModal(),
                         leading: iconPerson,
                         title: const Text("Select from our custom avatars"),
                       )
@@ -156,7 +154,7 @@ class _SignupPreviewState extends State<SignupPreview> {
           child: _hasAvatarChoosen
               ? CircleAvatar(
                   backgroundImage: Image.asset(
-                    '$_bottomImagePath$_currentImageId.png',
+                    '$_pathAvatar$_currentImageId.png',
                     fit: BoxFit.contain,
                   ).image,
                 )
@@ -204,7 +202,7 @@ class _SignupPreviewState extends State<SignupPreview> {
     final response = await showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return CustomGridView().gridView(41, _pathAvatar);
+          return CustomGridView().gridView(8, _pathAvatar);
         });
     _setImage(response);
   }

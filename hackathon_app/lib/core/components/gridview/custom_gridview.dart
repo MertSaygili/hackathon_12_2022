@@ -17,7 +17,7 @@ class CustomGridView {
           crossAxisCount: axisCount,
         ),
         itemBuilder: (context, index) {
-          String tempImage = '$pathJpg$index.png';
+          String tempImage = '$pathJpg${index + 1}.png';
           return GestureDetector(
             onTap: () {
               Navigator.of(context).pop<String>(index.toString());
