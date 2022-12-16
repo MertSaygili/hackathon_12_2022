@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hackathon_app/view/preview/login.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -30,7 +31,7 @@ class _OnboardPreviewState extends State<OnboardPreview> {
             onDone: _openLoginScreen,
             onSkip: _openLoginScreen,
             pages: _introductionPages(),
-            globalBackgroundColor: colorBlack,
+            globalBackgroundColor: colorWhite,
             showSkipButton: true,
             baseBtnStyle: ElevatedButton.styleFrom(
               foregroundColor: colorPrimary,
@@ -55,7 +56,7 @@ class _OnboardPreviewState extends State<OnboardPreview> {
 
     return DotsDecorator(
       color: colorGrey,
-      activeColor: colorBlack,
+      activeColor: colorPrimary,
       sizes: size,
       activeSize: _setDotSize(dotSActive),
     );
@@ -82,9 +83,9 @@ class _OnboardPreviewState extends State<OnboardPreview> {
 
   List<PageViewModel> _introductionPages() {
     final List<String> introImageAddress = [
-      'assets/images/png/com_4.png',
-      'assets/images/png/com_3.png',
-      'assets/images/png/com_2.png',
+      'assets/images/svg/intro-1.svg',
+      'assets/images/svg/intro-2.svg',
+      'assets/images/svg/intro-3.svg',
     ];
     final List<String> introTitles = [
       'Yüzlerce Farklı Topluluk.',
@@ -107,9 +108,9 @@ class _OnboardPreviewState extends State<OnboardPreview> {
 
   PageViewModel _pageViewModel(String imageAddress, String title, String text) {
     return PageViewModel(
-      image: Image.asset(
+      image: SvgPicture.asset(
         imageAddress,
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         width: MediaQuery.of(context).size.width * 1.25,
         height: 420,
       ),
@@ -143,7 +144,6 @@ class _OnboardPreviewState extends State<OnboardPreview> {
           fontFamily: 'BalooBhaina',
           shadows: <Shadow>[
             const Shadow(
-              offset: Offset(0.0, 0.0),
               blurRadius: 4.0,
               color: Color.fromARGB(150, 0, 0, 0),
             )
