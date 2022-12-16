@@ -153,8 +153,8 @@ class _SignupPreviewState extends State<SignupPreview> {
           ),
           child: _hasAvatarChoosen
               ? CircleAvatar(
-                  backgroundImage: Image.network(
-                    '',
+                  backgroundImage: Image.asset(
+                    '$_bottomImagePath$_currentImageId.png',
                     fit: BoxFit.contain,
                   ).image,
                 )
