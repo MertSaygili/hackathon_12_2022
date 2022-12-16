@@ -32,6 +32,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       elevation: _elevation,
       leading: widget.backButton ? _backButton() : null,
+      bottomOpacity: 0,
     );
   }
 
