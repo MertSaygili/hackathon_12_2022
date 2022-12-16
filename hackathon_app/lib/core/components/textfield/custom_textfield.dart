@@ -23,6 +23,7 @@ class CustomTextField extends StatefulWidget {
     this.enabled,
     this.contentPadding,
     this.isFilled,
+    this.emailFieldKey,
   });
 
   final Function fun;
@@ -42,6 +43,7 @@ class CustomTextField extends StatefulWidget {
   final bool? enabled;
   final EdgeInsets? contentPadding;
   final bool? isFilled;
+  final GlobalKey<FormFieldState<String>>? emailFieldKey;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -68,6 +70,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: widget.emailFieldKey,
       onChanged: (value) => widget.fun(value),
       keyboardAppearance: Brightness.dark,
       keyboardType: widget.inputType,

@@ -35,8 +35,32 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       showSelectedLabels: widget.isText ? true : false,
       showUnselectedLabels: widget.isText ? true : false,
       iconSize: widget.isText ? 0 : _iconSize,
-      selectedItemColor: Theme.of(context).colorScheme.onBackground,
-      unselectedItemColor: colorGrey,
+      selectedItemColor: widget.isText
+          ? colorBlack
+          : Theme.of(context).colorScheme.onBackground,
+      selectedLabelStyle: widget.isText
+          ? Theme.of(context).textTheme.headline6?.copyWith(
+              fontWeight: FontWeight.w600,
+              shadows: <Shadow>[
+                const Shadow(
+                  blurRadius: 4.0,
+                  color: Color.fromARGB(150, 0, 0, 0),
+                )
+              ],
+            )
+          : null,
+      unselectedLabelStyle: widget.isText
+          ? Theme.of(context).textTheme.headline6?.copyWith(
+              fontWeight: FontWeight.w400,
+              shadows: <Shadow>[
+                const Shadow(
+                  blurRadius: 4.0,
+                  color: Color.fromARGB(75, 0, 0, 0),
+                )
+              ],
+            )
+          : null,
+      unselectedItemColor: widget.isText ? colorBlack : colorGrey,
       selectedIconTheme: const IconThemeData(color: colorPrimary),
       unselectedIconTheme: const IconThemeData(color: colorGrey),
       onTap: _onTap,

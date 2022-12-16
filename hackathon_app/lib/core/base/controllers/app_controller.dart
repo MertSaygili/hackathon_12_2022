@@ -309,7 +309,7 @@ class AppController extends GetxController {
     Get.offAll(() => const OnboardPreview());
   }
 
-  void forgotPass(String email) async {
+  void forgotPass() async {
     try {
       await firebaseAuth.sendPasswordResetEmail(email: email);
       Get.snackbar("Password Reset",
