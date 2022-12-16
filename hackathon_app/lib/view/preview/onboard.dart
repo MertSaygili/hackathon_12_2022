@@ -137,6 +137,7 @@ class _OnboardPreviewState extends State<OnboardPreview> {
         bottom: 10,
       ),
       titleTextStyle: Theme.of(context).textTheme.headline6!.copyWith(
+          height: 1,
           color: colorBlack,
           fontSize: 25,
           fontWeight: FontWeight.w800,
