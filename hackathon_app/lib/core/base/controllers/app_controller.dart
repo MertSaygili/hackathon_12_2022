@@ -88,7 +88,7 @@ class AppController extends GetxController {
 
   _setInitialScreen(User? user) async {
     if (user == null) {
-      Get.offAll(() => const HomePageControllerView());
+      Get.offAll(() => const OnboardPreview());
     } else {
       if (userList.isNotEmpty) {
         for (var element in userList) {
@@ -98,7 +98,7 @@ class AppController extends GetxController {
         }
       }
 
-      /* Get.offAll(() => const HomeScreen()); */
+      Get.offAll(() => const HomePageControllerView());
     }
   }
 
@@ -233,7 +233,6 @@ class AppController extends GetxController {
           );
           await UsersService.createOne(user);
           Get.snackbar("Register", "You are successfully registered");
-          // TODO: Navigate to home screen
           profilePhoto = null;
           currentUserSignInMethod = (await getUserSignInMethods(email)).first;
         } else {
@@ -245,13 +244,12 @@ class AppController extends GetxController {
     }
   }
 
-  void loginUser(String email, String password) async {
+  void loginUser() async {
     isLoginPressed = true;
     // update([authId]);
     try {
       await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      // TODO: Navigate to home screen
       Get.snackbar(
           "Login", "You have successfully logged in navigating to home page!");
       currentUserSignInMethod = (await getUserSignInMethods(email)).first;
@@ -296,7 +294,6 @@ class AppController extends GetxController {
 
       Get.snackbar("Google Sign In",
           "You have successfully signed in via google navigating to home page!");
-      // TODO: Navigate to home screen
       currentUserSignInMethod = (await getUserSignInMethods(gUser.email)).first;
     } catch (e) {
       Get.snackbar("Google Sign In Error", e.toString());

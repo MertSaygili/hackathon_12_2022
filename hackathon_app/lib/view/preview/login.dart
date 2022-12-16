@@ -101,7 +101,7 @@ class _LoginPreviewState extends State<LoginPreview> {
           fun: () {
             if (formKey.currentState!.validate() &&
                 !controller.isLoginPressed) {
-              // controller.loginUser(_email, _password);
+              controller.loginUser();
             }
           }, // butona tiklandiginda calisacak fonksiyon
           text: _login,
