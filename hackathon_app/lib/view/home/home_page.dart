@@ -23,6 +23,7 @@ class _HomePageViewState extends State<HomePageView> {
     Icons.baby_changing_station,
     Icons.sports_basketball_outlined,
     Icons.person_outline,
+    Icons.laptop,
   ];
 
   // Create a list that holds categories
@@ -32,6 +33,7 @@ class _HomePageViewState extends State<HomePageView> {
     'Baby',
     'Sports',
     'Fashion',
+    'Laptops',
   ];
 
   @override
