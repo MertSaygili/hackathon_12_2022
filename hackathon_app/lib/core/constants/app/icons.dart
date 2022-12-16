@@ -12,3 +12,5 @@ const Icon iconBackButton = Icon(
   color: colorPrimary,
   size: 24,
 );
+const iconCamera = Icon(Icons.camera);
+const iconGallery = Icon(Icons.file_present);

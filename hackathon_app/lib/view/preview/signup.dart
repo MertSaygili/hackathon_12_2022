@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:hackathon_app/core/components/icon_buttons/back_button.dart';
 import 'package:hackathon_app/core/components/stack_image/stack_image.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
+import 'package:hackathon_app/core/constants/app/icons.dart';
 import 'package:hackathon_app/view/preview/signup_2.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../core/base/controllers/app_controller.dart';
 import '../../core/components/textfield/custom_textfield.dart';
 
 class SignupPreview extends StatefulWidget {
@@ -21,6 +24,9 @@ class _SignupPreviewState extends State<SignupPreview> {
   final String _usernameHint = 'Username';
   String _username = '';
   bool _hasAvatarChoosen = false;
+
+  final formKey = GlobalKey<FormState>();
+  AppController controller = Get.find<AppController>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,19 +65,33 @@ class _SignupPreviewState extends State<SignupPreview> {
     );
   }
 
-  Padding _textField(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width / 1.25,
-        child: CustomTextField(
-          fun: () {},
-          inputType: TextInputType.text,
-          inputAction: TextInputAction.done,
-          isRoundedBorder: true,
-          obscureText: false,
-          hintText: _usernameHint,
-          isFilled: false,
+  Form _textField(BuildContext context) {
+    return Form(
+      key: formKey,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width / 1.25,
+          child: CustomTextField(
+            fun: (String value) {
+              _setUsername(value);
+            },
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Please enter your username!";
+              } else if (controller.userList
+                  .any((element) => element.username == _username)) {
+                return "This username is in use.";
+              }
+              return null;
+            },
+            inputType: TextInputType.text,
+            inputAction: TextInputAction.done,
+            isRoundedBorder: true,
+            obscureText: false,
+            hintText: _usernameHint,
+            isFilled: false,
+          ),
         ),
       ),
     );
@@ -81,7 +101,45 @@ class _SignupPreviewState extends State<SignupPreview> {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: GestureDetector(
-        onTap: () {}, // bastiginda
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25.0),
+                  topRight: Radius.circular(25.0)),
+            ),
+            builder: (context) => Wrap(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        onTap: () => controller.pickImage(ImageSource.camera),
+                        leading: iconCamera,
+                        title: const Text(
+                          "Take photo from camera",
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () => controller.pickImage(ImageSource.gallery),
+                        leading: iconGallery,
+                        title: const Text("Select photo from gallery"),
+                      ),
+                      // TODO: Avator bottom sheet
+                      ListTile(
+                        onTap: () {},
+                        leading: iconPerson,
+                        title: const Text("Select from our custom avatars"),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }, // bastiginda
         child: Container(
           width: MediaQuery.of(context).size.width / 3,
           height: MediaQuery.of(context).size.height / 6,
@@ -96,13 +154,10 @@ class _SignupPreviewState extends State<SignupPreview> {
                     fit: BoxFit.contain,
                   ).image,
                 )
-              : IconButton(
-                  icon: Icon(
-                    Icons.add,
-                    color: colorWhite,
-                    size: MediaQuery.of(context).size.height / 7,
-                  ),
-                  onPressed: () {},
+              : Icon(
+                  Icons.add,
+                  color: colorWhite,
+                  size: MediaQuery.of(context).size.height / 7,
                 ),
         ),
       ),
@@ -139,5 +194,11 @@ class _SignupPreviewState extends State<SignupPreview> {
     );
   }
 
-  void _navigateNextPage() => Get.to(() => const SignupTwoPreview());
+  void _navigateNextPage() {
+    if (formKey.currentState!.validate()) {
+      Get.to(() => const SignupTwoPreview());
+    }
+  }
+
+  void _setUsername(String username) => () => _username = username;
 }
