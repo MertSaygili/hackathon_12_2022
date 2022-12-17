@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/core/components/dropdown_menu/dropdown.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:hackathon_app/core/constants/enums/categories.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/constants/app/icons.dart';
@@ -43,6 +45,9 @@ class _Body extends StatelessWidget {
   final String _chooseLocation = 'Choose location';
   final String _descriptionText = 'Description';
   final String _descriptionHint = 'Enter descripe of product';
+  final String _categoryHint = 'Select category';
+  final String _categoryText = 'Category';
+  String _category = '';
   String _title = '';
   String _description = '';
   double _price = 0.0;
@@ -146,6 +151,8 @@ class _Body extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            _setTitleAlign(context, _categoryText),
+            DropDownCategories(fun: _getCat),
             _setTitleAlign(context, _listingTitleText),
             CustomTextField(
               textEditingController: titleEditingController,
@@ -272,6 +279,7 @@ class _Body extends StatelessWidget {
     );
   }
 
+  void _getCat(String? val) => _category = val ?? 'Other';
   void _setTitle(String val) => _title = val;
   void _setPrice(String val) => _price = val as double;
   void _setCountry(String val) => _location = val;
