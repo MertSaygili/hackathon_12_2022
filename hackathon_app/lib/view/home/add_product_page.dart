@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
-import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
-import 'package:hackathon_app/core/constants/app/strings.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -54,17 +52,9 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        backgroundColor: colorScaffold,
-        preferedSize: 55,
-        backButton: true,
-        actions: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(logoUrlSmall, height: 50),
-        ),
-      ),
       body: Column(
         children: [
+          const Padding(padding: EdgeInsets.only(top: 45.0)),
           Expanded(
             flex: 3,
             child: _addImage(context),
@@ -236,7 +226,7 @@ class _Body extends StatelessWidget {
   Padding _floatingActionButton(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height / 1.5,
+        bottom: MediaQuery.of(context).size.height / 1.35,
         right: 0,
       ),
       child: CustomFloatingActionButton(
