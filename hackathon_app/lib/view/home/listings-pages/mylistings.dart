@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../core/components/elevatedButton/custom_elevatedbutton.dart';
 import '../../../core/constants/app/colors.dart';
-import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 
 class Mylistings extends StatefulWidget {
   const Mylistings({super.key});
@@ -17,42 +18,76 @@ class _MylistingsState extends State<Mylistings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: 4,
-        itemBuilder: ((context, index) {
-          return Padding(
-            padding:
-                const EdgeInsets.only(top: 0, bottom: 8.0, left: 12, right: 12),
-            child: SizedBox(
-              height: 170,
-              child: Card(
-                shape: _borderRadius,
-                elevation: 15,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    backgroundColor: colorPrimary,
-                    shape: _borderRadius,
-                  ),
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _imgAlign(index, context),
-                      _cardTexts(index, context),
-                    ],
-                  ),
+      body: _emptyList(),
+    );
+  }
+
+  Widget _emptyList() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/images/svg/not-found.svg',
+            width: MediaQuery.of(context).size.width / 1.5,
+          ),
+          const Text(
+            'You have no listings yet',
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                shadows: <Shadow>[
+                  Shadow(
+                    blurRadius: 4.0,
+                    color: Color.fromARGB(150, 0, 0, 0),
+                  )
+                ]),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 6),
+            width: MediaQuery.of(context).size.width / 1.7,
+            child: CustomElevatedButton(
+              fun: () {},
+              text: 'Create one now!',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ListView _listingItems() {
+    return ListView.builder(
+      itemCount: 5,
+      itemBuilder: ((context, index) {
+        return Padding(
+          padding:
+              const EdgeInsets.only(top: 0, bottom: 8.0, left: 12, right: 12),
+          child: SizedBox(
+            height: 170,
+            child: Card(
+              shape: _borderRadius,
+              elevation: 15,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  backgroundColor: colorPrimary,
+                  shape: _borderRadius,
+                ),
+                onPressed: () {},
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _imgAlign(index, context),
+                    _cardTexts(index, context),
+                  ],
                 ),
               ),
             ),
-          );
-        }),
-      ),
-      floatingActionButton: CustomFloatingActionButton(
-        icon: Icons.add,
-        fun: _floatingActionFun,
-      ),
+          ),
+        );
+      }),
     );
   }
 

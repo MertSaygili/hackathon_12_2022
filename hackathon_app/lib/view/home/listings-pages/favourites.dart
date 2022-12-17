@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
 
+import '../../../core/components/elevatedButton/custom_elevatedbutton.dart';
 import '../../../core/constants/app/colors.dart';
 
 class Favourites extends StatefulWidget {
@@ -17,36 +19,74 @@ class _FavouritesState extends State<Favourites> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: 4,
-        itemBuilder: ((context, index) {
-          return Padding(
-            padding:
-                const EdgeInsets.only(top: 0, bottom: 8.0, left: 12, right: 12),
-            child: SizedBox(
-              height: 170,
-              child: Card(
-                shape: _borderRadius,
-                elevation: 15,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: colorPrimary,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _imgAlign(index, context),
-                      _cardTexts(index, context),
-                    ],
-                  ),
+      body: _emptyList(),
+    );
+  }
+
+  Widget _emptyList() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/images/svg/not-found-like.svg',
+            width: MediaQuery.of(context).size.width / 1.5,
+          ),
+          const Text(
+            'You have no listings yet',
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                shadows: <Shadow>[
+                  Shadow(
+                    blurRadius: 4.0,
+                    color: Color.fromARGB(150, 0, 0, 0),
+                  )
+                ]),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 6),
+            width: MediaQuery.of(context).size.width / 1.7,
+            child: CustomElevatedButton(
+              fun: () {},
+              text: 'Browse Listings',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ListView _favList() {
+    return ListView.builder(
+      itemCount: 4,
+      itemBuilder: ((context, index) {
+        return Padding(
+          padding:
+              const EdgeInsets.only(top: 0, bottom: 8.0, left: 12, right: 12),
+          child: SizedBox(
+            height: 170,
+            child: Card(
+              shape: _borderRadius,
+              elevation: 15,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: colorPrimary,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _imgAlign(index, context),
+                    _cardTexts(index, context),
+                  ],
                 ),
               ),
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 
