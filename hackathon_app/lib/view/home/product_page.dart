@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:hackathon_app/core/base/models/user.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/divider/custom_line_divider.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
+import 'package:hackathon_app/core/components/indicator/loading_indicator.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/core/constants/app/strings.dart';
 
@@ -160,9 +162,11 @@ class _ProductPageState extends State<ProductPage> {
                   CircleAvatar(
                     radius: 40,
                     backgroundColor: colorPrimary,
-                    foregroundImage: NetworkImage(seller!.profilePhoto != ""
-                        ? seller!.profilePhoto
-                        : 'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png'),
+                    foregroundImage: NetworkImage(
+                      seller!.profilePhoto != ""
+                          ? seller!.profilePhoto
+                          : 'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png',
+                    ),
                   ),
                 ],
               ),
@@ -291,8 +295,15 @@ class _ProductPageState extends State<ProductPage> {
 
   Widget _productImage(BuildContext context) {
     return CarouselSlider(
-        items: List.generate(widget.listingModel.photos.length,
-            (index) => Image.network(widget.listingModel.photos[index])),
+        items: List.generate(
+          widget.listingModel.photos.length,
+          (index) => CachedNetworkImage(
+            imageUrl: widget.listingModel.photos[index],
+            progressIndicatorBuilder: (context, url, progress) {
+              return const LoadingIndicator();
+            },
+          ),
+        ),
         options: CarouselOptions(height: 300));
     /* return Image.asset(
       'assets/images/jpg/listing-foto-1.jpg',
