@@ -26,7 +26,6 @@ class _SignupTwoPreviewState extends State<SignupTwoPreview> {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.username);
     return Scaffold(
       backgroundColor: colorPrimary,
       resizeToAvoidBottomInset: false,

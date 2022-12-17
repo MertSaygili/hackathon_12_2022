@@ -44,7 +44,7 @@ class _MylistingsState extends State<Mylistings> {
                 ]),
           ),
           Container(
-            padding: EdgeInsets.only(top: 6),
+            padding: const EdgeInsets.only(top: 6),
             width: MediaQuery.of(context).size.width / 1.7,
             child: CustomElevatedButton(
               fun: () {},
