@@ -8,6 +8,7 @@ import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../core/components/indicator/loading_indicator.dart';
 import '../../core/constants/app/icons.dart';
 import '../../core/constants/enums/categories.dart';
 
@@ -52,6 +53,7 @@ class _Body extends StatelessWidget {
   double _price = 0.0;
   String _location = '';
   String _state = '';
+  bool _loading = false;
 
   List photos = [];
 
@@ -305,6 +307,14 @@ class _Body extends StatelessWidget {
       child: CustomFloatingActionButton(
         iconSize: 30,
         fun: () async {
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return const LoadingIndicator();
+            },
+          );
+
           if (formKey.currentState!.validate() &&
               controller.images.isNotEmpty) {
             await controller.addListing(
