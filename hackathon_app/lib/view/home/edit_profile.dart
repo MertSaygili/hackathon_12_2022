@@ -34,51 +34,30 @@ class _EditProfileViewState extends State<EditProfileView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Scaffold(
+        appBar: const CustomAppBar(
+          backButton: true,
+          preferedSize: 75,
+        ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              _logoAppBar(),
-              _logoAndInputs(context),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        CircleIconButton(
-                          iconSize: 35,
-                          radius: 35,
-                          backgroundColor: colorPrimary,
-                          color: colorWhite,
-                          icon: Icons.mail,
-                          pressFunction: () => {},
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 1.5,
-                          child: CustomTextField(
-                            fun: _setEmail,
-                            inputType: TextInputType.text,
-                            inputAction: TextInputAction.next,
-                            isRoundedBorder: true,
-                            obscureText: false,
-                            hintText: _emailHint,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Row(
+          child: Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 25.0),
+                  child: _logoAndInputs(context),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
                           CircleIconButton(
                             iconSize: 35,
                             radius: 35,
                             backgroundColor: colorPrimary,
                             color: colorWhite,
-                            icon: Icons.phone,
+                            icon: Icons.mail,
                             pressFunction: () => {},
                           ),
                           SizedBox(
@@ -87,58 +66,87 @@ class _EditProfileViewState extends State<EditProfileView> {
                           Container(
                             width: MediaQuery.of(context).size.width / 1.5,
                             child: CustomTextField(
-                              fun: _setPhone,
+                              fun: _setEmail,
                               inputType: TextInputType.text,
                               inputAction: TextInputAction.next,
                               isRoundedBorder: true,
                               obscureText: false,
-                              hintText: _phoneHint,
+                              hintText: _emailHint,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    Row(
-                      children: [
-                        CircleIconButton(
-                          iconSize: 35,
-                          radius: 35,
-                          backgroundColor: colorPrimary,
-                          color: colorWhite,
-                          icon: Icons.calendar_month,
-                          pressFunction: () => {},
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          children: [
+                            CircleIconButton(
+                              iconSize: 35,
+                              radius: 35,
+                              backgroundColor: colorPrimary,
+                              color: colorWhite,
+                              icon: Icons.phone,
+                              pressFunction: () => {},
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 1.5,
+                              child: CustomTextField(
+                                fun: _setPhone,
+                                inputType: TextInputType.text,
+                                inputAction: TextInputAction.next,
+                                isRoundedBorder: true,
+                                obscureText: false,
+                                hintText: _phoneHint,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 1.5,
-                          child: CustomTextField(
-                            fun: _setBirthdate,
-                            inputType: TextInputType.text,
-                            inputAction: TextInputAction.next,
-                            isRoundedBorder: true,
-                            obscureText: false,
-                            hintText: _birthdateHint,
+                      ),
+                      Row(
+                        children: [
+                          CircleIconButton(
+                            iconSize: 35,
+                            radius: 35,
+                            backgroundColor: colorPrimary,
+                            color: colorWhite,
+                            icon: Icons.calendar_month,
+                            pressFunction: () => {},
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: MediaQuery.of(context).size.height / 3.6,
-                  alignment: Alignment.bottomCenter,
-                  child: SvgPicture.asset(
-                    'assets/images/svg/profile.svg',
-                    fit: BoxFit.contain,
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            child: CustomTextField(
+                              fun: _setBirthdate,
+                              inputType: TextInputType.text,
+                              inputAction: TextInputAction.next,
+                              isRoundedBorder: true,
+                              obscureText: false,
+                              hintText: _birthdateHint,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height / 3.6,
+                    alignment: Alignment.bottomCenter,
+                    child: SvgPicture.asset(
+                      'assets/images/svg/profile.svg',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -185,18 +193,6 @@ class _EditProfileViewState extends State<EditProfileView> {
           ],
         )
       ],
-    );
-  }
-
-  Center _logoAppBar() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 30.0, bottom: 15.0),
-        child: Image.asset(
-          logoUrlSmall,
-          width: 75,
-        ),
-      ),
     );
   }
 

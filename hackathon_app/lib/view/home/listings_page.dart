@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/components/appbar/custom_appbar.dart';
 import '../../core/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../../core/components/bottom_navigation_bar/page_view.dart';
 import '../../core/constants/app/colors.dart';
@@ -21,18 +22,22 @@ class _ListingsPageState extends State<ListingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(
+        backButton: false,
+        title: Padding(
+          padding: EdgeInsets.only(top: 16.0),
+          child: Text(
+            "Your listings",
+            style: TextStyle(color: colorPrimary, fontSize: 30),
+          ),
+        ),
+        preferedSize: 50,
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Expanded(
             flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 30.0),
-              child: Image.asset(logoUrlSmall),
-            ),
-          ),
-          Expanded(
-            flex: 1,
             child: Padding(
               padding: EdgeInsets.zero,
               child: SizedBox(

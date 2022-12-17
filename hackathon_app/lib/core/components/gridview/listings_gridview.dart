@@ -44,6 +44,7 @@ class _Body extends StatelessWidget {
             ),
             color: colorPrimary,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Stack(
                   children: [
@@ -116,9 +117,11 @@ class _Body extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(context).textTheme.subtitle1?.copyWith(
-              fontSize: 18,
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
               color: colorWhite,
             ),
+        maxLines: 1,
       ),
     );
   }
@@ -160,7 +163,7 @@ class _Body extends StatelessWidget {
         child: Image.network(
           imgPath,
           fit: BoxFit.cover,
-          height: 125,
+          height: 140,
         ),
       ),
     );

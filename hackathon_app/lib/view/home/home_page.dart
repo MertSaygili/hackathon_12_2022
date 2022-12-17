@@ -57,20 +57,10 @@ class _Body extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Scaffold(
         appBar: CustomAppBar(
-          leading: Image.asset(logoUrlSmall),
-          actions: SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
-            child: CustomTextField(
-              fun: () {},
-              inputType: TextInputType.text,
-              inputAction: TextInputAction.done,
-              isRoundedBorder: true,
-              obscureText: false,
-              suffix: const Icon(
-                Icons.search,
-                size: 32,
-                color: colorPrimary,
-              ),
+          title: Center(
+            child: Image.asset(
+              logoUrl,
+              height: 65,
             ),
           ),
           backButton: false,
@@ -80,6 +70,32 @@ class _Body extends StatelessWidget {
           child: Column(
             children: [
               _categories(context),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const CustomLineDivider(
+                      lineColor: colorPrimary,
+                    ),
+                    Text(
+                      "Listings",
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                          height: 1,
+                          color: colorBlack,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'BalooBhaina',
+                          shadows: <Shadow>[
+                            const Shadow(
+                              blurRadius: 4.0,
+                              color: Color.fromARGB(150, 0, 0, 0),
+                            )
+                          ]),
+                    ),
+                  ],
+                ),
+              ),
               const ListingsGridView(),
             ],
           ),

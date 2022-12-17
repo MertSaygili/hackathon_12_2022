@@ -4,6 +4,7 @@ import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/view/home/edit_profile.dart';
 
+import '../../core/components/appbar/custom_appbar.dart';
 import '../../core/components/gridview/listings_gridview.dart';
 import '../../core/constants/app/colors.dart';
 import '../../core/constants/app/strings.dart';
@@ -22,17 +23,18 @@ class _ProfilePageState extends State<ProfilePage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 32),
       child: Scaffold(
+        appBar: const CustomAppBar(
+          backButton: false,
+          title: Text(
+            "Your profile",
+            style: TextStyle(color: colorPrimary, fontSize: 30),
+          ),
+          preferedSize: 75,
+        ),
         resizeToAvoidBottomInset: false,
         body: Column(
           // main column
           children: [
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: Image.asset(logoUrlSmall),
-              ),
-            ),
             Expanded(flex: 3, child: _profileColumn()),
             Expanded(
               flex: 10,
@@ -41,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: const [
                     Divider(
                       color: colorPrimary,
-                      thickness: 2,
+                      thickness: 1,
                     ),
                     ListingsGridView(),
                   ],
@@ -82,15 +84,9 @@ class _ProfilePageState extends State<ProfilePage> {
           text: TextSpan(
             text: '',
             style: Theme.of(context).textTheme.headline6?.copyWith(
-              fontSize: 16,
-              color: colorGrey,
-              shadows: <Shadow>[
-                const Shadow(
-                  blurRadius: 4.0,
-                  color: Color.fromARGB(150, 0, 0, 0),
-                )
-              ],
-            ),
+                  fontSize: 16,
+                  color: colorGrey,
+                ),
             children: const [
               TextSpan(text: '4.1/5'),
               WidgetSpan(child: Icon(Icons.star, color: colorGrey))
@@ -101,18 +97,12 @@ class _ProfilePageState extends State<ProfilePage> {
           text: TextSpan(
             text: '',
             style: Theme.of(context).textTheme.headline6?.copyWith(
-              color: colorGrey,
-              fontSize: 16,
-              shadows: <Shadow>[
-                const Shadow(
-                  blurRadius: 4.0,
-                  color: Color.fromARGB(150, 0, 0, 0),
-                )
-              ],
-            ),
+                  color: colorGrey,
+                  fontSize: 16,
+                ),
             children: const [
               WidgetSpan(child: Icon(Icons.calendar_month, color: colorGrey)),
-              TextSpan(text: 'joined at December 2022'),
+              TextSpan(text: 'Joined at December 2022'),
             ],
           ),
         )

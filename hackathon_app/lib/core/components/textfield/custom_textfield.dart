@@ -62,7 +62,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     if (widget.isRoundedBorder) {
       _border = InputBorders().textFieldOutlineBorder.copyWith(
             borderSide: BorderSide(
-              color: widget.borderColor ?? colorPrimary,
+              color: widget.borderColor ?? colorGrey,
               width: 2,
             ),
           );

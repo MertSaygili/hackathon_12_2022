@@ -4,7 +4,7 @@ import 'package:hackathon_app/core/constants/app/colors.dart';
 class CustomLineDivider extends StatelessWidget {
   final Color? textColor;
   final Color? lineColor;
-  final double _dividerThickness = 1;
+  final double _dividerThickness = 0.5;
 
   const CustomLineDivider({super.key, this.textColor, this.lineColor});
 

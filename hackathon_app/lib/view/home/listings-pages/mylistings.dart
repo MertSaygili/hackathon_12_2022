@@ -125,6 +125,8 @@ class _MylistingsState extends State<Mylistings> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _cardItemsPadding(_listingTitle(index, context), 16),
               _cardItemsPadding(_listingDescText(index, context), 4),
@@ -140,7 +142,7 @@ class _MylistingsState extends State<Mylistings> {
                     _richText(
                       context,
                       const Icon(Icons.remove_red_eye, color: colorWhite),
-                      " 1251",
+                      " 0",
                     ),
                     _richText(
                       context,
