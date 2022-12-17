@@ -17,6 +17,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   AppController controller = Get.find<AppController>();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,6 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
         floatingActionButton: CustomFloatingActionButton(
           backgroundColor: colorWhite,
           iconColor: colorPrimary,
+          iconSize: 25,
           icon: Icons.edit,
           fun: _navigate,
         ),

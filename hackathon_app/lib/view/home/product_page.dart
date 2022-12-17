@@ -13,6 +13,8 @@ import 'package:hackathon_app/core/components/indicator/loading_indicator.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/core/constants/app/strings.dart';
 
+import '../../core/components/textfield/custom_textfield.dart';
+
 class ProductPage extends StatefulWidget {
   const ProductPage({
     super.key,
@@ -77,7 +79,7 @@ class _ProductPageState extends State<ProductPage> {
                 ),
               ),
               builder: (context) {
-                return const _ShowBottomSheet();
+                return _ShowBottomSheet();
               });
         },
         icon: Icons.attach_money,
@@ -374,7 +376,10 @@ class _ProductPageState extends State<ProductPage> {
 }
 
 class _ShowBottomSheet extends StatelessWidget {
-  const _ShowBottomSheet({
+  final String _bidAmountHint = "Enter bid amount";
+  double _bidAmount = 0;
+
+  _ShowBottomSheet({
     Key? key,
   }) : super(key: key);
 
@@ -397,17 +402,42 @@ class _ShowBottomSheet extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return index == 0
-                      ? _mainCard(colorPrimary)
-                      : _mainCard(const Color(0xfffea5af));
+                      ? _mainCard(colorPrimary, false)
+                      : _mainCard(const Color(0xfffea5af), true);
                 }),
           ),
-          const Divider(color: colorBlack, thickness: 0.5),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: Divider(color: colorBlack, thickness: 0.5),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width - 100,
+                child: CustomTextField(
+                  fun: _setBid,
+                  inputType: TextInputType.text,
+                  inputAction: TextInputAction.next,
+                  isRoundedBorder: true,
+                  obscureText: false,
+                  hintText: _bidAmountHint,
+                ),
+              ),
+              CircleIconButton(
+                icon: Icons.send,
+                backgroundColor: colorPrimary,
+                color: colorWhite,
+                pressFunction: () => {},
+              )
+            ],
+          ),
         ],
       ),
     );
   }
 
-  Card _mainCard(Color color) {
+  Card _mainCard(Color color, bool isSmall) {
     return Card(
       elevation: 15,
       shape: RoundedRectangleBorder(
@@ -420,8 +450,8 @@ class _ShowBottomSheet extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(100),
             child: CachedNetworkImage(
-              width: 150,
-              height: 75,
+              width: isSmall ? 100 : 150,
+              height: isSmall ? 50 : 75,
               imageUrl:
                   'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png',
               progressIndicatorBuilder: (context, url, progress) {
@@ -431,9 +461,20 @@ class _ShowBottomSheet extends StatelessWidget {
           ),
           Column(
             children: const [
-              Text('@saltuk'),
-              Text("100\$"),
-              Text('5 min ago'),
+              Text(
+                '@saltuk',
+                style: TextStyle(
+                    color: colorWhite,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400),
+              ),
+              Text(
+                "100\$",
+                style: TextStyle(
+                    color: colorWhite,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800),
+              ),
             ],
           ),
         ],
@@ -456,4 +497,6 @@ class _ShowBottomSheet extends StatelessWidget {
       ],
     );
   }
+
+  void _setBid(double val) => _bidAmount = val;
 }
