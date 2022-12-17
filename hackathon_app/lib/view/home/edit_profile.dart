@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
+import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/core/components/gridview/listings_gridview.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
@@ -34,6 +35,10 @@ class _EditProfileViewState extends State<EditProfileView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Scaffold(
+        floatingActionButton: CustomFloatingActionButton(
+          fun: () => {},
+          icon: Icons.send,
+        ),
         appBar: const CustomAppBar(
           backButton: true,
           preferedSize: 75,
