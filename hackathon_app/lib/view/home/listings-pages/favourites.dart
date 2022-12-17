@@ -54,7 +54,7 @@ class _FavouritesState extends State<Favourites> {
             padding: const EdgeInsets.only(top: 6),
             width: MediaQuery.of(context).size.width / 1.7,
             child: CustomElevatedButton(
-              fun: () {},
+              fun: () => {},
               text: 'Browse Listings',
             ),
           ),
@@ -62,6 +62,8 @@ class _FavouritesState extends State<Favourites> {
       ),
     );
   }
+
+// Create a function that navigates to the home page with the bottom navigation bar
 
   ListView _favList() {
     return ListView.builder(

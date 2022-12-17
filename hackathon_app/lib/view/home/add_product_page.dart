@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/core/components/dropdown_menu/dropdown.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
@@ -9,6 +10,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/constants/app/icons.dart';
+import '../../core/constants/enums/categories.dart';
 
 class AddProductPage extends StatelessWidget {
   const AddProductPage({super.key});
@@ -41,6 +43,7 @@ class _Body extends StatelessWidget {
   final String _chooseLocation = 'Choose location';
   final String _descriptionText = 'Description';
   final String _descriptionHint = 'Enter descripe of product';
+  CategoriesType _category = CategoriesType.unknown;
   String _title = '';
   String _description = '';
   double _price = 0.0;
@@ -148,6 +151,7 @@ class _Body extends StatelessWidget {
           key: formKey,
           child: Column(
             children: [
+              DropDownCategories(fun: _getCat),
               _setTitleAlign(context, _listingTitleText),
               CustomTextField(
                 textEditingController: titleEditingController,
@@ -311,6 +315,7 @@ class _Body extends StatelessWidget {
     );
   }
 
+  void _getCat(int index) => _category = CategoriesType.values[index];
   void _setTitle(String val) => _title = val;
   void _setPrice(String val) => _price = val as double;
   void _setCountry(String val) => _location = val;

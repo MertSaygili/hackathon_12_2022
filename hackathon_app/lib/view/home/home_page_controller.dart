@@ -35,7 +35,6 @@ class _HomePageControllerViewState extends State<HomePageControllerView> {
       _bottomNavigationBarItem(_customIcons(Icons.add_box_outlined), ''),
       _bottomNavigationBarItem(_customIcons(Icons.list_alt_outlined), ''),
       _bottomNavigationBarItem(_customIcons(Icons.person), ''),
-      _bottomNavigationBarItem(_customIcons(Icons.temple_buddhist), ''),
     ];
 
     List<Widget> pageItems = [
@@ -43,7 +42,6 @@ class _HomePageControllerViewState extends State<HomePageControllerView> {
       const AddProductPage(),
       const ListingsPage(),
       const ProfilePage(),
-      const EditProfileView(),
     ];
 
     return Scaffold(

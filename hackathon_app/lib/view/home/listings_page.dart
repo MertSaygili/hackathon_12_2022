@@ -23,7 +23,7 @@ class _ListingsPageState extends State<ListingsPage> {
       appBar: const CustomAppBar(
         backButton: false,
         title: Padding(
-          padding: EdgeInsets.only(top: 16.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: Text(
             "Your listings",
             style: TextStyle(color: colorPrimary, fontSize: 30),
@@ -35,7 +35,7 @@ class _ListingsPageState extends State<ListingsPage> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Padding(
               padding: EdgeInsets.zero,
               child: SizedBox(

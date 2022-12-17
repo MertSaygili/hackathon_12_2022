@@ -24,7 +24,6 @@ class HomePageView extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   _Body({
-    super.key,
     required this.controller,
   });
 

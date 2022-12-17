@@ -50,13 +50,24 @@ class _Body extends StatelessWidget {
             ),
             color: colorPrimary,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Stack(
                   children: [
-                    _alignImage(isProfileScreen
-                        ? controller.myListingList[index].photos[0]
-                        : controller.listingList[index].photos[0]),
+                    Container(
+                      height: 140,
+                      width: MediaQuery.of(context).size.width / 1.75,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(15)),
+                        image: DecorationImage(
+                          image: NetworkImage(isProfileScreen
+                              ? controller.myListingList[index].photos[0]
+                              : controller.listingList[index].photos[0]),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                     _alignFavButton(),
                   ],
                 ),
@@ -65,18 +76,23 @@ class _Body extends StatelessWidget {
                   child: ListTile(
                     contentPadding: const EdgeInsets.only(top: 4, left: 4),
                     title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _alignTitle(
-                            context,
-                            isProfileScreen
-                                ? controller.myListingList[index].title
-                                : controller.listingList[index].title),
-                        _alignSubtitle(
-                            context,
-                            isProfileScreen
-                                ? controller.myListingList[index].description
-                                : controller.listingList[index].description),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _alignTitle(
+                                context,
+                                isProfileScreen
+                                    ? controller.myListingList[index].photos[0]
+                                    : controller.listingList[index].title),
+                            _alignSubtitle(
+                                context,
+                                isProfileScreen
+                                    ? controller.myListingList[index].photos[0]
+                                    : controller
+                                        .listingList[index].description),
+                          ],
+                        ),
                         _alignRow(context,
                             "${isProfileScreen ? controller.myListingList[index].state : controller.listingList[index].state}, ${isProfileScreen ? controller.myListingList[index].country : controller.listingList[index].country}"),
                       ],
@@ -146,14 +162,14 @@ class _Body extends StatelessWidget {
       child: Align(
         alignment: Alignment.topRight,
         child: Container(
-          height: 32,
-          width: 32,
+          height: 26,
+          width: 26,
           decoration: const BoxDecoration(
             color: colorPrimary,
             shape: BoxShape.circle,
           ),
           child: IconButton(
-            iconSize: 24,
+            iconSize: 16,
             padding: EdgeInsets.zero,
             color: colorWhite,
             onPressed: () {},
@@ -161,23 +177,6 @@ class _Body extends StatelessWidget {
               Icons.favorite,
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Align _alignImage(String imgPath) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
-        child: Image.network(
-          imgPath,
-          fit: BoxFit.cover,
-          height: 140,
         ),
       ),
     );
