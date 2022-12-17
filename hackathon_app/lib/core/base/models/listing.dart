@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:hackathon_app/core/constants/enums/categories.dart';
+
 class ListingModel {
   List photos;
   double price;
@@ -9,6 +11,7 @@ class ListingModel {
   String coordinates;
   List comments;
   List likes;
+  CategoriesType category;
 
   // Firebase Releated
   String uid;
@@ -24,6 +27,7 @@ class ListingModel {
     required this.coordinates,
     required this.comments,
     required this.likes,
+    required this.category,
     required this.uid,
     required this.createdAt,
     required this.updatedAt,
@@ -39,6 +43,7 @@ class ListingModel {
       'coordinates': coordinates,
       'comments': comments,
       'likes': likes,
+      'category': category.index,
       'uid': uid,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
@@ -55,6 +60,7 @@ class ListingModel {
       coordinates: map['coordinates'] as String,
       comments: map['comments'] as List? ?? [],
       likes: map['likes'] as List? ?? [],
+      category: CategoriesType.values[map['category'] as int],
       uid: map['uid'] as String,
       createdAt: map['createdAt'] as int,
       updatedAt: map['updatedAt'] as int,
