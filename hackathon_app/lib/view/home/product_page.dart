@@ -1,4 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/core/base/models/listing.dart';
+import 'package:hackathon_app/core/base/models/user.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/divider/custom_line_divider.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
@@ -6,15 +11,27 @@ import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/core/constants/app/strings.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({super.key});
+  const ProductPage({
+    super.key,
+    required this.listingModel,
+  });
+  final ListingModel listingModel;
 
   @override
   State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
+  AppController controller = Get.find();
+  UserModel? seller;
+
   @override
   Widget build(BuildContext context) {
+    for (UserModel user in controller.userList) {
+      if (user.uid == widget.listingModel.userUID) {
+        seller = user;
+      }
+    }
     return Scaffold(
       appBar: CustomAppBar(
         backgroundColor: colorScaffold,
@@ -104,7 +121,7 @@ class _ProductPageState extends State<ProductPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
             child: Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five ",
+              widget.listingModel.description,
               style: Theme.of(context).textTheme.headline6!.copyWith(
                     height: 1,
                     color: colorBlack,
@@ -140,11 +157,12 @@ class _ProductPageState extends State<ProductPage> {
                           fontFamily: 'BalooBhaina',
                         ),
                   ),
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 40,
                     backgroundColor: colorPrimary,
-                    foregroundImage: NetworkImage(
-                        'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png'),
+                    foregroundImage: NetworkImage(seller!.profilePhoto != ""
+                        ? seller!.profilePhoto
+                        : 'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png'),
                   ),
                 ],
               ),
@@ -165,7 +183,7 @@ class _ProductPageState extends State<ProductPage> {
                       textAlign: TextAlign.right,
                     ),
                     Text(
-                      "Mert İnan Saygılı",
+                      seller!.username,
                       style: Theme.of(context).textTheme.headline1!.copyWith(
                             height: 1.3,
                             color: colorBlack,
@@ -226,7 +244,7 @@ class _ProductPageState extends State<ProductPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Text(
-        "An used black sofa set",
+        widget.listingModel.title,
         style: Theme.of(context).textTheme.headline6!.copyWith(
               height: 1,
               color: colorBlack,
@@ -271,12 +289,16 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  Image _productImage(BuildContext context) {
-    return Image.asset(
+  Widget _productImage(BuildContext context) {
+    return CarouselSlider(
+        items: List.generate(widget.listingModel.photos.length,
+            (index) => Image.network(widget.listingModel.photos[index])),
+        options: CarouselOptions(height: 300));
+    /* return Image.asset(
       'assets/images/jpg/listing-foto-1.jpg',
       height: MediaQuery.of(context).size.height / 2.6,
       fit: BoxFit.cover,
-    );
+    ); */
   }
 
   Padding _richText(BuildContext context, Widget icon, String text) {
@@ -284,9 +306,9 @@ class _ProductPageState extends State<ProductPage> {
       padding: const EdgeInsets.only(right: 10),
       child: RichText(
         text: TextSpan(
-          style: DefaultTextStyle.of(context).style.copyWith(
-                color: colorBlack,
-              ),
+          style: DefaultTextStyle.of(context)
+              .style
+              .copyWith(color: colorBlack, fontSize: 20.0),
           children: [
             WidgetSpan(
               alignment: PlaceholderAlignment.middle,

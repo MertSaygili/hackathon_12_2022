@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/view/home/product_page.dart';
 
 import '../../constants/app/colors.dart';
 
@@ -41,66 +42,75 @@ class _Body extends StatelessWidget {
       ),
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: ((context, index) {
-        return SizedBox(
-          width: MediaQuery.of(context).size.width / 1.75,
-          height: 250,
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+        return GestureDetector(
+          onTap: () => Get.to(
+            () => ProductPage(
+              listingModel: isProfileScreen
+                  ? controller.myListingList[index]
+                  : controller.listingList[index],
             ),
-            color: colorPrimary,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      height: 140,
-                      width: MediaQuery.of(context).size.width / 1.75,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(15)),
-                        image: DecorationImage(
-                          image: NetworkImage(isProfileScreen
-                              ? controller.myListingList[index].photos[0]
-                              : controller.listingList[index].photos[0]),
-                          fit: BoxFit.cover,
+          ),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width / 1.75,
+            height: 250,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              color: colorPrimary,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        height: 140,
+                        width: MediaQuery.of(context).size.width / 1.75,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(15)),
+                          image: DecorationImage(
+                            image: NetworkImage(isProfileScreen
+                                ? controller.myListingList[index].photos[0]
+                                : controller.listingList[index].photos[0]),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    _alignFavButton(),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.only(top: 4, left: 4),
-                    title: Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _alignTitle(
-                                context,
-                                isProfileScreen
-                                    ? controller.myListingList[index].title
-                                    : controller.listingList[index].title),
-                            _alignSubtitle(
-                                context,
-                                isProfileScreen
-                                    ? controller
-                                        .myListingList[index].description
-                                    : controller
-                                        .listingList[index].description),
-                          ],
-                        ),
-                        _alignRow(context,
-                            "${isProfileScreen ? controller.myListingList[index].state : controller.listingList[index].state}, ${isProfileScreen ? controller.myListingList[index].country : controller.listingList[index].country}"),
-                      ],
-                    ),
+                      _alignFavButton(),
+                    ],
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.only(top: 4, left: 4),
+                      title: Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _alignTitle(
+                                  context,
+                                  isProfileScreen
+                                      ? controller.myListingList[index].title
+                                      : controller.listingList[index].title),
+                              _alignSubtitle(
+                                  context,
+                                  isProfileScreen
+                                      ? controller
+                                          .myListingList[index].description
+                                      : controller
+                                          .listingList[index].description),
+                            ],
+                          ),
+                          _alignRow(context,
+                              "${isProfileScreen ? controller.myListingList[index].state : controller.listingList[index].state}, ${isProfileScreen ? controller.myListingList[index].country : controller.listingList[index].country}"),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
