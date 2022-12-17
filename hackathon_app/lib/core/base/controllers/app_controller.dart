@@ -73,12 +73,12 @@ class AppController extends GetxController {
   _controlListeners(User? user) async {
     try {
       if (user != null) {
-        await _subscribeListings();
         await _subscribeUsers();
+        await _subscribeListings();
         await _subscribeComments();
       } else {
-        if (listingsListener != null) listingsListener!.cancel();
         if (usersListener != null) usersListener!.cancel();
+        if (listingsListener != null) listingsListener!.cancel();
         if (commentsListener != null) commentsListener!.cancel();
       }
     } catch (e) {
@@ -132,6 +132,12 @@ class AppController extends GetxController {
     if (listingList.isNotEmpty) {
       if (listingListNonBlocked.isNotEmpty) {
         listingListNonBlocked.clear();
+      }
+      if (myListingList.isNotEmpty) {
+        myListingList.clear();
+      }
+      if (favouriteListings.isNotEmpty) {
+        favouriteListings.clear();
       }
       for (ListingModel listingModel in listingList) {
         if (currentUser!.blocked.contains(listingModel.uid)) {
