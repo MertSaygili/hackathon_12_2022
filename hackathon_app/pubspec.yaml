@@ -64,6 +64,9 @@ dependencies:
   # cached network image
   cached_network_image: ^3.2.2
 
+  # horizontal slider
+  carousel_slider: ^4.2.1
+
 
 
   

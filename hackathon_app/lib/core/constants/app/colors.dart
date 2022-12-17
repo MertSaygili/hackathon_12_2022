@@ -6,3 +6,4 @@ const Color colorPrimary = Color(0xfff4717f);
 const Color colorScaffold = Color(0xfff6f6f6);
 const Color colorGrey = Colors.grey;
 const Color colorTransparent = Colors.transparent;
+const Color colorSecondryScaffold = Color(0xffE6E6E6);

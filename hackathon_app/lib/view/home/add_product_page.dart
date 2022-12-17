@@ -5,6 +5,9 @@ import 'package:hackathon_app/core/components/floating_action_button/floating_ac
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/core/constants/app/strings.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
+import '../../core/constants/app/icons.dart';
 
 class AddProductPage extends StatefulWidget {
   const AddProductPage({super.key});
@@ -14,6 +17,7 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
+  final String _dummyImg = 'assets/images/jpg/listing-foto-1.jpg';
   final String _listingTitleText = 'Listing Title';
   final String _priceText = 'Price';
   final String _locationText = 'Location';
@@ -22,6 +26,7 @@ class _AddProductPageState extends State<AddProductPage> {
   final String _locationHint = 'Country';
   final String _stateHint = 'State';
   final String _chooseLocation = 'Choose location';
+  List<bool> _checkImages = [false, true, false];
   String _title = '';
   String _price = '';
   String _location = '';
@@ -56,8 +61,35 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  Container _addImage() {
-    return Container(color: colorGrey);
+  Widget _addImage() {
+    return GestureDetector(
+      onTap: () {}, // tikla resmi cek
+      child: CarouselSlider(
+        options: CarouselOptions(height: 400.0),
+        items: [
+          _checkImages[0]
+              ? Image.asset(_dummyImg, fit: BoxFit.cover)
+              : iconCameraAlt,
+          _checkImages[1]
+              ? Image.asset(_dummyImg, fit: BoxFit.cover)
+              : iconCameraAlt,
+          _checkImages[2]
+              ? Image.asset(_dummyImg, fit: BoxFit.cover)
+              : iconCameraAlt,
+        ].map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                decoration: const BoxDecoration(color: colorSecondryScaffold),
+                child: i,
+              );
+            },
+          );
+        }).toList(),
+      ),
+    );
   }
 
   Widget _setInformation() {
