@@ -7,6 +7,7 @@ import 'package:hackathon_app/core/base/models/listing.dart';
 import 'package:hackathon_app/core/base/models/user.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/divider/custom_line_divider.dart';
+import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
 import 'package:hackathon_app/core/components/indicator/loading_indicator.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
@@ -63,6 +64,23 @@ class _ProductPageState extends State<ProductPage> {
             _productLocation(context)
           ],
         ),
+      ),
+      floatingActionButton: CustomFloatingActionButton(
+        fun: () {
+          final response = showModalBottomSheet(
+              context: context,
+              elevation: 15,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+              ),
+              builder: (context) {
+                return const _ShowBottomSheet();
+              });
+        },
+        icon: Icons.attach_money,
       ),
     );
   }
@@ -351,6 +369,91 @@ class _ProductPageState extends State<ProductPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ShowBottomSheet extends StatelessWidget {
+  const _ShowBottomSheet({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 16.0,
+      ),
+      child: Column(
+        children: [
+          _titleRow(context),
+          const Divider(color: colorBlack, thickness: 0.5),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 3.75,
+            child: ListView.builder(
+                itemCount: 10,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return index == 0
+                      ? _mainCard(colorPrimary)
+                      : _mainCard(const Color(0xfffea5af));
+                }),
+          ),
+          const Divider(color: colorBlack, thickness: 0.5),
+        ],
+      ),
+    );
+  }
+
+  Card _mainCard(Color color) {
+    return Card(
+      elevation: 15,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      color: color,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: CachedNetworkImage(
+              width: 150,
+              height: 75,
+              imageUrl:
+                  'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png',
+              progressIndicatorBuilder: (context, url, progress) {
+                return const LoadingIndicator();
+              },
+            ),
+          ),
+          Column(
+            children: const [
+              Text('@saltuk'),
+              Text("100\$"),
+              Text('5 min ago'),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Row _titleRow(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'Current Bids',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: const Icon(Icons.close),
+        )
+      ],
     );
   }
 }
