@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/view/home/add_product_page.dart';
-import 'package:hackathon_app/view/home/edit_profile.dart';
 import 'package:hackathon_app/view/home/home_page.dart';
 import 'package:hackathon_app/view/home/listings_page.dart';
 import 'package:hackathon_app/view/home/profile.dart';
@@ -39,7 +38,7 @@ class _HomePageControllerViewState extends State<HomePageControllerView> {
 
     List<Widget> pageItems = [
       const HomePageView(),
-      const AddProductPage(),
+      AddProductPage(pageController: _controller),
       const ListingsPage(),
       const ProfilePage(),
     ];

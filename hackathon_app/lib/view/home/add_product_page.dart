@@ -13,7 +13,9 @@ import '../../core/constants/app/icons.dart';
 import '../../core/constants/enums/categories.dart';
 
 class AddProductPage extends StatelessWidget {
-  const AddProductPage({super.key});
+  const AddProductPage({super.key, required this.pageController});
+
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class AddProductPage extends StatelessWidget {
       id: AppController.listingId,
       builder: (AppController controller) => _Body(
         controller: controller,
+        pageController: pageController,
       ),
     );
   }
@@ -29,10 +32,11 @@ class AddProductPage extends StatelessWidget {
 class _Body extends StatelessWidget {
   _Body({
     required this.controller,
+    required this.pageController,
   });
 
   final AppController controller;
-
+  final PageController pageController;
   final String _listingTitleText = 'Listing Title';
   final String _priceText = 'Price';
   final String _locationText = 'Location';
@@ -306,6 +310,11 @@ class _Body extends StatelessWidget {
             stateEditingController.text = "";
             controller.images.clear();
             controller.update([AppController.listingId]);
+            pageController.animateToPage(
+              0,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeIn,
+            );
           } else if (controller.images.isEmpty) {
             Get.snackbar("Pictures", "Please pick atleast 1 picture!");
           }
