@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 
+import '../../core/components/gridview/listings_gridview.dart';
 import '../../core/constants/app/colors.dart';
 import '../../core/constants/app/strings.dart';
 
@@ -33,13 +34,16 @@ class _ProfilePageState extends State<ProfilePage> {
             Expanded(flex: 2, child: _profileColumn()),
             Expanded(
               flex: 4,
-              child: Column(
-                children: [
-                  const Divider(
-                    color: colorPrimary,
-                    thickness: 2,
-                  ),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: const [
+                    Divider(
+                      color: colorPrimary,
+                      thickness: 2,
+                    ),
+                    ListingsGridView(),
+                  ],
+                ),
               ),
             ),
           ],
