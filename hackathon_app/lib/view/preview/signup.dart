@@ -203,5 +203,5 @@ class _Body extends StatelessWidget {
     }
   }
 
-  void _setUsername(String username) => () => controller.username = username;
+  void _setUsername(String username) => controller.username = username;
 }
