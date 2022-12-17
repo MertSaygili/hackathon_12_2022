@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/core/constants/enums/gender.dart';
 
 import 'package:hive/hive.dart';
@@ -31,6 +32,8 @@ class AppController extends GetxController {
   List<UserModel> userList = [];
   List<CommentModel> commentList = [];
 
+  List<File?> images = [];
+
   late Rx<User?> _user;
 
   UserModel? currentUser;
@@ -48,15 +51,8 @@ class AppController extends GetxController {
 
   var firebaseAuth = FirebaseAuth.instance;
 
-  static const String userId = "userId";
-  static const String videoId = "videoId";
-  static const String searchId = "searchId";
+  static const String listingId = "listingId";
   static const String authId = "authId";
-  static const String homeId = "homeId";
-  static const String settingsId = "settingsId";
-  static const String navigationId = "navigationId";
-  static const String reportId = "reportId";
-  static String profileMoreId = "profileMoreId";
 
   StreamSubscription<QuerySnapshot<Object?>>? listingsListener;
   StreamSubscription<QuerySnapshot<Object?>>? usersListener;
@@ -328,7 +324,7 @@ class AppController extends GetxController {
     return await firebaseAuth.fetchSignInMethodsForEmail(email);
   }
 
-  Future<void> pickImage(ImageSource imageSource) async {
+  Future<void> pickProfileImage(ImageSource imageSource) async {
     final pickedImage = await ImagePicker().pickImage(
         source: imageSource, preferredCameraDevice: CameraDevice.front);
     if (pickedImage != null) {
@@ -342,8 +338,7 @@ class AppController extends GetxController {
           AndroidUiSettings(
               toolbarColor: Theme.of(Get.context!).colorScheme.background,
               toolbarWidgetColor: Get.isDarkMode ? Colors.white : Colors.black,
-              activeControlsWidgetColor:
-                  Theme.of(Get.context!).colorScheme.primary),
+              activeControlsWidgetColor: colorPrimary),
         ],
       );
       Get.back();
@@ -354,6 +349,35 @@ class AppController extends GetxController {
         // update([authId, userId]);
       } else {
         Get.snackbar("Profile Picture", "Compressed image is null!");
+      }
+    } else {
+      Get.snackbar("Profile Picture", "You selected nothing!");
+    }
+    update([authId]);
+  }
+
+  Future<void> pickImage(ImageSource imageSource) async {
+    final pickedImage = await ImagePicker().pickImage(
+        source: imageSource, preferredCameraDevice: CameraDevice.front);
+    if (pickedImage != null) {
+      var file = await ImageCropper().cropImage(
+        sourcePath: pickedImage.path,
+        compressQuality: 40,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarColor: Theme.of(Get.context!).colorScheme.background,
+            toolbarWidgetColor: Get.isDarkMode ? Colors.white : Colors.black,
+            activeControlsWidgetColor: colorPrimary,
+          ),
+        ],
+      );
+      Get.back();
+      if (file != null) {
+        Get.snackbar("Picture", "Picture successfully selected!");
+        images.add(File(file.path));
+        update([listingId]);
+      } else {
+        Get.snackbar("Picture", "Compressed image is null!");
       }
     } else {
       Get.snackbar("Profile Picture", "You selected nothing!");
