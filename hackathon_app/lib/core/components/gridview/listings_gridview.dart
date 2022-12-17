@@ -14,7 +14,7 @@ class ListingsGridView extends StatelessWidget {
       itemCount: 6,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.85,
+        childAspectRatio: 0.80,
       ),
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: ((context, index) {
@@ -26,17 +26,17 @@ class ListingsGridView extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             color: colorPrimary,
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      _alignImage(''),
-                      _alignFavButton(),
-                    ],
-                  ),
-                  ListTile(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    _alignImage(''),
+                    _alignFavButton(),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: ListTile(
                     contentPadding: const EdgeInsets.only(top: 4, left: 4),
                     title: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,9 +46,9 @@ class ListingsGridView extends StatelessWidget {
                         _alignRow(context, ''),
                       ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
           ),
         );

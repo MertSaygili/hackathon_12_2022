@@ -4,7 +4,11 @@ class ListingModel {
   List photos;
   double price;
   String description;
+  String country;
+  String state;
+  String coordinates;
   List comments;
+  List likes;
 
   // Firebase Releated
   String uid;
@@ -15,7 +19,11 @@ class ListingModel {
     required this.photos,
     required this.price,
     required this.description,
+    required this.country,
+    required this.state,
+    required this.coordinates,
     required this.comments,
+    required this.likes,
     required this.uid,
     required this.createdAt,
     required this.updatedAt,
@@ -26,7 +34,11 @@ class ListingModel {
       'photos': photos,
       'price': price,
       'description': description,
+      'country': country,
+      'state': state,
+      'coordinates': coordinates,
       'comments': comments,
+      'likes': likes,
       'uid': uid,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
@@ -38,7 +50,11 @@ class ListingModel {
       photos: map['photos'] as List? ?? [],
       price: map['price'] as double,
       description: map['description'] as String,
+      country: map['country'] as String,
+      state: map['state'] as String,
+      coordinates: map['coordinates'] as String,
       comments: map['comments'] as List? ?? [],
+      likes: map['likes'] as List? ?? [],
       uid: map['uid'] as String,
       createdAt: map['createdAt'] as int,
       updatedAt: map['updatedAt'] as int,
