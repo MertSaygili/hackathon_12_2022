@@ -72,19 +72,19 @@ class AppController extends GetxController {
   }
 
   _controlListeners(User? user) async {
-    //try {
-    if (user != null) {
-      await _subscribeListings();
-      await _subscribeUsers();
-      await _subscribeComments();
-    } else {
-      if (listingsListener != null) listingsListener!.cancel();
-      if (usersListener != null) usersListener!.cancel();
-      if (commentsListener != null) commentsListener!.cancel();
+    try {
+      if (user != null) {
+        await _subscribeListings();
+        await _subscribeUsers();
+        await _subscribeComments();
+      } else {
+        if (listingsListener != null) listingsListener!.cancel();
+        if (usersListener != null) usersListener!.cancel();
+        if (commentsListener != null) commentsListener!.cancel();
+      }
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
     }
-    //} catch (e) {
-    //  Get.snackbar("Error", e.toString());
-    //}
   }
 
   _setInitialScreen(User? user) async {
