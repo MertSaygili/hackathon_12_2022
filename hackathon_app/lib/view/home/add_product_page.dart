@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/core/base/models/listing.dart';
+import 'package:hackathon_app/core/base/services/db/listings.dart';
+import 'package:hackathon_app/core/base/services/storage/storage_service.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:hackathon_app/core/constants/enums/categories.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/constants/app/icons.dart';
@@ -42,7 +48,7 @@ class _Body extends StatelessWidget {
   final String _stateHint = 'State';
   final String _chooseLocation = 'Choose location';
   String _title = '';
-  String _price = '';
+  double _price = 0.0;
   String _location = '';
   String _state = '';
 
@@ -137,7 +143,7 @@ class _Body extends StatelessWidget {
           children: [
             _setTitleAlign(context, _listingTitleText),
             CustomTextField(
-              fun: () => _setTitle,
+              fun: _setTitle,
               inputType: TextInputType.text,
               inputAction: TextInputAction.next,
               isRoundedBorder: true,
@@ -147,7 +153,7 @@ class _Body extends StatelessWidget {
             _customDivider(context),
             _setTitleAlign(context, _priceText),
             CustomTextField(
-              fun: () => _setPrice,
+              fun: _setPrice,
               inputType: TextInputType.text,
               inputAction: TextInputAction.next,
               isRoundedBorder: true,
@@ -166,7 +172,7 @@ class _Body extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: CustomTextField(
-                          fun: () => _setCountry,
+                          fun: _setCountry,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
                           isRoundedBorder: true,
@@ -184,7 +190,7 @@ class _Body extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomTextField(
-                          fun: () => _setState,
+                          fun: _setState,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
                           isRoundedBorder: true,
@@ -230,14 +236,16 @@ class _Body extends StatelessWidget {
         right: 0,
       ),
       child: CustomFloatingActionButton(
-        fun: () {},
+        fun: () async {
+          await controller.addListing(_price, _title, _location, _state);
+        },
         icon: Icons.save,
       ),
     );
   }
 
   void _setTitle(String val) => () => _title = val;
-  void _setPrice(String val) => () => _price = val;
+  void _setPrice(String val) => () => _price = val as double;
   void _setCountry(String val) => () => _location = val;
   void _setState(String val) => () => _state = val;
 }

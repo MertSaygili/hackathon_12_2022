@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../view/home/home_page_controller.dart';
 import '../../../view/preview/onboard.dart';
+import '../../constants/enums/categories.dart';
 import '../../init/utils/prefs_helper.dart';
 import '../models/comment.dart';
 import '../models/listing.dart';
@@ -393,5 +394,43 @@ class AppController extends GetxController {
     }
     await UsersService.updateOne(currentUser!);
     // update([profileMoreId]);
+  }
+
+  Future<void> addListing(
+      double price, String title, String country, String state) async {
+    List photoURL = [];
+    DateTime now = DateTime.now();
+    String id =
+        "Listing ${now.day}:${now.month}:${now.year}_${now.hour}:${now.minute}:${now.second}.${now.millisecond}";
+    for (int i = 0; i <= images.length; i++) {
+      try {
+        photoURL.add(
+          await uploadImages("${id}_image_$i", images[i]),
+        );
+      } catch (e) {
+        Get.snackbar("Error", e.toString());
+      }
+    }
+    await ListingsService.createOne(
+      ListingModel(
+        photos: photoURL,
+        price: price,
+        title: title,
+        country: country,
+        state: state,
+        coordinates: "",
+        comments: [],
+        likes: [],
+        category: CategoriesType.unknown,
+        uid: id,
+        createdAt: 0,
+        updatedAt: 0,
+      ),
+    );
+  }
+
+  Future<String> uploadImages(String id, file) async {
+    return await StorageService.uploadImageToStorage(
+        id, file, StorageService.listingPhotosRef);
   }
 }

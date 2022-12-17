@@ -5,7 +5,7 @@ import 'package:hackathon_app/core/constants/enums/categories.dart';
 class ListingModel {
   List photos;
   double price;
-  String description;
+  String title;
   String country;
   String state;
   String coordinates;
@@ -21,7 +21,7 @@ class ListingModel {
   ListingModel({
     required this.photos,
     required this.price,
-    required this.description,
+    required this.title,
     required this.country,
     required this.state,
     required this.coordinates,
@@ -37,7 +37,7 @@ class ListingModel {
     return <String, dynamic>{
       'photos': photos,
       'price': price,
-      'description': description,
+      'title': title,
       'country': country,
       'state': state,
       'coordinates': coordinates,
@@ -54,7 +54,7 @@ class ListingModel {
     return ListingModel(
       photos: map['photos'] as List? ?? [],
       price: map['price'] as double,
-      description: map['description'] as String,
+      title: map['title'] as String,
       country: map['country'] as String,
       state: map['state'] as String,
       coordinates: map['coordinates'] as String,
