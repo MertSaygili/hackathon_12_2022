@@ -148,11 +148,10 @@ class AppController extends GetxController {
       for (ListingModel listingModel in listingList) {
         if (currentUser!.blocked.contains(listingModel.uid)) {
           continue;
-        }
-        if (listingModel.userUID == currentUser!.uid) {
+        } else if (listingModel.userUID == currentUser!.uid) {
           myListingList.add(listingModel);
-        }
-        if (listingModel.likes.contains(currentUser!.uid)) {
+          continue;
+        } else if (listingModel.likes.contains(currentUser!.uid)) {
           favouriteListings.add(listingModel);
         }
         listingListNonBlocked.add(listingModel);
@@ -503,10 +502,24 @@ class AppController extends GetxController {
               StorageService.profilePhotoRef)
           : "";
       currentUser!.profilePhoto = downloadUrl;
+      await UsersService.updateOne(currentUser!);
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
+  }
+
+  Future<void> likeListing(ListingModel listingModel) async {
+    try {
+      if (listingModel.likes.contains(currentUser!.uid)) {
+        listingModel.likes.remove(currentUser!.uid);
+      } else {
+        listingModel.likes.add(currentUser!.uid);
+      }
+      await ListingsService.updateOne(listingModel);
     } catch (e) {
       Get.snackbar("Error", e.toString());
     }
 
-    await UsersService.updateOne(currentUser!);
+    update([listingId]);
   }
 }

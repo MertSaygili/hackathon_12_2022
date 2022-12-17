@@ -71,7 +71,7 @@ class ListingModel {
       comments: map['comments'] as List? ?? [],
       likes: map['likes'] as List? ?? [],
       category: CategoriesType.values[map['category'] as int],
-      bids: map['bids'] as List? ?? [],
+      bids: map['bids'] ?? [],
       uid: map['uid'] as String,
       userUID: map['userUID'] as String,
       createdAt: map['createdAt'] as int,
