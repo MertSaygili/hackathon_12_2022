@@ -9,7 +9,23 @@ class ListingsGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppController controller = Get.find<AppController>();
+    return GetBuilder(
+      id: AppController.listingId,
+      builder: (AppController controller) => _Body(
+        controller: controller,
+      ),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  final AppController controller;
+  const _Body({
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
       itemCount: controller.listingList.length,

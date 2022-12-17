@@ -110,7 +110,7 @@ class AppController extends GetxController {
     final lastUpdatedAtTime =
         listingList.fold(0, (int p, e) => p < e.updatedAt ? e.updatedAt : p);
 
-    //update([videoId]);
+    update([listingId]);
 
     listingsListener = ListingsService.getAllAsStream(
       lastUpdatedAtTime,
@@ -118,7 +118,7 @@ class AppController extends GetxController {
       await _listingsBox
           .putAll(event.docs.fold({}, (p, e) => p..[e.id] = e.data()));
       _updateListings();
-      //update([videoId]);
+      update([listingId]);
     });
   }
 
