@@ -413,7 +413,7 @@ class AppController extends GetxController {
   }
 
   Future<void> addListing(double price, String title, String description,
-      String country, String state) async {
+      String country, String state, CategoriesType categoryType) async {
     List photoURL = [];
     DateTime now = DateTime.now();
     String id =
@@ -438,7 +438,7 @@ class AppController extends GetxController {
         coordinates: "",
         comments: [],
         likes: [],
-        category: CategoriesType.unknown,
+        category: categoryType,
         uid: id,
         userUID: currentUser!.uid,
         createdAt: 0,
@@ -451,5 +451,27 @@ class AppController extends GetxController {
   Future<String> uploadImages(String id, file) async {
     return await StorageService.uploadImageToStorage(
         id, file, StorageService.listingPhotosRef);
+  }
+
+  Future<void> updateUser(
+      String name, String about, String phone, String birthDate) async {
+    currentUser!.username = name;
+    currentUser!.about = about;
+    currentUser!.phone = phone;
+    currentUser!.birthDate = birthDate;
+
+    try {
+      String downloadUrl = profilePhoto != null
+          ? await StorageService.uploadImageToStorage(
+              firebaseAuth.currentUser!.uid,
+              profilePhoto,
+              StorageService.profilePhotoRef)
+          : "";
+      currentUser!.profilePhoto = downloadUrl;
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
+
+    await UsersService.updateOne(currentUser!);
   }
 }

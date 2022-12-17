@@ -114,11 +114,13 @@ class _ProfilePageState extends State<ProfilePage> {
   Row _firstRow() {
     return Row(
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           radius: 50,
           backgroundColor: colorPrimary,
           foregroundImage: NetworkImage(
-            'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png',
+            controller.currentUser!.profilePhoto != ""
+                ? controller.currentUser!.profilePhoto
+                : 'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png',
           ),
         ),
         Flexible(
@@ -128,13 +130,13 @@ class _ProfilePageState extends State<ProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Saltuk Bugra',
+                  controller.currentUser!.username,
                   style: Theme.of(context).textTheme.headline6?.copyWith(
                         fontWeight: FontWeight.w900,
                       ),
                 ),
                 Text(
-                  'lorem ipsum is simply dummy text of the printing and type settings...',
+                  controller.currentUser!.about,
                   maxLines: 3,
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
                         overflow: TextOverflow.ellipsis,

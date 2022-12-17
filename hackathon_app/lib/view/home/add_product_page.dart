@@ -309,7 +309,7 @@ class _Body extends StatelessWidget {
           if (formKey.currentState!.validate() &&
               controller.images.isNotEmpty) {
             await controller.addListing(
-                _price, _title, _description, _location, _state);
+                _price, _title, _description, _location, _state, _category);
             priceEditingController.text = "";
             titleEditingController.text = "";
             descriptionEditingController.text = "";
