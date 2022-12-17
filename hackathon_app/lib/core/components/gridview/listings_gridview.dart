@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/core/components/indicator/loading_indicator.dart';
 
 import '../../constants/app/colors.dart';
 
@@ -54,19 +56,43 @@ class _Body extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 140,
                       width: MediaQuery.of(context).size.width / 1.75,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(15)),
-                        image: DecorationImage(
-                          image: NetworkImage(isProfileScreen
-                              ? controller.myListingList[index].photos[0]
-                              : controller.listingList[index].photos[0]),
-                          fit: BoxFit.cover,
-                        ),
+                      child: CachedNetworkImage(
+                        imageUrl: isProfileScreen
+                            ? controller.myListingList[index].photos[0]
+                            : controller.listingList[index].photos[0],
+                        imageBuilder: ((context, imageProvider) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                              ),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        }),
+                        progressIndicatorBuilder: (context, url, progress) {
+                          return const LoadingIndicator();
+                        },
                       ),
+                      // decoration: BoxDecoration(
+                      //   borderRadius: const BorderRadius.vertical(
+                      //       top: Radius.circular(15)),
+                      //   image: DecorationImage(
+                      //     image: NetworkImage(
+                      // isProfileScreen
+                      //     ? controller.myListingList[index].photos[0]
+                      //     : controller.listingList[index].photos[0],
+                      //     ),
+                      //     fit: BoxFit.cover,
+                      //   ),
+                      // ),
                     ),
                     _alignFavButton(),
                   ],
