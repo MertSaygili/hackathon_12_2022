@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 class ListingModel {
-  List<String> photos;
+  List photos;
   double price;
   String description;
-  List<String> comments;
+  List comments;
 
   // Firebase Releated
   String uid;
@@ -35,10 +35,10 @@ class ListingModel {
 
   factory ListingModel.fromMap(Map<String, dynamic> map) {
     return ListingModel(
-      photos: List<String>.from(map['photos'] as List<String>),
+      photos: map['photos'] as List? ?? [],
       price: map['price'] as double,
       description: map['description'] as String,
-      comments: List<String>.from(map['comments'] as List<String>),
+      comments: map['comments'] as List? ?? [],
       uid: map['uid'] as String,
       createdAt: map['createdAt'] as int,
       updatedAt: map['updatedAt'] as int,

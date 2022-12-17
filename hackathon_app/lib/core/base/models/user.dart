@@ -9,8 +9,8 @@ class UserModel {
   String profilePhoto;
   String email;
   String phone;
-  List<String> listings;
-  List<String> blocked;
+  List listings;
+  List blocked;
 
   // Firebase Releated
   String uid;
@@ -25,10 +25,10 @@ class UserModel {
     required this.email,
     required this.phone,
     required this.listings,
+    required this.blocked,
     required this.uid,
     required this.createdAt,
     required this.updatedAt,
-    required this.blocked,
   });
 
   Map<String, dynamic> toMap() {
@@ -40,6 +40,7 @@ class UserModel {
       'email': email,
       'phone': phone,
       'listings': listings,
+      'blocked': blocked,
       'uid': uid,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
@@ -48,17 +49,18 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-        username: map['username'] as String,
-        gender: GenderType.values[map['gender'] as int],
-        birthDate: map['birthDate'] as String,
-        profilePhoto: map['profilePhoto'] as String,
-        email: map['email'] as String,
-        phone: map['phone'] as String,
-        listings: List<String>.from(map['listings'] as List<String>),
-        uid: map['uid'] as String,
-        createdAt: map['createdAt'] as int,
-        updatedAt: map['updatedAt'] as int,
-        blocked: List<String>.from(map['blocked'] as List<String>));
+      username: map['username'] as String,
+      gender: GenderType.values[map['gender'] as int],
+      birthDate: map['birthDate'] as String,
+      profilePhoto: map['profilePhoto'] as String,
+      email: map['email'] as String,
+      phone: map['phone'] as String,
+      listings: map['listings'] as List? ?? [],
+      blocked: map['blocked'] as List? ?? [],
+      uid: map['uid'] as String,
+      createdAt: map['createdAt'] as int,
+      updatedAt: map['updatedAt'] as int,
+    );
   }
 
   String toJson() => json.encode(toMap());
