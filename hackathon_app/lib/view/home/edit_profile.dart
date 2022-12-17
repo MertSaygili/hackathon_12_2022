@@ -7,6 +7,8 @@ import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.da
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 
+import '../../core/components/floating_action_button/floating_action_button.dart';
+
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
 
@@ -40,6 +42,10 @@ class _EditProfileViewState extends State<EditProfileView> {
     phoneEditingController.text = controller.currentUser!.phone;
     birthDateEditingController.text = controller.currentUser!.birthDate;
     return Scaffold(
+      floatingActionButton: CustomFloatingActionButton(
+        fun: () => {},
+        icon: Icons.send,
+      ),
       appBar: const CustomAppBar(
         backButton: true,
         preferedSize: 75,
