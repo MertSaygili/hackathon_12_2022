@@ -150,9 +150,10 @@ class _Body extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 3.0),
-                          child: Text(_categoriesText[index],
-                              style:
-                                  const TextStyle(fontStyle: FontStyle.italic)),
+                          child: Text(
+                            _categoriesText[index],
+                            style: const TextStyle(fontStyle: FontStyle.italic),
+                          ),
                         )
                       ],
                     ),
