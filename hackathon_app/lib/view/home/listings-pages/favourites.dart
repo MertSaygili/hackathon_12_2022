@@ -67,7 +67,7 @@ class _FavouritesState extends State<Favourites> {
 
   ListView _favList() {
     return ListView.builder(
-      itemCount: 4,
+      itemCount: widget.controller.favouriteListings.length,
       itemBuilder: ((context, index) {
         return Padding(
           padding:
@@ -108,7 +108,7 @@ class _FavouritesState extends State<Favourites> {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: SizedBox(
-            child: Image.asset(
+            child: Image.network(
               widget.controller.favouriteListings[index].photos[0],
               width: 150,
               height: 200,
@@ -205,8 +205,15 @@ class _FavouritesState extends State<Favourites> {
               ),
         ),
         CircleIconButton(
-          icon: Icons.favorite,
-          pressFunction: () => {},
+          icon: widget.controller.favouriteListings[index].likes
+                  .contains(widget.controller.currentUser!.uid)
+              ? Icons.favorite
+              : Icons.heart_broken,
+          pressFunction: () {
+            widget.controller
+                .likeListing(widget.controller.favouriteListings[index]);
+            setState(() {});
+          },
           color: colorWhite,
           backgroundColor: colorPrimary,
           radius: 20,

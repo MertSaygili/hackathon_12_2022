@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/indicator/loading_indicator.dart';
 import '../../../view/home/product_page.dart';
+import '../../base/models/listing.dart';
 import '../../constants/app/colors.dart';
 
 class ListingsGridView extends StatelessWidget {
@@ -36,7 +37,7 @@ class _Body extends StatelessWidget {
       shrinkWrap: true,
       itemCount: isProfileScreen
           ? controller.myListingList.length
-          : controller.listingList.length,
+          : controller.listingListNonBlocked.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 0.70,
@@ -48,7 +49,7 @@ class _Body extends StatelessWidget {
             () => ProductPage(
               listingModel: isProfileScreen
                   ? controller.myListingList[index]
-                  : controller.listingList[index],
+                  : controller.listingListNonBlocked[index],
             ),
           ),
           child: Card(
@@ -67,7 +68,7 @@ class _Body extends StatelessWidget {
                       child: CachedNetworkImage(
                         imageUrl: isProfileScreen
                             ? controller.myListingList[index].photos[0]
-                            : controller.listingList[index].photos[0],
+                            : controller.listingListNonBlocked[index].photos[0],
                         imageBuilder: ((context, imageProvider) {
                           return Container(
                             decoration: BoxDecoration(
@@ -99,7 +100,8 @@ class _Body extends StatelessWidget {
                       //   ),
                       // ),
                     ),
-                    _alignFavButton(),
+                    if (!isProfileScreen)
+                      _alignFavButton(controller.listingListNonBlocked[index]),
                   ],
                 ),
                 Padding(
@@ -115,18 +117,19 @@ class _Body extends StatelessWidget {
                                 context,
                                 isProfileScreen
                                     ? controller.myListingList[index].title
-                                    : controller.listingList[index].title),
+                                    : controller
+                                        .listingListNonBlocked[index].title),
                             _alignSubtitle(
                                 context,
                                 isProfileScreen
                                     ? controller
                                         .myListingList[index].description
-                                    : controller
-                                        .listingList[index].description),
+                                    : controller.listingListNonBlocked[index]
+                                        .description),
                           ],
                         ),
                         _alignRow(context,
-                            "${isProfileScreen ? controller.myListingList[index].state : controller.listingList[index].state}, ${isProfileScreen ? controller.myListingList[index].country : controller.listingList[index].country}"),
+                            "${isProfileScreen ? controller.myListingList[index].state : controller.listingListNonBlocked[index].state}, ${isProfileScreen ? controller.myListingList[index].country : controller.listingListNonBlocked[index].country}"),
                       ],
                     ),
                   ),
@@ -188,7 +191,7 @@ class _Body extends StatelessWidget {
     );
   }
 
-  Padding _alignFavButton() {
+  Widget _alignFavButton(ListingModel listingModel) {
     return Padding(
       padding: const EdgeInsets.all(4),
       child: Align(
@@ -204,9 +207,13 @@ class _Body extends StatelessWidget {
             iconSize: 16,
             padding: EdgeInsets.zero,
             color: colorWhite,
-            onPressed: () {},
-            icon: const Icon(
-              Icons.favorite,
+            onPressed: () {
+              controller.likeListing(listingModel);
+            },
+            icon: Icon(
+              listingModel.likes.contains(controller.currentUser!.uid)
+                  ? Icons.favorite
+                  : Icons.heart_broken,
             ),
           ),
         ),
