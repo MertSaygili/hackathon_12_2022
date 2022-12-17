@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hackathon_app/view/home/add_product_page.dart';
 import 'package:hackathon_app/view/home/home_page.dart';
 import 'package:hackathon_app/view/home/listings_page.dart';
+import 'package:hackathon_app/view/home/product_page.dart';
 import 'package:hackathon_app/view/home/profile.dart';
 import '../../core/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../../core/components/bottom_navigation_bar/page_view.dart';
@@ -34,6 +35,7 @@ class _HomePageControllerViewState extends State<HomePageControllerView> {
       _bottomNavigationBarItem(_customIcons(Icons.add_box_outlined), ''),
       _bottomNavigationBarItem(_customIcons(Icons.list_alt_outlined), ''),
       _bottomNavigationBarItem(_customIcons(Icons.person), ''),
+      _bottomNavigationBarItem(_customIcons(Icons.temple_buddhist), ''),
     ];
 
     List<Widget> pageItems = [
@@ -41,6 +43,7 @@ class _HomePageControllerViewState extends State<HomePageControllerView> {
       const AddProductPage(),
       const ListingsPage(),
       const ProfilePage(),
+      const ProductPage(),
     ];
 
     return Scaffold(

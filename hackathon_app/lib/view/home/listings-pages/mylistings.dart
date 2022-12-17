@@ -18,7 +18,7 @@ class _MylistingsState extends State<Mylistings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _emptyList(),
+      body: _listingItems(),
     );
   }
 
