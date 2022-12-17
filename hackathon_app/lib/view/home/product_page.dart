@@ -391,44 +391,51 @@ class _ShowBottomSheet extends StatelessWidget {
           const Divider(color: colorBlack, thickness: 0.5),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4,
+            height: MediaQuery.of(context).size.height / 3.75,
             child: ListView.builder(
-                itemCount: 1,
+                itemCount: 10,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 15,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    color: colorPrimary,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: CachedNetworkImage(
-                            width: 150,
-                            height: 75,
-                            imageUrl:
-                                'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png',
-                            progressIndicatorBuilder: (context, url, progress) {
-                              return const LoadingIndicator();
-                            },
-                          ),
-                        ),
-                        Column(
-                          children: const [
-                            Text('@saltuk'),
-                            Text("100\$"),
-                            Text('5 min ago'),
-                          ],
-                        )
-                      ],
-                    ),
-                  );
+                  return index == 0
+                      ? _mainCard(colorPrimary)
+                      : _mainCard(const Color(0xfffea5af));
                 }),
-          )
+          ),
+          const Divider(color: colorBlack, thickness: 0.5),
+        ],
+      ),
+    );
+  }
+
+  Card _mainCard(Color color) {
+    return Card(
+      elevation: 15,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      color: color,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: CachedNetworkImage(
+              width: 150,
+              height: 75,
+              imageUrl:
+                  'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png',
+              progressIndicatorBuilder: (context, url, progress) {
+                return const LoadingIndicator();
+              },
+            ),
+          ),
+          Column(
+            children: const [
+              Text('@saltuk'),
+              Text("100\$"),
+              Text('5 min ago'),
+            ],
+          ),
         ],
       ),
     );
