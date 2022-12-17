@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/indicator/loading_indicator.dart';
+import '../../../view/home/product_page.dart';
 import '../../constants/app/colors.dart';
 
 class ListingsGridView extends StatelessWidget {

@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/core/components/indicator/loading_indicator.dart';
 
 import '../../../core/components/elevatedButton/custom_elevatedbutton.dart';
 import '../../../core/constants/app/colors.dart';
@@ -101,19 +103,24 @@ class _MylistingsState extends State<Mylistings> {
     return Align(
       alignment: Alignment.centerLeft,
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(25),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(15),
+          bottomLeft: Radius.circular(15),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: SizedBox(
-            child: Image.network(
-              widget.controller.myListingList[index].photos[0],
-              width: 150,
-              height: 200,
-              fit: BoxFit.cover,
-            ),
+        child: SizedBox(
+          child: CachedNetworkImage(
+            imageUrl: widget.controller.myListingList[index].photos[0],
+            fit: BoxFit.cover,
+            progressIndicatorBuilder: ((context, url, progress) {
+              return const LoadingIndicator();
+            }),
           ),
+          // child: Image.network(
+          //   widget.controller.myListingList[index].photos[0],
+          //   width: 150,
+          //   height: 200,
+          //   fit: BoxFit.cover,
+          // ),
         ),
       ),
     );
