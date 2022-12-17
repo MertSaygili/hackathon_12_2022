@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 
 import '../../constants/app/colors.dart';
 
 class ListingsGridView extends StatelessWidget {
   const ListingsGridView({super.key});
 
-  final String _dummyImage = 'assets/images/jpg/listing-foto-1.jpg';
-
   @override
   Widget build(BuildContext context) {
+    AppController controller = Get.find<AppController>();
     return GridView.builder(
       shrinkWrap: true,
-      itemCount: 6,
+      itemCount: controller.listingList.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 0.80,
@@ -30,7 +31,7 @@ class ListingsGridView extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    _alignImage(''),
+                    _alignImage(controller.listingList[index].photos[0]),
                     _alignFavButton(),
                   ],
                 ),
@@ -39,11 +40,14 @@ class ListingsGridView extends StatelessWidget {
                   child: ListTile(
                     contentPadding: const EdgeInsets.only(top: 4, left: 4),
                     title: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _alignTitle(context, ''),
-                        _alignSubtitle(context, ''),
-                        _alignRow(context, ''),
+                        _alignTitle(
+                            context, controller.listingList[index].title),
+                        _alignSubtitle(
+                            context, controller.listingList[index].description),
+                        _alignRow(context,
+                            "${controller.listingList[index].state}, ${controller.listingList[index].country}"),
                       ],
                     ),
                   ),
@@ -64,7 +68,7 @@ class ListingsGridView extends StatelessWidget {
         children: [
           const Icon(Icons.location_on, color: colorWhite),
           Text(
-            'Peru, Brazil',
+            text,
             style: Theme.of(context)
                 .textTheme
                 .subtitle2
@@ -79,7 +83,7 @@ class ListingsGridView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 4),
       child: Text(
-        'Lorem ipsum is simpy sumyy text of printing and typesetting',
+        text,
         maxLines: 2,
         style: Theme.of(context).textTheme.subtitle2?.copyWith(
               fontSize: 12,
@@ -94,7 +98,7 @@ class ListingsGridView extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: Text(
-        'Listing title - 1',
+        text,
         style: Theme.of(context).textTheme.subtitle1?.copyWith(
               fontSize: 18,
               color: colorWhite,
@@ -137,8 +141,8 @@ class ListingsGridView extends StatelessWidget {
           topLeft: Radius.circular(15),
           topRight: Radius.circular(15),
         ),
-        child: Image.asset(
-          _dummyImage,
+        child: Image.network(
+          imgPath,
           fit: BoxFit.cover,
           height: 125,
         ),

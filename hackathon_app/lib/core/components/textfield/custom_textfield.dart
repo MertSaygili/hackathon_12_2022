@@ -6,10 +6,11 @@ import '../../constants/app/borders.dart';
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
     super.key,
+    this.textEditingController,
     required this.fun,
     this.validator,
     required this.inputType,
-    required this.inputAction,
+    this.inputAction,
     required this.isRoundedBorder,
     required this.obscureText,
     this.label,
@@ -28,9 +29,10 @@ class CustomTextField extends StatefulWidget {
   });
 
   final Function fun;
+  final TextEditingController? textEditingController;
   final Function? validator;
   final TextInputType inputType;
-  final TextInputAction inputAction;
+  final TextInputAction? inputAction;
   final Widget? label;
   final String? hintText;
   final Widget? suffix;
@@ -72,6 +74,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.textEditingController,
       key: widget.emailFieldKey,
       onChanged: (value) => widget.fun(value),
       keyboardAppearance: Brightness.dark,

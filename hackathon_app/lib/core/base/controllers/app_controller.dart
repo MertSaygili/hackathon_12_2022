@@ -30,6 +30,8 @@ class AppController extends GetxController {
 
   List<ListingModel> listingList = [];
   List<ListingModel> listingListNonBlocked = [];
+  List<ListingModel> myListingList = [];
+  List<ListingModel> favouriteListings = [];
   List<UserModel> userList = [];
   List<CommentModel> commentList = [];
 
@@ -134,6 +136,12 @@ class AppController extends GetxController {
       for (ListingModel listingModel in listingList) {
         if (currentUser!.blocked.contains(listingModel.uid)) {
           continue;
+        }
+        if (listingModel.userUID == currentUser!.uid) {
+          myListingList.add(listingModel);
+        }
+        if (listingModel.likes.contains(currentUser!.uid)) {
+          favouriteListings.add(listingModel);
         }
         listingListNonBlocked.add(listingModel);
       }
@@ -396,13 +404,13 @@ class AppController extends GetxController {
     // update([profileMoreId]);
   }
 
-  Future<void> addListing(
-      double price, String title, String country, String state) async {
+  Future<void> addListing(double price, String title, String description,
+      String country, String state) async {
     List photoURL = [];
     DateTime now = DateTime.now();
     String id =
         "Listing ${now.day}:${now.month}:${now.year}_${now.hour}:${now.minute}:${now.second}.${now.millisecond}";
-    for (int i = 0; i <= images.length; i++) {
+    for (int i = 0; i < images.length; i++) {
       try {
         photoURL.add(
           await uploadImages("${id}_image_$i", images[i]),
@@ -416,6 +424,7 @@ class AppController extends GetxController {
         photos: photoURL,
         price: price,
         title: title,
+        description: description,
         country: country,
         state: state,
         coordinates: "",
@@ -423,10 +432,12 @@ class AppController extends GetxController {
         likes: [],
         category: CategoriesType.unknown,
         uid: id,
+        userUID: currentUser!.uid,
         createdAt: 0,
         updatedAt: 0,
       ),
     );
+    Get.snackbar("Listing Successful", "Your listing created successfully");
   }
 
   Future<String> uploadImages(String id, file) async {

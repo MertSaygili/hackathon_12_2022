@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/components/appbar/custom_appbar.dart';
 import '../../core/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../../core/components/bottom_navigation_bar/page_view.dart';
 import '../../core/constants/app/colors.dart';
@@ -47,7 +46,7 @@ class _ListingsPageState extends State<ListingsPage> {
             flex: 10,
             child: CustomPageView(
               controller: _controller,
-              items: const [
+              items: [
                 Mylistings(),
                 Favourites(),
               ],
