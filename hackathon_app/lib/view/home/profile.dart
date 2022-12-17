@@ -23,13 +23,19 @@ class _ProfilePageState extends State<ProfilePage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 32),
       child: Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           backButton: false,
-          title: Text(
+          title: const Text(
             "Your profile",
             style: TextStyle(color: colorPrimary, fontSize: 30),
           ),
           preferedSize: 75,
+          actions: IconButton(
+              onPressed: () => controller.signOut(),
+              icon: const Icon(
+                Icons.logout,
+                color: colorPrimary,
+              )),
         ),
         resizeToAvoidBottomInset: false,
         body: Column(

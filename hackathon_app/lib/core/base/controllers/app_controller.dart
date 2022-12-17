@@ -196,7 +196,7 @@ class AppController extends GetxController {
   }
 
   Future<void> _subscribeBids() async {
-    _bidsBox = await Hive.openBox(PrefsHelper.usersBox);
+    _bidsBox = await Hive.openBox(PrefsHelper.bidsBox);
 
     _updateBids();
 
@@ -521,5 +521,24 @@ class AppController extends GetxController {
     }
 
     update([listingId]);
+  }
+
+  Future<void> createBid(ListingModel listingModel, double amount) async {
+    try {
+      DateTime now = DateTime.now();
+      String id =
+          "Bid ${now.day}:${now.month}:${now.year}_${now.hour}:${now.minute}:${now.second}.${now.millisecond}";
+      await BidsService.createOne(BidModel(
+          userUID: currentUser!.uid,
+          amount: amount,
+          uid: id,
+          createdAt: 0,
+          updatedAt: 0));
+      listingModel.bids.add(id);
+      await ListingsService.updateOne(listingModel);
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
+    Get.back();
   }
 }

@@ -1,8 +1,11 @@
+import 'dart:collection';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/core/base/models/bid.dart';
 import 'package:hackathon_app/core/base/models/listing.dart';
 import 'package:hackathon_app/core/base/models/user.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
@@ -79,7 +82,9 @@ class _ProductPageState extends State<ProductPage> {
                 ),
               ),
               builder: (context) {
-                return _ShowBottomSheet();
+                return _ShowBottomSheet(
+                  listingModel: widget.listingModel,
+                );
               });
         },
         icon: Icons.attach_money,
@@ -376,15 +381,32 @@ class _ProductPageState extends State<ProductPage> {
 }
 
 class _ShowBottomSheet extends StatelessWidget {
+  AppController controller = Get.find();
   final String _bidAmountHint = "Enter bid amount";
   double _bidAmount = 0;
+  ListingModel listingModel;
+  Map<UserModel, double> bidders = {};
+  final formKey = GlobalKey<FormState>();
 
   _ShowBottomSheet({
     Key? key,
+    required this.listingModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    for (BidModel bidModel in controller.bidList) {
+      if (listingModel.bids.contains(bidModel.uid)) {
+        for (UserModel userModel in controller.userList) {
+          if (userModel.uid == bidModel.userUID) {
+            bidders[userModel] = bidModel.amount;
+          }
+        }
+      }
+    }
+    final sortedMap = SplayTreeMap<UserModel, double>.from(
+        bidders, (keys2, keys1) => bidders[keys1]!.compareTo(bidders[keys2]!));
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8.0,
@@ -398,12 +420,20 @@ class _ShowBottomSheet extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 3.75,
             child: ListView.builder(
-                itemCount: 10,
+                itemCount: bidders.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return index == 0
-                      ? _mainCard(colorPrimary, false)
-                      : _mainCard(const Color(0xfffea5af), true);
+                      ? _mainCard(
+                          colorPrimary,
+                          false,
+                          sortedMap.keys.elementAt(index),
+                          sortedMap.values.elementAt(index))
+                      : _mainCard(
+                          const Color(0xfffea5af),
+                          true,
+                          sortedMap.keys.elementAt(index),
+                          sortedMap.values.elementAt(index));
                 }),
           ),
           const Padding(
@@ -413,22 +443,38 @@ class _ShowBottomSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width - 100,
-                child: CustomTextField(
-                  fun: _setBid,
-                  inputType: TextInputType.text,
-                  inputAction: TextInputAction.next,
-                  isRoundedBorder: true,
-                  obscureText: false,
-                  hintText: _bidAmountHint,
+              Form(
+                key: formKey,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width - 100,
+                  child: CustomTextField(
+                    fun: _setBid,
+                    inputType: TextInputType.text,
+                    inputAction: TextInputAction.next,
+                    isRoundedBorder: true,
+                    obscureText: false,
+                    hintText: _bidAmountHint,
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return "Please enter a valid amount!";
+                      } else if (value as double <= listingModel.price ||
+                          value as double <= sortedMap.values.first) {
+                        return "Please write a higher amount";
+                      }
+                      return null;
+                    },
+                  ),
                 ),
               ),
               CircleIconButton(
                 icon: Icons.send,
                 backgroundColor: colorPrimary,
                 color: colorWhite,
-                pressFunction: () => {},
+                pressFunction: () {
+                  // if (formKey.currentState!.validate()) {
+                  controller.createBid(listingModel, 120);
+                  // }
+                },
               )
             ],
           ),
@@ -437,7 +483,8 @@ class _ShowBottomSheet extends StatelessWidget {
     );
   }
 
-  Card _mainCard(Color color, bool isSmall) {
+  Card _mainCard(
+      Color color, bool isSmall, UserModel userModel, double amount) {
     return Card(
       elevation: 15,
       shape: RoundedRectangleBorder(
@@ -452,25 +499,26 @@ class _ShowBottomSheet extends StatelessWidget {
             child: CachedNetworkImage(
               width: isSmall ? 100 : 150,
               height: isSmall ? 50 : 75,
-              imageUrl:
-                  'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png',
+              imageUrl: userModel.profilePhoto != ""
+                  ? userModel.profilePhoto
+                  : 'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png',
               progressIndicatorBuilder: (context, url, progress) {
                 return const LoadingIndicator();
               },
             ),
           ),
           Column(
-            children: const [
+            children: [
               Text(
-                '@saltuk',
-                style: TextStyle(
+                userModel.username,
+                style: const TextStyle(
                     color: colorWhite,
                     fontSize: 20,
                     fontWeight: FontWeight.w400),
               ),
               Text(
-                "100\$",
-                style: TextStyle(
+                "$amount\$",
+                style: const TextStyle(
                     color: colorWhite,
                     fontSize: 20,
                     fontWeight: FontWeight.w800),
