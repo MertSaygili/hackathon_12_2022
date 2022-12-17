@@ -5,7 +5,8 @@ import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import '../../constants/app/colors.dart';
 
 class ListingsGridView extends StatelessWidget {
-  const ListingsGridView({super.key});
+  final bool isProfileScreen;
+  const ListingsGridView({super.key, required this.isProfileScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class ListingsGridView extends StatelessWidget {
       id: AppController.listingId,
       builder: (AppController controller) => _Body(
         controller: controller,
+        isProfileScreen: isProfileScreen,
       ),
     );
   }
@@ -20,15 +22,19 @@ class ListingsGridView extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   final AppController controller;
+  final bool isProfileScreen;
   const _Body({
     required this.controller,
+    required this.isProfileScreen,
   });
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
-      itemCount: controller.listingList.length,
+      itemCount: isProfileScreen
+          ? controller.myListingList.length
+          : controller.listingList.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 0.70,
@@ -48,7 +54,9 @@ class _Body extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    _alignImage(controller.listingList[index].photos[0]),
+                    _alignImage(isProfileScreen
+                        ? controller.myListingList[index].photos[0]
+                        : controller.listingList[index].photos[0]),
                     _alignFavButton(),
                   ],
                 ),
@@ -60,11 +68,17 @@ class _Body extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _alignTitle(
-                            context, controller.listingList[index].title),
+                            context,
+                            isProfileScreen
+                                ? controller.myListingList[index].title
+                                : controller.listingList[index].title),
                         _alignSubtitle(
-                            context, controller.listingList[index].description),
+                            context,
+                            isProfileScreen
+                                ? controller.myListingList[index].description
+                                : controller.listingList[index].description),
                         _alignRow(context,
-                            "${controller.listingList[index].state}, ${controller.listingList[index].country}"),
+                            "${isProfileScreen ? controller.myListingList[index].state : controller.listingList[index].state}, ${isProfileScreen ? controller.myListingList[index].country : controller.listingList[index].country}"),
                       ],
                     ),
                   ),

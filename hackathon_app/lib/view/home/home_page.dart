@@ -4,7 +4,6 @@ import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/gridview/listings_gridview.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
-import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/components/divider/custom_line_divider.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 
@@ -96,7 +95,9 @@ class _Body extends StatelessWidget {
                   ],
                 ),
               ),
-              const ListingsGridView(),
+              const ListingsGridView(
+                isProfileScreen: false,
+              ),
             ],
           ),
         ),

@@ -213,6 +213,4 @@ class _FavouritesState extends State<Favourites> {
       ],
     );
   }
-
-  void _floatingActionFun() {}
 }

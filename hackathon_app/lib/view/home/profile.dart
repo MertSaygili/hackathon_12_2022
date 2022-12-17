@@ -7,7 +7,6 @@ import 'package:hackathon_app/view/home/edit_profile.dart';
 import '../../core/components/appbar/custom_appbar.dart';
 import '../../core/components/gridview/listings_gridview.dart';
 import '../../core/constants/app/colors.dart';
-import '../../core/constants/app/strings.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -45,7 +44,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: colorPrimary,
                       thickness: 1,
                     ),
-                    ListingsGridView(),
+                    ListingsGridView(
+                      isProfileScreen: true,
+                    ),
                   ],
                 ),
               ),

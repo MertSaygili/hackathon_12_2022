@@ -4,7 +4,6 @@ import '../../core/components/appbar/custom_appbar.dart';
 import '../../core/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../../core/components/bottom_navigation_bar/page_view.dart';
 import '../../core/constants/app/colors.dart';
-import '../../core/constants/app/strings.dart';
 import 'listings-pages/favourites.dart';
 import 'listings-pages/mylistings.dart';
 
@@ -17,7 +16,6 @@ class ListingsPage extends StatefulWidget {
 
 class _ListingsPageState extends State<ListingsPage> {
   late final PageController _controller = PageController();
-  final List<Widget> _items = [];
 
   @override
   Widget build(BuildContext context) {

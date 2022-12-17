@@ -232,6 +232,7 @@ class AppController extends GetxController {
               : "";
           UserModel user = UserModel(
             username: username,
+            about: "",
             gender: GenderType.unknown,
             profilePhoto: downloadUrl,
             email: email,
@@ -289,6 +290,7 @@ class AppController extends GetxController {
         if (!value) {
           UserModel user = UserModel(
             username: gUser.displayName!,
+            about: "",
             gender: GenderType.unknown,
             profilePhoto: gUser.photoUrl!,
             email: gUser.email,

@@ -26,13 +26,11 @@ class AddProductPage extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   _Body({
-    super.key,
     required this.controller,
   });
 
   final AppController controller;
 
-  final String _dummyImg = 'assets/images/jpg/listing-foto-1.jpg';
   final String _listingTitleText = 'Listing Title';
   final String _priceText = 'Price';
   final String _locationText = 'Location';
@@ -58,6 +56,8 @@ class _Body extends StatelessWidget {
   final TextEditingController locationEditingController =
       TextEditingController();
   final TextEditingController stateEditingController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -144,90 +144,124 @@ class _Body extends StatelessWidget {
         bottom: 4,
       ),
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            _setTitleAlign(context, _listingTitleText),
-            CustomTextField(
-              textEditingController: titleEditingController,
-              fun: _setTitle,
-              inputType: TextInputType.text,
-              inputAction: TextInputAction.next,
-              isRoundedBorder: true,
-              obscureText: false,
-              hintText: _listingTitleHint,
-            ),
-            _customDivider(context),
-            _setTitleAlign(context, _descriptionText),
-            CustomTextField(
-              textEditingController: descriptionEditingController,
-              fun: _setDescp,
-              inputType: TextInputType.multiline,
-              minLine: 1,
-              isRoundedBorder: true,
-              obscureText: false,
-              maxLines: 2,
-            ),
-            _customDivider(context),
-            _setTitleAlign(context, _priceText),
-            CustomTextField(
-              textEditingController: priceEditingController,
-              fun: _setPrice,
-              inputType: TextInputType.text,
-              inputAction: TextInputAction.next,
-              isRoundedBorder: true,
-              obscureText: false,
-              hintText: _priceHint,
-            ),
-            _customDivider(context),
-            _setTitleAlign(context, _locationText),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: CustomTextField(
-                          textEditingController: locationEditingController,
-                          fun: _setCountry,
-                          inputType: TextInputType.text,
-                          inputAction: TextInputAction.done,
-                          isRoundedBorder: true,
-                          obscureText: false,
-                          hintText: _locationHint,
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              _setTitleAlign(context, _listingTitleText),
+              CustomTextField(
+                textEditingController: titleEditingController,
+                fun: _setTitle,
+                inputType: TextInputType.text,
+                inputAction: TextInputAction.next,
+                isRoundedBorder: true,
+                obscureText: false,
+                hintText: _listingTitleHint,
+                validator: (String value) {
+                  if (value.isEmpty) {
+                    return "Please enter a title!";
+                  }
+                  return null;
+                },
+              ),
+              _customDivider(context),
+              _setTitleAlign(context, _descriptionText),
+              CustomTextField(
+                textEditingController: descriptionEditingController,
+                fun: _setDescp,
+                inputType: TextInputType.multiline,
+                minLine: 1,
+                isRoundedBorder: true,
+                obscureText: false,
+                hintText: _descriptionHint,
+                maxLines: 2,
+                validator: (String value) {
+                  if (value.isEmpty) {
+                    return "Please enter a description!";
+                  }
+                  return null;
+                },
+              ),
+              _customDivider(context),
+              _setTitleAlign(context, _priceText),
+              CustomTextField(
+                textEditingController: priceEditingController,
+                fun: _setPrice,
+                inputType: TextInputType.text,
+                inputAction: TextInputAction.next,
+                isRoundedBorder: true,
+                obscureText: false,
+                hintText: _priceHint,
+                validator: (String value) {
+                  if (value.isEmpty) {
+                    return "Please enter a price!";
+                  }
+                  return null;
+                },
+              ),
+              _customDivider(context),
+              _setTitleAlign(context, _locationText),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: CustomTextField(
+                            textEditingController: locationEditingController,
+                            fun: _setCountry,
+                            inputType: TextInputType.text,
+                            inputAction: TextInputAction.done,
+                            isRoundedBorder: true,
+                            obscureText: false,
+                            hintText: _locationHint,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return "Please enter your country!";
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomTextField(
-                          textEditingController: stateEditingController,
-                          fun: _setState,
-                          inputType: TextInputType.text,
-                          inputAction: TextInputAction.done,
-                          isRoundedBorder: true,
-                          obscureText: false,
-                          hintText: _stateHint,
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomTextField(
+                            textEditingController: stateEditingController,
+                            fun: _setState,
+                            inputType: TextInputType.text,
+                            inputAction: TextInputAction.done,
+                            isRoundedBorder: true,
+                            obscureText: false,
+                            hintText: _stateHint,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return "Please enter your state!";
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            _customDivider(context),
-            Center(
-              child: CustomElevatedButton(fun: () {}, text: _chooseLocation),
-            )
-          ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              _customDivider(context),
+              Center(
+                child: CustomElevatedButton(fun: () {}, text: _chooseLocation),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -257,15 +291,20 @@ class _Body extends StatelessWidget {
       ),
       child: CustomFloatingActionButton(
         fun: () async {
-          await controller.addListing(
-              _price, _title, _description, _location, _state);
-          priceEditingController.text = "";
-          titleEditingController.text = "";
-          descriptionEditingController.text = "";
-          locationEditingController.text = "";
-          stateEditingController.text = "";
-          controller.images.clear();
-          controller.update([AppController.listingId]);
+          if (formKey.currentState!.validate() &&
+              controller.images.isNotEmpty) {
+            await controller.addListing(
+                _price, _title, _description, _location, _state);
+            priceEditingController.text = "";
+            titleEditingController.text = "";
+            descriptionEditingController.text = "";
+            locationEditingController.text = "";
+            stateEditingController.text = "";
+            controller.images.clear();
+            controller.update([AppController.listingId]);
+          } else if (controller.images.isEmpty) {
+            Get.snackbar("Pictures", "Please pick atleast 1 picture!");
+          }
         },
         icon: Icons.save,
       ),
