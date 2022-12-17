@@ -52,7 +52,11 @@ class _HomePageViewState extends State<HomePageView> {
               inputAction: TextInputAction.done,
               isRoundedBorder: true,
               obscureText: false,
-              suffix: const Icon(Icons.search, size: 32),
+              suffix: const Icon(
+                Icons.search,
+                size: 32,
+                color: colorPrimary,
+              ),
             ),
           ),
           backButton: false,
