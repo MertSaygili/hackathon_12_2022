@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hackathon_app/core/base/models/bid.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/core/constants/enums/gender.dart';
 
@@ -20,6 +21,7 @@ import '../../init/utils/prefs_helper.dart';
 import '../models/comment.dart';
 import '../models/listing.dart';
 import '../models/user.dart';
+import '../services/db/bids.dart';
 import '../services/db/comments.dart';
 import '../services/db/listings.dart';
 import '../services/db/users.dart';
@@ -34,6 +36,7 @@ class AppController extends GetxController {
   List<ListingModel> favouriteListings = [];
   List<UserModel> userList = [];
   List<CommentModel> commentList = [];
+  List<BidModel> bidList = [];
 
   List<File?> images = [];
 
@@ -45,6 +48,7 @@ class AppController extends GetxController {
   late Box _usersBox;
   late Box _listingsBox;
   late Box _commentsBox;
+  late Box _bidsBox;
 
   String email = '';
   String password = '';
@@ -60,6 +64,7 @@ class AppController extends GetxController {
   StreamSubscription<QuerySnapshot<Object?>>? listingsListener;
   StreamSubscription<QuerySnapshot<Object?>>? usersListener;
   StreamSubscription<QuerySnapshot<Object?>>? commentsListener;
+  StreamSubscription<QuerySnapshot<Object?>>? bidsListener;
 
   @override
   void onReady() {
@@ -76,6 +81,7 @@ class AppController extends GetxController {
         await _subscribeUsers();
         await _subscribeListings();
         await _subscribeComments();
+        await _subscribeBids();
       } else {
         if (usersListener != null) usersListener!.cancel();
         if (listingsListener != null) listingsListener!.cancel();
@@ -188,6 +194,34 @@ class AppController extends GetxController {
         }
       }
     }
+  }
+
+  Future<void> _subscribeBids() async {
+    _bidsBox = await Hive.openBox(PrefsHelper.usersBox);
+
+    _updateBids();
+
+    final lastUpdatedAtTime =
+        userList.fold(0, (int p, e) => p < e.updatedAt ? e.updatedAt : p);
+
+    // update([userId, authId, navigationId]);
+
+    bidsListener = BidsService.getAllAsStream(
+      lastUpdatedAtTime,
+    ).listen((event) async {
+      await _bidsBox
+          .putAll(event.docs.fold({}, (p, e) => p..[e.id] = e.data()));
+      _updateBids();
+      // update([userId, authId, navigationId]);
+    });
+  }
+
+  void _updateBids() {
+    bidList = _bidsBox
+        .toMap()
+        .entries
+        .map((e) => BidModel.fromMap(Map<String, dynamic>.from(e.value)))
+        .toList();
   }
 
   Future<void> _subscribeComments() async {
@@ -439,6 +473,7 @@ class AppController extends GetxController {
         comments: [],
         likes: [],
         category: categoryType,
+        bids: [],
         uid: id,
         userUID: currentUser!.uid,
         createdAt: 0,

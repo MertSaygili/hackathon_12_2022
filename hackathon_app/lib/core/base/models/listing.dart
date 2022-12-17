@@ -13,6 +13,7 @@ class ListingModel {
   List comments;
   List likes;
   CategoriesType category;
+  List bids;
 
   // Firebase Releated
   String uid;
@@ -31,6 +32,7 @@ class ListingModel {
     required this.comments,
     required this.likes,
     required this.category,
+    required this.bids,
     required this.uid,
     required this.userUID,
     required this.createdAt,
@@ -49,6 +51,7 @@ class ListingModel {
       'comments': comments,
       'likes': likes,
       'category': category.index,
+      'bids': bids,
       'uid': uid,
       'userUID': userUID,
       'createdAt': createdAt,
@@ -68,6 +71,7 @@ class ListingModel {
       comments: map['comments'] as List? ?? [],
       likes: map['likes'] as List? ?? [],
       category: CategoriesType.values[map['category'] as int],
+      bids: map['bids'] as List? ?? [],
       uid: map['uid'] as String,
       userUID: map['userUID'] as String,
       createdAt: map['createdAt'] as int,
