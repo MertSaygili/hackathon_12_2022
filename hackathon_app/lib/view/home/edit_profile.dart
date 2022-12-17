@@ -6,8 +6,10 @@ import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../core/components/floating_action_button/floating_action_button.dart';
+import '../../core/constants/app/icons.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
@@ -43,7 +45,19 @@ class _EditProfileViewState extends State<EditProfileView> {
     birthDateEditingController.text = controller.currentUser!.birthDate;
     return Scaffold(
       floatingActionButton: CustomFloatingActionButton(
-        fun: () => {},
+        fun: () async {
+          try {
+            await controller
+                .updateUser(
+                    nameEditingController.text,
+                    aboutEditingController.text,
+                    phoneEditingController.text,
+                    birthDateEditingController.text)
+                .then((value) => setState(() {}));
+          } catch (e) {
+            Get.snackbar("Error", e.toString());
+          }
+        },
         icon: Icons.send,
       ),
       appBar: const CustomAppBar(
@@ -144,14 +158,49 @@ class _EditProfileViewState extends State<EditProfileView> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        /* CircleAvatar(
-          radius: 60,
-          backgroundColor: colorPrimary,
-          foregroundImage: NetworkImage(
-              controller.currentUser!.profilePhoto != ""
-                  ? controller.currentUser!.profilePhoto
-                  : 'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png'),
-        ), */
+        GestureDetector(
+          onTap: () => showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25.0),
+                  topRight: Radius.circular(25.0)),
+            ),
+            builder: (context) => Wrap(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        onTap: () =>
+                            controller.pickProfileImage(ImageSource.camera),
+                        leading: iconCamera,
+                        title: const Text(
+                          "Take photo from camera",
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () =>
+                            controller.pickProfileImage(ImageSource.gallery),
+                        leading: iconGallery,
+                        title: const Text("Select photo from gallery"),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          child: CircleAvatar(
+            radius: 60,
+            backgroundColor: colorPrimary,
+            foregroundImage: NetworkImage(
+                controller.currentUser!.profilePhoto != ""
+                    ? controller.currentUser!.profilePhoto
+                    : 'https://www.pngarts.com/files/3/Avatar-PNG-Picture.png'),
+          ),
+        ),
         Column(
           children: [
             SizedBox(

@@ -83,12 +83,13 @@ class _Body extends StatelessWidget {
                             _alignTitle(
                                 context,
                                 isProfileScreen
-                                    ? controller.myListingList[index].photos[0]
+                                    ? controller.myListingList[index].title
                                     : controller.listingList[index].title),
                             _alignSubtitle(
                                 context,
                                 isProfileScreen
-                                    ? controller.myListingList[index].photos[0]
+                                    ? controller
+                                        .myListingList[index].description
                                     : controller
                                         .listingList[index].description),
                           ],
