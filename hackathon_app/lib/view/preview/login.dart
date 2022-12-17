@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
@@ -36,11 +37,11 @@ class _LoginPreviewState extends State<LoginPreview> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _expanded(
-              _flex * 3,
+              _flex * 2,
               Image.asset(logoUrl),
             ),
             _expanded(
-                _flex * 3,
+                _flex * 2,
                 Column(
                   children: [
                     AuthForm(
@@ -65,7 +66,30 @@ class _LoginPreviewState extends State<LoginPreview> {
                     ),
                   ],
                 )),
-            _expanded(_flex * 2, _loginButton()),
+            _loginButton(),
+            const SizedBox(
+              height: 20.0,
+            ),
+            CustomElevatedButton(
+              backgroundColor: colorWhite,
+              fun: () {
+                controller.signInGoogle();
+              },
+              text: "Google Sign In",
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                SvgPicture.asset("assets/images/svg/google.svg"),
+                const SizedBox(
+                  width: 15.0,
+                ),
+                Text(
+                  "Google Sign In",
+                  style: Theme.of(context).textTheme.headline6?.copyWith(
+                        color: colorGrey,
+                      ),
+                )
+              ]),
+            ),
             const CustomTextDivider(
               textColor: colorGrey,
               lineColor: colorPrimary,
@@ -116,19 +140,14 @@ class _LoginPreviewState extends State<LoginPreview> {
     );
   }
 
-  Column _loginButton() {
-    return Column(
-      children: [
-        CustomElevatedButton(
-          fun: () {
-            if (formKey.currentState!.validate() &&
-                !controller.isLoginPressed) {
-              controller.loginUser();
-            }
-          }, // butona tiklandiginda calisacak fonksiyon
-          text: _login,
-        ),
-      ],
+  CustomElevatedButton _loginButton() {
+    return CustomElevatedButton(
+      fun: () {
+        if (formKey.currentState!.validate() && !controller.isLoginPressed) {
+          controller.loginUser();
+        }
+      }, // butona tiklandiginda calisacak fonksiyon
+      text: _login,
     );
   }
 }
