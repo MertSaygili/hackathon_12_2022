@@ -24,6 +24,7 @@ class CustomTextField extends StatefulWidget {
     this.contentPadding,
     this.isFilled,
     this.emailFieldKey,
+    this.minLine,
   });
 
   final Function fun;
@@ -44,6 +45,7 @@ class CustomTextField extends StatefulWidget {
   final EdgeInsets? contentPadding;
   final bool? isFilled;
   final GlobalKey<FormFieldState<String>>? emailFieldKey;
+  final int? minLine;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -78,6 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       obscureText: widget.obscureText,
       maxLength: widget.maxLength,
       maxLines: widget.maxLines,
+      minLines: widget.minLine,
       cursorColor: colorPrimary,
       validator:
           widget.validator == null ? null : (value) => widget.validator!(value),
@@ -88,6 +91,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         label: widget.label,
         hintText: widget.hintText,
         prefixIcon: widget.prefixIcon,
+
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: colorPrimary, width: 2),
         ),

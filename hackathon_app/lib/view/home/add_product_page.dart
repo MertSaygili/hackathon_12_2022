@@ -1,17 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
-import 'package:hackathon_app/core/base/models/listing.dart';
-import 'package:hackathon_app/core/base/services/db/listings.dart';
-import 'package:hackathon_app/core/base/services/storage/storage_service.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:hackathon_app/core/constants/enums/categories.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/constants/app/icons.dart';
@@ -47,7 +41,10 @@ class _Body extends StatelessWidget {
   final String _locationHint = 'Country';
   final String _stateHint = 'State';
   final String _chooseLocation = 'Choose location';
+  final String _descriptionText = 'Description';
+  final String _descriptionHint = 'Enter descripe of product';
   String _title = '';
+  String _description = '';
   double _price = 0.0;
   String _location = '';
   String _state = '';
@@ -151,6 +148,16 @@ class _Body extends StatelessWidget {
               hintText: _listingTitleHint,
             ),
             _customDivider(context),
+            _setTitleAlign(context, _descriptionText),
+            CustomTextField(
+              fun: _setDescp,
+              inputType: TextInputType.text,
+              inputAction: TextInputAction.next,
+              isRoundedBorder: true,
+              obscureText: false,
+              maxLines: 3,
+            ),
+            _customDivider(context),
             _setTitleAlign(context, _priceText),
             CustomTextField(
               fun: _setPrice,
@@ -248,4 +255,5 @@ class _Body extends StatelessWidget {
   void _setPrice(String val) => () => _price = val as double;
   void _setCountry(String val) => () => _location = val;
   void _setState(String val) => () => _state = val;
+  void _setDescp(String val) => () => _description = val;
 }
