@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 
 import '../../core/components/gridview/listings_gridview.dart';
 import '../../core/constants/app/colors.dart';
@@ -48,6 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
+        // floatingActionButton: CustomFloatingActionButton(icon: Icons.edit),
       ),
     );
   }
