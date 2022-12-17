@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 
 import '../../../core/components/elevatedButton/custom_elevatedbutton.dart';
 import '../../../core/constants/app/colors.dart';
 
 class Mylistings extends StatefulWidget {
-  const Mylistings({super.key});
+  Mylistings({super.key});
+
+  AppController controller = Get.find();
 
   @override
   State<Mylistings> createState() => _MylistingsState();
@@ -18,7 +22,9 @@ class _MylistingsState extends State<Mylistings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _listingItems(),
+      body: widget.controller.myListingList.isEmpty
+          ? _emptyList()
+          : _listingItems(),
     );
   }
 
@@ -58,7 +64,7 @@ class _MylistingsState extends State<Mylistings> {
 
   ListView _listingItems() {
     return ListView.builder(
-      itemCount: 5,
+      itemCount: widget.controller.myListingList.length,
       itemBuilder: ((context, index) {
         return Padding(
           padding:
@@ -101,8 +107,8 @@ class _MylistingsState extends State<Mylistings> {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: SizedBox(
-            child: Image.asset(
-              'assets/images/jpg/listing-foto-${index + 1}.jpg',
+            child: Image.network(
+              widget.controller.myListingList[index].photos[0],
               width: 150,
               height: 200,
               fit: BoxFit.cover,
@@ -139,7 +145,8 @@ class _MylistingsState extends State<Mylistings> {
                     _richText(
                       context,
                       const Icon(Icons.favorite, color: colorWhite),
-                      " 21",
+                      widget.controller.myListingList[index].likes.length
+                          .toString(),
                     ),
                   ],
                 ),
@@ -181,7 +188,7 @@ class _MylistingsState extends State<Mylistings> {
 
   Text _listingDescText(int index, BuildContext context) {
     return Text(
-      "Lorem Ipsum is simply dummy text of the printing and typesetting",
+      widget.controller.myListingList[index].description,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: colorWhite,
           ),
@@ -195,13 +202,11 @@ class _MylistingsState extends State<Mylistings> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
-        "Listing item - 1",
+        widget.controller.myListingList[index].title,
         style: Theme.of(context).textTheme.headline5?.copyWith(
               color: colorWhite,
             ),
       ),
     );
   }
-
-  void _floatingActionFun() {}
 }

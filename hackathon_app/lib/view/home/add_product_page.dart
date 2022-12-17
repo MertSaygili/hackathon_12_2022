@@ -51,6 +51,14 @@ class _Body extends StatelessWidget {
 
   List photos = [];
 
+  final TextEditingController titleEditingController = TextEditingController();
+  final TextEditingController descriptionEditingController =
+      TextEditingController();
+  final TextEditingController priceEditingController = TextEditingController();
+  final TextEditingController locationEditingController =
+      TextEditingController();
+  final TextEditingController stateEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,6 +148,7 @@ class _Body extends StatelessWidget {
           children: [
             _setTitleAlign(context, _listingTitleText),
             CustomTextField(
+              textEditingController: titleEditingController,
               fun: _setTitle,
               inputType: TextInputType.text,
               inputAction: TextInputAction.next,
@@ -150,16 +159,18 @@ class _Body extends StatelessWidget {
             _customDivider(context),
             _setTitleAlign(context, _descriptionText),
             CustomTextField(
+              textEditingController: descriptionEditingController,
               fun: _setDescp,
-              inputType: TextInputType.text,
-              inputAction: TextInputAction.next,
+              inputType: TextInputType.multiline,
+              minLine: 1,
               isRoundedBorder: true,
               obscureText: false,
-              maxLines: 3,
+              maxLines: 2,
             ),
             _customDivider(context),
             _setTitleAlign(context, _priceText),
             CustomTextField(
+              textEditingController: priceEditingController,
               fun: _setPrice,
               inputType: TextInputType.text,
               inputAction: TextInputAction.next,
@@ -179,6 +190,7 @@ class _Body extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: CustomTextField(
+                          textEditingController: locationEditingController,
                           fun: _setCountry,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
@@ -197,6 +209,7 @@ class _Body extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomTextField(
+                          textEditingController: stateEditingController,
                           fun: _setState,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
@@ -244,16 +257,24 @@ class _Body extends StatelessWidget {
       ),
       child: CustomFloatingActionButton(
         fun: () async {
-          await controller.addListing(_price, _title, _location, _state);
+          await controller.addListing(
+              _price, _title, _description, _location, _state);
+          priceEditingController.text = "";
+          titleEditingController.text = "";
+          descriptionEditingController.text = "";
+          locationEditingController.text = "";
+          stateEditingController.text = "";
+          controller.images.clear();
+          controller.update([AppController.listingId]);
         },
         icon: Icons.save,
       ),
     );
   }
 
-  void _setTitle(String val) => () => _title = val;
-  void _setPrice(String val) => () => _price = val as double;
-  void _setCountry(String val) => () => _location = val;
-  void _setState(String val) => () => _state = val;
-  void _setDescp(String val) => () => _description = val;
+  void _setTitle(String val) => _title = val;
+  void _setPrice(String val) => _price = val as double;
+  void _setCountry(String val) => _location = val;
+  void _setState(String val) => _state = val;
+  void _setDescp(String val) => _description = val;
 }

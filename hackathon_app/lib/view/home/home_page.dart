@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/gridview/listings_gridview.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
@@ -8,14 +10,27 @@ import 'package:hackathon_app/core/constants/app/colors.dart';
 
 import '../../core/constants/app/strings.dart';
 
-class HomePageView extends StatefulWidget {
+class HomePageView extends StatelessWidget {
   const HomePageView({super.key});
 
   @override
-  State<HomePageView> createState() => _HomePageViewState();
+  Widget build(BuildContext context) {
+    return GetBuilder(
+        id: AppController.listingId,
+        builder: (AppController controller) => _Body(
+              controller: controller,
+            ));
+  }
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _Body extends StatelessWidget {
+  _Body({
+    super.key,
+    required this.controller,
+  });
+
+  final AppController controller;
+
   // Create a list that holds icons
   final List<IconData> _icons = <IconData>[
     Icons.electric_bolt,
@@ -64,7 +79,7 @@ class _HomePageViewState extends State<HomePageView> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              _categories(),
+              _categories(context),
               const ListingsGridView(),
             ],
           ),
@@ -73,7 +88,7 @@ class _HomePageViewState extends State<HomePageView> {
     );
   }
 
-  Widget _categories() {
+  Widget _categories(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

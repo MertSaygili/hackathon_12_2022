@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
 
 import '../../../core/components/elevatedButton/custom_elevatedbutton.dart';
 import '../../../core/constants/app/colors.dart';
 
 class Favourites extends StatefulWidget {
-  const Favourites({super.key});
+  Favourites({super.key});
+
+  AppController controller = Get.find();
 
   @override
   State<Favourites> createState() => _FavouritesState();
@@ -19,7 +23,9 @@ class _FavouritesState extends State<Favourites> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _emptyList(),
+      body: widget.controller.favouriteListings.isEmpty
+          ? _emptyList()
+          : _favList(),
     );
   }
 
@@ -45,7 +51,7 @@ class _FavouritesState extends State<Favourites> {
                 ]),
           ),
           Container(
-            padding: EdgeInsets.only(top: 6),
+            padding: const EdgeInsets.only(top: 6),
             width: MediaQuery.of(context).size.width / 1.7,
             child: CustomElevatedButton(
               fun: () {},
@@ -101,7 +107,7 @@ class _FavouritesState extends State<Favourites> {
           padding: const EdgeInsets.all(4.0),
           child: SizedBox(
             child: Image.asset(
-              'assets/images/jpg/listing-foto-${index + 1}.jpg',
+              widget.controller.favouriteListings[index].photos[0],
               width: 150,
               height: 200,
               fit: BoxFit.cover,
@@ -134,7 +140,7 @@ class _FavouritesState extends State<Favourites> {
                       context,
                       const Icon(Icons.monetization_on_outlined,
                           color: colorWhite),
-                      " 5.000 \$",
+                      " ${widget.controller.favouriteListings[index].price} \$",
                     ),
                   ],
                 ),
@@ -176,7 +182,7 @@ class _FavouritesState extends State<Favourites> {
 
   Text _listingDescText(int index, BuildContext context) {
     return Text(
-      "Lorem Ipsum is simply dummy text of the printing and typesetting",
+      widget.controller.favouriteListings[index].description,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: colorWhite,
           ),
@@ -191,7 +197,7 @@ class _FavouritesState extends State<Favourites> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "Listing item - 1",
+          widget.controller.favouriteListings[index].title,
           style: Theme.of(context).textTheme.headline5?.copyWith(
                 color: colorWhite,
               ),
