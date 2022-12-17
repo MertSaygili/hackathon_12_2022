@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/view/home/add_product_page.dart';
+import 'package:hackathon_app/view/home/edit_profile.dart';
 import 'package:hackathon_app/view/home/home_page.dart';
 import 'package:hackathon_app/view/home/listings_page.dart';
-import 'package:hackathon_app/view/home/product_page.dart';
 import 'package:hackathon_app/view/home/profile.dart';
 import '../../core/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../../core/components/bottom_navigation_bar/page_view.dart';
@@ -43,7 +43,7 @@ class _HomePageControllerViewState extends State<HomePageControllerView> {
       const AddProductPage(),
       const ListingsPage(),
       const ProfilePage(),
-      const ProductPage(),
+      const EditProfileView(),
     ];
 
     return Scaffold(

@@ -15,7 +15,7 @@ class ListingsGridView extends StatelessWidget {
       itemCount: controller.listingList.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.80,
+        childAspectRatio: 0.70,
       ),
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: ((context, index) {
