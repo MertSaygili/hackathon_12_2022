@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
+import 'package:hackathon_app/core/components/divider/custom_line_divider.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
 import 'package:hackathon_app/core/constants/app/strings.dart';
@@ -24,14 +25,95 @@ class _ProductPageState extends State<ProductPage> {
           child: Image.asset(logoUrlSmall, height: 50),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _productImage(context),
+            _productPriceAndLocation(context),
+            _productTitle(context),
+            _productSeller(context),
+            const CustomLineDivider(
+              lineColor: colorPrimary,
+            ),
+            _productDescription(context),
+            const CustomLineDivider(
+              lineColor: colorPrimary,
+            ),
+            _productLocation(context)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding _productLocation(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _productImage(context),
-          _productPriceAndLocation(context),
-          _productTitle(context),
-          _productSeller(context)
+          Text(
+            "Location",
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                height: 1,
+                color: colorBlack,
+                fontSize: 25,
+                fontWeight: FontWeight.w800,
+                fontFamily: 'BalooBhaina',
+                shadows: <Shadow>[
+                  const Shadow(
+                    blurRadius: 4.0,
+                    color: Color.fromARGB(150, 0, 0, 0),
+                  )
+                ]),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Image.network(
+              "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iNv8NMTH4cSc/v0/1200x-1.png",
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding _productDescription(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Description",
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                height: 1,
+                color: colorBlack,
+                fontSize: 25,
+                fontWeight: FontWeight.w800,
+                fontFamily: 'BalooBhaina',
+                shadows: <Shadow>[
+                  const Shadow(
+                    blurRadius: 4.0,
+                    color: Color.fromARGB(150, 0, 0, 0),
+                  )
+                ]),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Text(
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five ",
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    height: 1,
+                    color: colorBlack,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'BalooBhaina',
+                  ),
+            ),
+          ),
         ],
       ),
     );
