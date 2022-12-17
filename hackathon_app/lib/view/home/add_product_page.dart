@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
 import 'package:hackathon_app/core/components/bottom_navigation_bar/page_view.dart';
-import 'package:hackathon_app/view/home/add_product_pages/favourites.dart';
-import 'package:hackathon_app/view/home/add_product_pages/mylistings.dart';
+import 'package:hackathon_app/view/home/listings-pages/favourites.dart';
+import 'package:hackathon_app/view/home/listings-pages/mylistings.dart';
 
 import '../../core/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../../core/constants/app/colors.dart';

@@ -245,7 +245,7 @@ class _HomePageViewState extends State<HomePageView> {
             color: colorWhite,
             onPressed: () {},
             icon: const Icon(
-              Icons.heart_broken,
+              Icons.favorite,
             ),
           ),
         ),

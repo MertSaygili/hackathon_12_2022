@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+
+import '../../../core/constants/colors.dart';
+
+class CustomFloatingActionButton extends StatelessWidget {
+  const CustomFloatingActionButton({
+    super.key,
+    required this.icon,
+    required this.fun,
+  });
+
+  final Function fun;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: FloatingActionButton(
+        backgroundColor: primaryColor,
+        mini: true,
+        onPressed: () => fun(),
+        child: Icon(icon, color: colorWhite, size: 40),
+      ),
+    );
+  }
+}

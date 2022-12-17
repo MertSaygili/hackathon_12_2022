@@ -24,6 +24,7 @@ class CircleIconButton extends StatelessWidget {
       foregroundColor: color,
       backgroundColor: backgroundColor,
       child: IconButton(
+        splashColor: color,
         onPressed: pressFunction,
         icon: Icon(icon),
         iconSize: iconSize,

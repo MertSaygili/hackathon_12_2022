@@ -5,8 +5,8 @@ import '../../core/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../../core/components/bottom_navigation_bar/page_view.dart';
 import '../../core/constants/app/colors.dart';
 import '../../core/constants/app/strings.dart';
-import 'add_product_pages/favourites.dart';
-import 'add_product_pages/mylistings.dart';
+import 'listings-pages/favourites.dart';
+import 'listings-pages/mylistings.dart';
 
 class ListingsPage extends StatefulWidget {
   const ListingsPage({super.key});
