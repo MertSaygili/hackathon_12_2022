@@ -13,19 +13,17 @@ class CustomLineDivider extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _divider(context, true),
+        _divider(context),
       ],
     );
   }
 
-  Container _divider(BuildContext context, bool check) {
+  Container _divider(BuildContext context) {
     return Container(
-      margin: check
-          ? const EdgeInsets.only(right: 20, top: 0, bottom: 20)
-          : const EdgeInsets.only(left: 20, top: 0, bottom: 20),
+      margin: const EdgeInsets.only(top: 0, bottom: 20),
       color: lineColor ?? colorGrey,
       height: _dividerThickness,
-      width: MediaQuery.of(context).size.width / 1.2,
+      width: MediaQuery.of(context).size.width / 1.1,
     );
   }
 }
