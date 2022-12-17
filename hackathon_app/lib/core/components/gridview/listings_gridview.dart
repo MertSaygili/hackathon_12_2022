@@ -2,7 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+<<<<<<< HEAD
 import 'package:hackathon_app/core/components/indicator/loading_indicator.dart';
+=======
+import 'package:hackathon_app/view/home/product_page.dart';
+>>>>>>> f485b61ef8c8cae6a28dcb493d086d515f65570e
 
 import '../../constants/app/colors.dart';
 
@@ -43,9 +47,14 @@ class _Body extends StatelessWidget {
       ),
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: ((context, index) {
-        return SizedBox(
-          width: MediaQuery.of(context).size.width / 1.75,
-          height: 250,
+        return GestureDetector(
+          onTap: () => Get.to(
+            () => ProductPage(
+              listingModel: isProfileScreen
+                  ? controller.myListingList[index]
+                  : controller.listingList[index],
+            ),
+          ),
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),

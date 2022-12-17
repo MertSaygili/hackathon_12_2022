@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/dropdown_menu/dropdown.dart';
-import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
@@ -265,9 +264,6 @@ class _Body extends StatelessWidget {
                 ],
               ),
               _customDivider(context),
-              Center(
-                child: CustomElevatedButton(fun: () {}, text: _chooseLocation),
-              )
             ],
           ),
         ),
@@ -275,29 +271,39 @@ class _Body extends StatelessWidget {
     );
   }
 
-  Divider _customDivider(BuildContext context) {
-    return Divider(
-      color: colorGrey,
-      thickness: 0.8,
-      endIndent: MediaQuery.of(context).size.width / 50,
-      indent: MediaQuery.of(context).size.width / 50,
+  Padding _customDivider(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Divider(
+        color: colorGrey,
+        thickness: 0.5,
+        endIndent: MediaQuery.of(context).size.width / 100,
+        indent: MediaQuery.of(context).size.width / 100,
+      ),
     );
   }
 
   Align _setTitleAlign(BuildContext context, String text) {
     return Align(
       alignment: Alignment.topLeft,
-      child: Text(text, style: Theme.of(context).textTheme.headline5),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(text,
+            style: Theme.of(context).textTheme.headline5?.copyWith(
+                  fontSize: 15,
+                )),
+      ),
     );
   }
 
   Padding _floatingActionButton(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height / 1.35,
+        top: MediaQuery.of(context).size.height / 1.3,
         right: 0,
       ),
       child: CustomFloatingActionButton(
+        iconSize: 30,
         fun: () async {
           if (formKey.currentState!.validate() &&
               controller.images.isNotEmpty) {
@@ -319,7 +325,7 @@ class _Body extends StatelessWidget {
             Get.snackbar("Pictures", "Please pick atleast 1 picture!");
           }
         },
-        icon: Icons.save,
+        icon: Icons.send,
       ),
     );
   }
