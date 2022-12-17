@@ -125,14 +125,16 @@ class _Body extends StatelessWidget {
                   child: Column(
                     children: [
                       ListTile(
-                        onTap: () => controller.pickImage(ImageSource.camera),
+                        onTap: () =>
+                            controller.pickProfileImage(ImageSource.camera),
                         leading: iconCamera,
                         title: const Text(
                           "Take photo from camera",
                         ),
                       ),
                       ListTile(
-                        onTap: () => controller.pickImage(ImageSource.gallery),
+                        onTap: () =>
+                            controller.pickProfileImage(ImageSource.gallery),
                         leading: iconGallery,
                         title: const Text("Select photo from gallery"),
                       ),

@@ -1,22 +1,43 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:hackathon_app/core/components/appbar/custom_appbar.dart';
+import 'package:get/get.dart';
+import 'package:hackathon_app/core/base/controllers/app_controller.dart';
+import 'package:hackathon_app/core/base/models/listing.dart';
+import 'package:hackathon_app/core/base/services/db/listings.dart';
+import 'package:hackathon_app/core/base/services/storage/storage_service.dart';
 import 'package:hackathon_app/core/components/elevatedButton/custom_elevatedbutton.dart';
 import 'package:hackathon_app/core/components/floating_action_button/floating_action_button.dart';
 import 'package:hackathon_app/core/components/textfield/custom_textfield.dart';
 import 'package:hackathon_app/core/constants/app/colors.dart';
-import 'package:hackathon_app/core/constants/app/strings.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:hackathon_app/core/constants/enums/categories.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../core/constants/app/icons.dart';
 
-class AddProductPage extends StatefulWidget {
+class AddProductPage extends StatelessWidget {
   const AddProductPage({super.key});
 
   @override
-  State<AddProductPage> createState() => _AddProductPageState();
+  Widget build(BuildContext context) {
+    return GetBuilder(
+      id: AppController.listingId,
+      builder: (AppController controller) => _Body(
+        controller: controller,
+      ),
+    );
+  }
 }
 
-class _AddProductPageState extends State<AddProductPage> {
+class _Body extends StatelessWidget {
+  _Body({
+    super.key,
+    required this.controller,
+  });
+
+  final AppController controller;
+
   final String _dummyImg = 'assets/images/jpg/listing-foto-1.jpg';
   final String _listingTitleText = 'Listing Title';
   final String _priceText = 'Price';
@@ -26,11 +47,12 @@ class _AddProductPageState extends State<AddProductPage> {
   final String _locationHint = 'Country';
   final String _stateHint = 'State';
   final String _chooseLocation = 'Choose location';
-  List<bool> _checkImages = [false, true, false];
   String _title = '';
-  String _price = '';
+  double _price = 0.0;
   String _location = '';
   String _state = '';
+
+  List photos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +62,12 @@ class _AddProductPageState extends State<AddProductPage> {
         children: [
           const Padding(padding: EdgeInsets.only(top: 45.0)),
           Expanded(
-            flex: 6,
-            child: _addImage(),
+            flex: 3,
+            child: _addImage(context),
           ),
           Expanded(
-            flex: 9,
-            child: _setInformation(),
+            flex: 5,
+            child: _setInformation(context),
           )
         ],
       ),
@@ -53,38 +75,60 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  Widget _addImage() {
-    return GestureDetector(
-      onTap: () {}, // tikla resmi cek
-      child: CarouselSlider(
-        options: CarouselOptions(height: 400.0),
-        items: [
-          _checkImages[0]
-              ? Image.asset(_dummyImg, fit: BoxFit.cover)
-              : iconCameraAlt,
-          _checkImages[1]
-              ? Image.asset(_dummyImg, fit: BoxFit.cover)
-              : iconCameraAlt,
-          _checkImages[2]
-              ? Image.asset(_dummyImg, fit: BoxFit.cover)
-              : iconCameraAlt,
-        ].map((i) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: const BoxDecoration(color: colorSecondryScaffold),
-                child: i,
-              );
-            },
-          );
-        }).toList(),
+  Widget _addImage(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(height: 400.0),
+      items: List.generate(
+        controller.images.isEmpty ? 1 : controller.images.length,
+        (index) => GestureDetector(
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25.0),
+                    topRight: Radius.circular(25.0)),
+              ),
+              builder: (context) => Wrap(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          onTap: () => controller.pickImage(ImageSource.camera),
+                          leading: iconCamera,
+                          title: const Text(
+                            "Take photo from camera",
+                          ),
+                        ),
+                        ListTile(
+                          onTap: () =>
+                              controller.pickImage(ImageSource.gallery),
+                          leading: iconGallery,
+                          title: const Text("Select photo from gallery"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+            decoration: const BoxDecoration(color: colorSecondryScaffold),
+            child: controller.images.isEmpty
+                ? iconCameraAlt
+                : Image.file(controller.images[index]!),
+          ),
+        ),
       ),
     );
   }
 
-  Widget _setInformation() {
+  Widget _setInformation(BuildContext context) {
     double paddingVal = 12;
 
     return Padding(
@@ -97,27 +141,27 @@ class _AddProductPageState extends State<AddProductPage> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            _setTitleAlign(_listingTitleText),
+            _setTitleAlign(context, _listingTitleText),
             CustomTextField(
-              fun: () => _setTitle,
+              fun: _setTitle,
               inputType: TextInputType.text,
               inputAction: TextInputAction.next,
               isRoundedBorder: true,
               obscureText: false,
               hintText: _listingTitleHint,
             ),
-            _customDivider(),
-            _setTitleAlign(_priceText),
+            _customDivider(context),
+            _setTitleAlign(context, _priceText),
             CustomTextField(
-              fun: () => _setPrice,
+              fun: _setPrice,
               inputType: TextInputType.text,
               inputAction: TextInputAction.next,
               isRoundedBorder: true,
               obscureText: false,
               hintText: _priceHint,
             ),
-            _customDivider(),
-            _setTitleAlign(_locationText),
+            _customDivider(context),
+            _setTitleAlign(context, _locationText),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -128,7 +172,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: CustomTextField(
-                          fun: () => _setCountry,
+                          fun: _setCountry,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
                           isRoundedBorder: true,
@@ -146,7 +190,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomTextField(
-                          fun: () => _setState,
+                          fun: _setState,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
                           isRoundedBorder: true,
@@ -159,7 +203,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 )
               ],
             ),
-            _customDivider(),
+            _customDivider(context),
             Center(
               child: CustomElevatedButton(fun: () {}, text: _chooseLocation),
             )
@@ -169,7 +213,7 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  Divider _customDivider() {
+  Divider _customDivider(BuildContext context) {
     return Divider(
       color: colorGrey,
       thickness: 0.8,
@@ -178,7 +222,7 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  Align _setTitleAlign(String text) {
+  Align _setTitleAlign(BuildContext context, String text) {
     return Align(
       alignment: Alignment.topLeft,
       child: Text(text, style: Theme.of(context).textTheme.headline5),
@@ -192,14 +236,16 @@ class _AddProductPageState extends State<AddProductPage> {
         right: 0,
       ),
       child: CustomFloatingActionButton(
-        fun: () {},
+        fun: () async {
+          await controller.addListing(_price, _title, _location, _state);
+        },
         icon: Icons.save,
       ),
     );
   }
 
-  void _setTitle(String val) => setState(() => _title = val);
-  void _setPrice(String val) => setState(() => _price = val);
-  void _setCountry(String val) => setState(() => _location = val);
-  void _setState(String val) => setState(() => _state = val);
+  void _setTitle(String val) => () => _title = val;
+  void _setPrice(String val) => () => _price = val as double;
+  void _setCountry(String val) => () => _location = val;
+  void _setState(String val) => () => _state = val;
 }
