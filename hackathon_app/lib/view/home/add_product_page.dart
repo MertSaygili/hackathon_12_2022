@@ -21,62 +21,6 @@ class _AddProductPageState extends State<AddProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        preferedSize: 75,
-        backButton: false,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 4.0),
-          child: Image.asset(logoUrlSmall, height: 55),
-        ),
-      ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: EdgeInsets.zero,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width - 30,
-                height: 30,
-                child: _navigationBar(),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: CustomPageView(
-              controller: _controller,
-              items: const [
-                Mylistings(),
-                Favourites(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  CustomBottomNavigationBar _navigationBar() {
-    List<BottomNavigationBarItem> items = const [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.hourglass_empty),
-        label: 'My listings',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.hourglass_empty),
-        label: 'Favourites',
-      ),
-    ];
-
-    return CustomBottomNavigationBar(
-      controller: _controller,
-      items: items,
-      isText: true,
-      elevation: 0,
-      backgroundColor: colorTransparent,
-    );
+    return const Scaffold();
   }
 }
