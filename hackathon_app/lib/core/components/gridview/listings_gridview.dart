@@ -44,11 +44,23 @@ class _Body extends StatelessWidget {
             ),
             color: colorPrimary,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Stack(
                   children: [
-                    _alignImage(controller.listingList[index].photos[0]),
+                    Container(
+                      height: 140,
+                      width: MediaQuery.of(context).size.width / 1.75,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(15)),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              controller.listingList[index].photos[0]),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                     _alignFavButton(),
                   ],
                 ),
@@ -57,12 +69,16 @@ class _Body extends StatelessWidget {
                   child: ListTile(
                     contentPadding: const EdgeInsets.only(top: 4, left: 4),
                     title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _alignTitle(
-                            context, controller.listingList[index].title),
-                        _alignSubtitle(
-                            context, controller.listingList[index].description),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _alignTitle(
+                                context, controller.listingList[index].title),
+                            _alignSubtitle(context,
+                                controller.listingList[index].description),
+                          ],
+                        ),
                         _alignRow(context,
                             "${controller.listingList[index].state}, ${controller.listingList[index].country}"),
                       ],
@@ -132,14 +148,14 @@ class _Body extends StatelessWidget {
       child: Align(
         alignment: Alignment.topRight,
         child: Container(
-          height: 32,
-          width: 32,
+          height: 26,
+          width: 26,
           decoration: const BoxDecoration(
             color: colorPrimary,
             shape: BoxShape.circle,
           ),
           child: IconButton(
-            iconSize: 24,
+            iconSize: 16,
             padding: EdgeInsets.zero,
             color: colorWhite,
             onPressed: () {},
@@ -163,7 +179,7 @@ class _Body extends StatelessWidget {
         child: Image.network(
           imgPath,
           fit: BoxFit.cover,
-          height: 140,
+          height: 125,
         ),
       ),
     );

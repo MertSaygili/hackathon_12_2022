@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathon_app/core/components/divider/custom_line_divider.dart';
 
 import '../../core/components/appbar/custom_appbar.dart';
 import '../../core/components/bottom_navigation_bar/bottom_navigation_bar.dart';
@@ -25,7 +26,7 @@ class _ListingsPageState extends State<ListingsPage> {
       appBar: const CustomAppBar(
         backButton: false,
         title: Padding(
-          padding: EdgeInsets.only(top: 16.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: Text(
             "Your listings",
             style: TextStyle(color: colorPrimary, fontSize: 30),
@@ -37,7 +38,7 @@ class _ListingsPageState extends State<ListingsPage> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Padding(
               padding: EdgeInsets.zero,
               child: SizedBox(

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hackathon_app/core/base/controllers/app_controller.dart';
 import 'package:hackathon_app/core/components/icon_buttons/circle_icon_button.dart';
+import 'package:hackathon_app/view/home/home_page.dart';
 
 import '../../../core/components/elevatedButton/custom_elevatedbutton.dart';
 import '../../../core/constants/app/colors.dart';
@@ -54,7 +55,7 @@ class _FavouritesState extends State<Favourites> {
             padding: const EdgeInsets.only(top: 6),
             width: MediaQuery.of(context).size.width / 1.7,
             child: CustomElevatedButton(
-              fun: () {},
+              fun: () => {},
               text: 'Browse Listings',
             ),
           ),
@@ -62,6 +63,8 @@ class _FavouritesState extends State<Favourites> {
       ),
     );
   }
+
+// Create a function that navigates to the home page with the bottom navigation bar
 
   ListView _favList() {
     return ListView.builder(
