@@ -310,7 +310,6 @@ class _Body extends StatelessWidget {
             stateEditingController.text = "";
             controller.images.clear();
             controller.update([AppController.listingId]);
-
             pageController.animateToPage(
               0,
               duration: const Duration(milliseconds: 400),
