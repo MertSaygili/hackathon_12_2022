@@ -36,23 +36,15 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        backgroundColor: colorScaffold,
-        preferedSize: 55,
-        backButton: true,
-        actions: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(logoUrlSmall, height: 50),
-        ),
-      ),
       body: Column(
         children: [
+          const Padding(padding: EdgeInsets.only(top: 45.0)),
           Expanded(
-            flex: 3,
+            flex: 6,
             child: _addImage(),
           ),
           Expanded(
-            flex: 5,
+            flex: 9,
             child: _setInformation(),
           )
         ],
@@ -196,7 +188,7 @@ class _AddProductPageState extends State<AddProductPage> {
   Padding _floatingActionButton(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height / 1.5,
+        bottom: MediaQuery.of(context).size.height / 1.35,
         right: 0,
       ),
       child: CustomFloatingActionButton(
