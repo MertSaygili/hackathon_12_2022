@@ -27,15 +27,15 @@ class _ProfilePageState extends State<ProfilePage> {
           // main column
           children: [
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.only(top: 30.0),
                 child: Image.asset(logoUrlSmall),
               ),
             ),
-            Expanded(flex: 2, child: _profileColumn()),
+            Expanded(flex: 3, child: _profileColumn()),
             Expanded(
-              flex: 4,
+              flex: 10,
               child: SingleChildScrollView(
                 child: Column(
                   children: const [
@@ -51,6 +51,8 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
         floatingActionButton: CustomFloatingActionButton(
+          backgroundColor: colorWhite,
+          iconColor: colorPrimary,
           icon: Icons.edit,
           fun: _navigate,
         ),
