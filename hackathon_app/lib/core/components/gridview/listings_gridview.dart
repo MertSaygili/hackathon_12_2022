@@ -55,7 +55,7 @@ class _Body extends StatelessWidget {
                 Stack(
                   children: [
                     Container(
-                      height: 140,
+                      height: 125,
                       width: MediaQuery.of(context).size.width / 1.75,
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.vertical(
@@ -83,12 +83,13 @@ class _Body extends StatelessWidget {
                             _alignTitle(
                                 context,
                                 isProfileScreen
-                                    ? controller.myListingList[index].photos[0]
+                                    ? controller.myListingList[index].title
                                     : controller.listingList[index].title),
                             _alignSubtitle(
                                 context,
                                 isProfileScreen
-                                    ? controller.myListingList[index].photos[0]
+                                    ? controller
+                                        .myListingList[index].description
                                     : controller
                                         .listingList[index].description),
                           ],

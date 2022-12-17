@@ -8,8 +8,10 @@ class CustomFloatingActionButton extends StatelessWidget {
     this.iconColor,
     required this.icon,
     required this.fun,
+    this.iconSize,
   });
 
+  final double? iconSize;
   final Function fun;
   final IconData icon;
   final Color? backgroundColor;
@@ -24,7 +26,7 @@ class CustomFloatingActionButton extends StatelessWidget {
         backgroundColor: backgroundColor ?? colorPrimary,
         mini: true,
         onPressed: () => fun(),
-        child: Icon(icon, color: iconColor, size: 40),
+        child: Icon(icon, color: iconColor, size: iconSize ?? 40),
       ),
     );
   }
